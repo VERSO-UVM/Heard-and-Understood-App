@@ -33,11 +33,11 @@ TBD
 
 ## Authors
 
-Fernanda De Oliveira Girelli (Team Lead)
-Johnna  Schulz
-Adrien Monks
-Tucker  Schulz 
-Felix Walberg 
+* Fernanda De Oliveira Girelli (Team Lead)
+* Johnna  Schulz
+* Adrien Monks
+* Tucker  Schulz 
+* Felix Walberg 
 
 ## Version History
 
