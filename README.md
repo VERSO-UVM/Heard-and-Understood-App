@@ -33,10 +33,11 @@ TBD
 
 ## Authors
 
-Contributors names and contact info
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+Fernanda De Oliveira Girelli (Team Lead)
+Johnna  Schulz
+Adrien Monks
+Tucker  Schulz 
+Felix Walberg 
 
 ## Version History
 
@@ -47,3 +48,4 @@ TBD
 This project is licensed under the Apache 2.0 License - see the LICENSE.md file for details
 
 ## Acknowledgments
+This project would not be possible without Robert "Bob" Gramling, MD and Donna Rizzo and the work by the Vermont Conversation Lab at the University of Vermont (UVM)
