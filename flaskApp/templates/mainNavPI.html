@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    {% endblock %}
+    <title></title>
+</head>
+<body>
+<nav>
+    <a href="{{ url_for('index') }}">Home</a>
+     <a href="{{ url_for('index') }}">Dashboard</a>
+     <a href="{{ url_for('index') }}">Upload</a>
+    <a href="{{ url_for('index') }}">View Data</a>
+    <a href="{{ url_for('index') }}">Project</a>
+    <a href="{{ url_for('index') }}">Ground Truthing</a>
+    <a href="{{ url_for('index') }}">View Users</a>
+</nav>
+
+<div class="content">
+    <!-- Your page content goes here -->
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
