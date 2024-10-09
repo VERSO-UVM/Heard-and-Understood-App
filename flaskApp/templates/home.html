@@ -1,43 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Welcome, User!</h1>
-    <h3>To access your dashboard and be able to upload audio files, you need to input to your institution's access code</h3>
-    <div class="modal-button" id="openModal">Click to Enter Access Code</div>
-    <div id="access-code-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Enter Access Code</h3>
-            <input type="text" id="accessCode" placeholder="Enter Access Code">
-            <button class="submit-btn" id="submitCode">Submit</button>
-        </div>
-    </div>
-</body>
-</html>
+{% extends 'home_base.html' %}
+{# Extends the 'home_base.html' template #}
 
-<script>
-var modal = document.getElementById("access-code-modal");
-var btn = document.getElementById("openModal");
-var span = document.getElementsByClassName("close")[0];
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-span.onclick = function() {
-    modal.style.display = "none";
-}
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-</script>
+{% import "bootstrap/wtf.html" as wtf %}
+{# Imports 'wtf.html' from the 'bootstrap' directory with an alias 'wtf' #}
 
-<style>
+{% block title %}
+Home Page
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+  <style>
     .modal-button{
         border: 2px dashed #ccc;
         padding: 20px;
@@ -73,3 +47,36 @@ window.onclick = function(event) {
     }
 
 </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome, User!</h1>
+    <h3>To access your dashboard and be able to upload audio files, you need to input to your institution's access code</h3>
+    <div class="modal-button" id="openModal">Click to Enter Access Code</div>
+    <div id="access-code-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Enter Access Code</h3>
+            <input type="text" id="accessCode" placeholder="Enter Access Code">
+            <button class="submit-btn" id="submitCode">Submit</button>
+        </div>
+    </div>
+
+
+<script>
+    var modal = document.getElementById("access-code-modal");
+    var btn = document.getElementById("openModal");
+    var span = document.getElementsByClassName("close")[0];
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+{% endblock content %}
