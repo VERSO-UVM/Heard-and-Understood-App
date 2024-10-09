@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Dashboard</title>
+    <link rel="stylesheet" href="../static/dashboard/dashboard.css">
+  </head>
+  <body>
+    <main>
+        <div>
+            <h1>Organization Dashboard Page</h1>
+            <p>Welcome back, User</p>
+        <div class="containerDiv">
+            <!-- QUESTIONS/NOTES -->
+            <!-- Is a datalist functional enough for searching for recordings? -->
+            <!-- What are they downloading the csv of if everything is stored locally? -->
+            <!-- Selector for recordings -->
+            <!-- <section>
+                    <input list="dynamicDatalist">
+                    <datalist id="dynamicDatalist">
+
+                    </datalist>
+            </section> -->
+            <section>
+                <form>
+                    <input list="recordings" id="recordingsInput">
+                    <datalist id="recordings">
+                        <!-- <option id="recording1" value="Recording 1"></option>
+                        <option id="recording2" value="Recording 2"></option>
+                        <option id="recording3" value="Recording 3"></option> -->
+                    </datalist>
+                </form>
+            </section>
+           
+            <!-- Buttons to generate popups -->
+            <section>
+                <div>
+                    <button type="submit" id="algorithm" value="Algorithm" onclick="runAlgorithm()" disabled>Run Algorithm</button>
+                </div>
+                <div>
+                    <button type="submit" id="confusionMatrix" value="Confusion Matrix" disabled>View Confusion Matrix</button>
+                </div>
+                <div>
+                    <button type="submit" id="rawData" value="Raw Data" disabled>View Raw Data</button>
+                </div>
+            </section>
+
+            <!-- Checkboxes for pause selection -->
+            <section>
+                <div>
+                    <label for="emotionalCheckbox">Emotional Pause</label>
+                    <input type="checkbox" id="emotionalCheckbox" disabled checked>
+                </div>
+                <div>
+                    <label for="invitationalCheckbox">Invitational Pause</label>
+                    <input type="checkbox" id="invitationalCheckbox" disabled checked>
+                </div>
+                <div>
+                    <label for="non-connectiveCheckbox">Non-Connective Pause</label>
+                    <input type="checkbox" id="non-connectiveCheckbox" disabled checked>
+                </div>
+                <!-- <div>
+                    <label class="switch">
+                        <input type="checkbox" id="accuracyToggle" checked>
+                        <span class="slider round"></span>
+                      </label>
+                </div> -->
+            </section>
+
+            <!-- CSV Download -->
+            <section>
+                <div>
+                    <button type="submit" id="downloadCSV" onclick="downloadToCSV()" disabled>Download CSV</button>
+                </div>
+            </section>
+
+            
+            <div id="modalBackground" class="modalBackground">
+                <div id="modalPopup" class="modalPopup">
+                    <span id="modalContent" class="modalContent"></span>
+                </div>
+            </div>
+            
+        </div>
+        <div class="containerDiv">
+            <!-- Graph -->
+            <section>
+                <canvas id="myCanvas" width="500" height="300" style="border:1px solid #000000;"></canvas>
+            </section>
+        </div>
+    </div>
+    </main>
+    <script src="index.js"></script>
+    <script src="../static/dashboard/dashboard.js"></script>
+  </body>
+</html>
