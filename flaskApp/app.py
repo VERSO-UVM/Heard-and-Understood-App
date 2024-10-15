@@ -18,11 +18,6 @@ def login():
 def dashboard():
     return render_template("dashboard.html")
 
-@app.route("/dashboard")
-def dashboard():
-    return render_template("dashboard.html")
-
-
 @app.route("/homepage")
 def homepage():
     return render_template('home.html')
