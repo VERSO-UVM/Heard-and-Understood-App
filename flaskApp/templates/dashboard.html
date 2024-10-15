@@ -14,21 +14,23 @@
         <div class="containerDiv">
             <!-- QUESTIONS/NOTES -->
             <!-- Is a datalist functional enough for searching for recordings? -->
-            <!-- What are they downloading the csv of if everything is stored locally? -->
-            <!-- Selector for recordings -->
-            <!-- <section>
-                    <input list="dynamicDatalist">
-                    <datalist id="dynamicDatalist">
 
-                    </datalist>
-            </section> -->
+            <!-- Project Selector -->
             <section>
                 <form>
-                    <input list="recordings" id="recordingsInput">
+                    <label for="projectsInput">Project</label>
+                    <input list="projects" id="projectsInput">
+                    <datalist id="projects">
+                    </datalist>
+                </form>
+            </section>
+
+            <!-- Recording Selector -->
+            <section>
+                <form>
+                    <label for="recordingsInput">Recording</label>
+                    <input list="recordings" id="recordingsInput" disabled>
                     <datalist id="recordings">
-                        <!-- <option id="recording1" value="Recording 1"></option>
-                        <option id="recording2" value="Recording 2"></option>
-                        <option id="recording3" value="Recording 3"></option> -->
                     </datalist>
                 </form>
             </section>
@@ -60,12 +62,16 @@
                     <label for="non-connectiveCheckbox">Non-Connective Pause</label>
                     <input type="checkbox" id="non-connectiveCheckbox" disabled checked>
                 </div>
-                <!-- <div>
+
+                <!-- Temporary styling for accuracy toggle -->
+                <!-- Styling doesn't show disabled starting point... -->
+                <div>
                     <label class="switch">
-                        <input type="checkbox" id="accuracyToggle" checked>
+                        <input type="checkbox" id="accuracyToggle" checked disabled>
                         <span class="slider round"></span>
                       </label>
-                </div> -->
+                      <label>View Accuracy</label>
+                </div>
             </section>
 
             <!-- CSV Download -->

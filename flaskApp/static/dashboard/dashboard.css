@@ -81,7 +81,6 @@ button {
     -webkit-transition: .4s;
     transition: .4s;
   }
-  
   input:checked + .slider {
     background-color: #2196F3;
   }

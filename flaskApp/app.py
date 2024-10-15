@@ -11,18 +11,6 @@ def home():
 def dashboard():
     return render_template("dashboard.html")
 
-@app.route("/algorithm")
-def algorithm():
-    return "Redirect for running algorithm"
-
-@app.route("/confusionMatrix")
-def confusionMatrix():
-    return "Redirect for confusion matrix"
-
-@app.route("/rawData")
-def rawData():
-    return "Redirect for rawData"
-
 
 
 
