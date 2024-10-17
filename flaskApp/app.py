@@ -19,6 +19,10 @@ def login():
 def homepage():
     return render_template('home.html')
 
+@app.route("/import")
+def upload():
+    return render_template('importPage.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5001, threaded=False)
