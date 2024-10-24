@@ -1,0 +1,22 @@
+{% extends 'dashboardPI_base.html' %}
+
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}
+View all Projects
+
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+{% endblock %}
+
+{% block content %}
+{% for i in all_project %}
+<h3>{{ i.projectName }}</h3>
+<h4>{{ i.projectCode}}</h4>
+{% endfor %}
+{% endblock %}

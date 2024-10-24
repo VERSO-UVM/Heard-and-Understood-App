@@ -37,9 +37,14 @@
           <li> <a href="{{ url_for('login') }}">Dashboard</a></li>
             <li> <a href="{{ url_for('login') }}">Upload</a></li>
               <li><a href="{{ url_for('login') }}">View Data</a></li>
-                <li><a href="{{ url_for('login') }}">Project</a></li>
                   <li><a href="{{ url_for('login') }}">Ground Truthing</a></li>
-                 <li> <a href="{{ url_for('login') }}">Add Invitiations</a></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Insitute <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="{{ url_for('login') }}">View all Users</a></li>
+                      <li><a href="{{ url_for('logint') }}">View all Requests</a></li>
+                    </ul>
+                  </li>
         </ul>
       </nav>
      
