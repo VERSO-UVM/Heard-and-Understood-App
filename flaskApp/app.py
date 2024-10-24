@@ -31,6 +31,9 @@ def login():
     # password = request.form.get('password')
     return redirect(url_for('homepage'))
 
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
 
 @app.route("/homepage")
 def homepage():
