@@ -26,11 +26,11 @@ pip install path/to/cloned/CONSert
 
 ### The Models
 
-CONSert's pause detection require several models to run: CNN, RF, and BERT. The paths to the models are specified in:
+CONSert's pause detection requires several models to run: CNN, RF, and BERT. The paths to the models are specified in package.json which can be found here:
 ```
 CONSERT/consert/package.json
 ```
-and look like this:
+and looks like this:
 
 ```
   "model_cache": "absolute/path/to/original_code/models",
@@ -56,3 +56,13 @@ pip3 install --upgrade --no-deps --force-reinstall git+https://github.com/openai
 
 ```
 This will downgrade the version of Whisper to the most recent compatable version. Whisper now includes timestamps, which it didn't when CONSert was developed. Eventually, we'll want to remove whisper_timestamped and use a more recent version of Whisper, instead.
+
+### Testing 
+
+The CONSert repository now has a test_script.py file. Update the media_file fiel to have the correct path to your mp3 or wav. Similarly update the audio format field to the correct file type. 
+
+````
+media_file = 'path/to/test/file.wav'
+
+audio_file_format = 'wav'
+````
