@@ -2,5 +2,6 @@
 firebase/serviceAccountKey.json
 .env
 __pycache__/
+*__pycache__*
 *.pyc
 *.log
