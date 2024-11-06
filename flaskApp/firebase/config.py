@@ -1,0 +1,9 @@
+
+class Config:
+    FIREBASE_API_KEY = "AIzaSyD6H_1OfT0tVO6VeCQewvafIHJGHd0QnvE"
+    FIREBASE_AUTH_DOMAIN = "hua-app-7e6c0.firebaseapp.com"
+    FIREBASE_PROJECT_ID = "hua-app-7e6c0"
+    FIREBASE_STORAGE_BUCKET = "hua-app-7e6c0.appspot.com"
+    FIREBASE_MESSAGING_SENDER_ID = "451642215157"
+    FIREBASE_APP_ID = "1:451642215157:web:dcae90bdf2befbf56013bc"
+    FIREBASE_MEASUREMENT_ID = "G-P12GT0GJFY"
