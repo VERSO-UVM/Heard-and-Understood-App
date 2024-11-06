@@ -31,9 +31,6 @@ class Projects(db.Model):
     def __repr__(self):
         return '<Project Name %r>' % self.projectName
 
-
-
-
 class Involvement(db.Model):
     id= db.Column(db.Integer, primary_key=True,
                 index=True, autoincrement=True)
@@ -49,7 +46,19 @@ class Involvement(db.Model):
     
 
 
-
+class groundTruthing(db.Model):
+    id= db.Column(db.Integer, primary_key=True,
+                index=True)
+    user_id = mapped_column(ForeignKey("user.email"), primary_key=True)
+    project_id = mapped_column(ForeignKey("projects.projectName"), primary_key=True)
+    date=db.Column(db.Date,primary_key=False)
+   
+    
+   
+    
+    userss = relationship("User", foreign_keys=[user_id])
+    projectss = relationship("Projects", foreign_keys=[project_id])
+    
                       
    
     

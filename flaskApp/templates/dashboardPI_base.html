@@ -34,7 +34,7 @@
       <nav>
         <ul>
         
-         <h3> User</h3>
+        
          <li> <a href="{{ url_for('login') }}">Home</a></li>
            <li> <a href="{{ url_for('login') }}">Dashboard</a></li>
              <li> <a href="{{ url_for('login') }}">Upload</a></li>
@@ -44,9 +44,10 @@
                    <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PI view <span class="caret"></span></a>
                      <ul class="dropdown-menu">
-                       <li><a href="{{ url_for('login') }}">View all users</a></li>
-                       <li><a href="{{ url_for('login') }}">Generate new project</a></li>
-                       <li><a href="{{ url_for('login') }}">View Ground Truth Updates</a></li>
+                       <li><a href="{{ url_for('viewAllUsers') }}">View all users</a></li>
+                       <li><a href="{{ url_for('viewAllProjects') }}">View all projects</a></li>
+                       <li><a href="{{ url_for('generateNewProject') }}">Generate new project</a></li>
+                       <li><a href="{{ url_for('groundTruthUpdates') }}">View Ground Truth Updates</a></li>
         </ul>
       </nav>
      

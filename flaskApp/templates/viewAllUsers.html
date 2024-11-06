@@ -15,20 +15,15 @@ View all Projects
 {% endblock %}
 
 {% block content %}
-
 <div class = "">
   <form action="{{ url_for('viewAllProjects')}}" method="post" onsubmit="return validateForm()">
     <input type="text" name="s_Name" class = "inputText" placeholder="Search..."><br>
     <button type="submit" class="save">Search</button>
   </form>
   </div>
+{% for i in all_users %}
+<h3>{{ i.username}}</h4>
 
-{% for i in all_project %}
-<h3>{{ i.projectName }}</h3>
-<h4>{{ i.projectCode}}</h4>
-<td>
-  <br>
-  <a href="/generateNewCode/{{i.projectName}}">Generate New Code</a>
-</td>
+
 {% endfor %}
 {% endblock %}
