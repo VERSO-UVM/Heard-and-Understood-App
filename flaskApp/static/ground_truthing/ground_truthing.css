@@ -1,0 +1,60 @@
+.modalPopup {
+    display: none;
+    background-color:white;
+    width: 70vw;
+    height:50vh;
+    margin: 10%;
+    border-radius: 1%;
+    padding:5%;
+}
+
+.modalContent {
+    text-decoration: underline;
+    text-align: center;
+}
+.modalBackground {
+    position:fixed;
+    top:0;
+    left:0;
+    display: none;
+    background-color: rgba(0,0,0,.4);
+    width: 100%;
+    height: 100%;
+}
+
+section {
+    padding-bottom:5%;
+}
+
+button {
+    margin: .5%;
+}
+
+.containerDiv {
+  display: inline-block;
+  margin-left: 10vw;
+  margin-top: 5vw;
+}
+
+.containerDiv > section {
+  margin-top: 2vh;
+}
+
+.cardHeader {
+    text-decoration: underline;
+}
+
+.timeStamp {
+    width:40px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.transcriptText {
+    resize:none;
+}
+
+.saveButton {
+    margin-left: 40%;
+    width:15%;
+}
