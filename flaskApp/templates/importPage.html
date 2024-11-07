@@ -7,11 +7,20 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="justify-content-center">
+    <div class=" container justify-content-center mt-5">
         <h3>Upload Audio Files</h3>
-        <!-- <label for="files" class="btn">Select Image</label> -->
-        <input type="file" id="files" multiple="multiple"/><br />
-        <input type="submit" value="Upload" />
+        <form action="/upload_file" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="files" accept="audio/*" required /><br /><br />
+            <input type="submit" value="Upload" class="btn btn-primary"/>
+        </form>
+        <p id = 'status'></p>
     </div>
 </body>
 </html>
+
+<script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function() {
+        document.getElementById('status').innerText = 'successfully uploaded!';
+    });
+</script>
