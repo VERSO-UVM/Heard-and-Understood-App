@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Files</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class=" container justify-content-center mt-5">
+        <h3>Upload Audio Files</h3>
+        <form action="/upload_file" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="files" accept="audio/*" required /><br /><br />
+            <input type="submit" value="Upload" class="btn btn-primary"/>
+        </form>
+        <p id = 'status'></p>
+    </div>
+</body>
+</html>
+
+<script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function() {
+        document.getElementById('status').innerText = 'successfully uploaded!';
+    });
+</script>
