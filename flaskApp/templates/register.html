@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Login Form</title>
+    <title>Register</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -11,9 +11,9 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <h2 class="text-center">Sign In</h2>
+                <h2 class="text-center">Register</h2>
 
-                <!-- Flash message for invalid credentials -->
+                <!-- Flash message for successful or failed registration -->
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         <div class="alert alert-danger" role="alert">
@@ -22,7 +22,7 @@
                     {% endif %}
                 {% endwith %}
 
-                <form method="POST" action="/login">
+                <form method="POST" action="/register">
                     <!-- Email input -->
                     <div class="form-group">
                         <label for="formEmail">Email address</label>
@@ -36,12 +36,11 @@
                     </div>
 
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                    <button type="submit" class="btn btn-primary btn-block">Register</button>
 
-                    <!-- Forgot password and create account links -->
+                    <!-- Links to navigate to login page -->
                     <div class="d-flex justify-content-between mt-3">
-                        <a href="{{ url_for('forgot_password') }}">Forgot password?</a>
-                        <a href="{{ url_for('register') }}">Create Account</a>
+                        <a href="/">Already have an account? Sign in</a>
                     </div>
                 </form>
             </div>
