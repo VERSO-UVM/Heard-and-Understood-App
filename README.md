@@ -20,11 +20,11 @@ TBD
 
 ### Dependencies
 
-TBD
+- [Consert Install Guide](flaskApp/consert/CONSERT_INSTALLATION.md)
 
 ### Installing
 
-- [Consert Install Guide](flaskApp/consert/CONSERT_INSTALLATION.md)
+TBD
 
 ### Executing program
 
