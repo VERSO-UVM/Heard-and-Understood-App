@@ -16,7 +16,8 @@ The methods used in this package are based on the methods used in Matt et al. 20
 Matt et al. 2023: Matt, Jeremy E et al. “An Acoustical and Lexical Machine-Learning Pipeline to Identify Connectional Silences.” Journal of palliative medicine, 10.1089/jpm.2023.0087. 13 Jul. 2023, doi:10.1089/jpm.2023.0087
 
 ## Getting Started
-TBD
+
+Here is an installation guide [CONSERT_INSTALLION.MD](CONSERT_INSTALLION.MD)
 
 ### Dependencies
 
