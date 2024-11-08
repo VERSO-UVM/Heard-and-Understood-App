@@ -12,13 +12,21 @@ This section of the guide is meant for HUA contributors who have access to the C
 
 As of 10/24/2024 testing and implementation of CONSert has been done with CONDA environments running python 3.10.11. The linux/macos version of this package must be run on python 3.10 or earlier. 
 
-### Install Via pip
+### Pip Install Via Local Repository
 
 Start by cloning the repository from github into your desired directory and activating any desired virtual environment.
 If you are a owner/maintainer/developer you can install the packagage via pip install (path to cloned repo).
 
 ```
 pip install path/to/cloned/CONSert
+```
+
+### Pip Install Via Github Repository
+
+Alternatively the package can be installed without the original source code.
+
+```
+pip install git+https://github.com/Heard-and-Understood/CONSert.git
 ```
 
 ### The Models
@@ -56,10 +64,11 @@ This will downgrade the version of Whisper to the most recent compatable version
 
 ### Testing 
 
-You can verify the package's installation via
+You can verify the package's installation via:
 ````
  pip show consert
 ````
 
+Once consert has been installed update the path to media file in [Consert Test Script](consert_test_script.py) and give it a run. If consert is able to fully process it will create a summary png in the test_output directory.
 
 
