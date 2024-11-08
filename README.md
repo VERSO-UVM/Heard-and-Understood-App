@@ -24,7 +24,7 @@ TBD
 
 ### Installing
 
-TBD
+- [Consert Install Guide](flaskApp/consert/CONSERT_INSTALLATION.md)
 
 ### Executing program
 
