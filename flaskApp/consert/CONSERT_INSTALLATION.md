@@ -12,12 +12,9 @@ This section of the guide is meant for HUA contributors who have access to the C
 
 As of 10/24/2024 testing and implementation of CONSert has been done with CONDA environments running python 3.10.11. The linux/macos version of this package must be run on python 3.10 or earlier. 
 
-### Cloning the Repository
-
-Start by cloning the repository from github into your desired directory and activating any desired virtual environment.
-
 ### Install Via pip
 
+Start by cloning the repository from github into your desired directory and activating any desired virtual environment.
 If you are a owner/maintainer/developer you can install the packagage via pip install (path to cloned repo).
 
 ```
@@ -26,9 +23,9 @@ pip install path/to/cloned/CONSert
 
 ### The Models
 
-CONSert's pause detection requires several models to run: CNN, RF, and BERT. The paths to the models are specified in package.json which can be found here:
+CONSert's pause detection and classification requires several models to run: CNN, RF, and BERT. The paths to the models are specified in package.json which can be found in the root directory of the package:
 ```
-CONSERT/consert/package.json
+/consert/package.json
 ```
 and looks like this:
 
@@ -45,7 +42,7 @@ and looks like this:
 
 Update your model paths by replacaing: aboslute/path/to/ with the absolute path to the original code directory. When you're done, save the packages.json file.
 
-As of now the BERT models are too large to store in GitHub. The can be transferred as .tar compressed file using fileshare. Create a directory title BERT inside "absolute/path/to/original_code/models/ " and extract the tar file here.
+As of now we are not sure the best practice for storing these models in git. The can be transferred as .tar compressed file using fileshare. Create a directory title BERT inside "absolute/path/to/original_code/models/ " and extract the tar file here.
 
 ### Whisper AI Transcription
 
@@ -59,10 +56,10 @@ This will downgrade the version of Whisper to the most recent compatable version
 
 ### Testing 
 
-The CONSert repository now has a test_script.py file. Update the media_file fiel to have the correct path to your mp3 or wav. Similarly update the audio format field to the correct file type. 
-
+You can verify the package's installation via
 ````
-media_file = 'path/to/test/file.wav'
-
-audio_file_format = 'wav'
+ pip show consert
 ````
+
+
+
