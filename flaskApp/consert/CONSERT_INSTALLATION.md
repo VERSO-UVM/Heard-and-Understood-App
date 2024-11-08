@@ -8,7 +8,7 @@ Read more here: https://github.com/Heard-and-Understood/CONSert
 
 ## Installing the CONSert Package
 
-This section of the guide is meant for HUA contributors who have access to the CONSert repository. The installation guide there has inaccuracies and can be streamlined for HUA contributors. 
+This section of the guide is meant for HUA contributors who have access to the CONSert repository.  
 
 As of 10/24/2024 testing and implementation of CONSert has been done with CONDA environments running python 3.10.11. The linux/macos version of this package must be run on python 3.10 or earlier. 
 
