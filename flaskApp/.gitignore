@@ -4,3 +4,4 @@ firebase/serviceAccountKey.json
 __pycache__/
 *.pyc
 *.log
+email_credentials.py
