@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, flash, json
 import firebase_admin
 from firebase_admin import credentials, firestore
-import bcrypt
+import bcrypt, secrets
 from firebase.config import Config
 from db_utils import upload_file_to_db, connect_to_database
 
@@ -60,6 +60,22 @@ def register():
 @app.route('/forgot_password')
 def forgot_password():
     return render_template('forgot_password.html')
+
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        user_ref = db.collection('users').document(email)
+        if user_ref.get().exists:
+            verificationSecret = secrets.token_hex(3)
+            #send email
+            return render_template('reset_password.html', verificationSecret = verificationSecret)
+        else:
+            flash("No account with this email exists.", "danger")
+            return redirect(url_for('forgot_password'))
+            
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
