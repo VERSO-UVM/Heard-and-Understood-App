@@ -4,6 +4,8 @@ from firebase_admin import credentials, firestore
 import bcrypt
 from firebase.config import Config
 from db_utils import upload_file_to_db, connect_to_database
+from flask_mail import Mail, Message
+import email_credentials
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -21,6 +23,15 @@ def initialize_firebase():
 
 initialize_firebase()
 db = firestore.client()
+
+# Configure Flask-Mail email settings
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP email server 
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = email_credentials.hua_email
+app.config['MAIL_PASSWORD'] = email_credentials.hua_password
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+mail = Mail(app)
 
 
 @app.route("/")
@@ -50,7 +61,7 @@ def register():
                 'email': email,
                 'password': hashed_password.decode('utf-8')
             })
-            return redirect(url_for('homepage'))
+            return redirect(url_for('homepage', email=email))
 
         except Exception as e:
             flash(f"An error occurred: {str(e)}", "danger")
@@ -60,6 +71,42 @@ def register():
 @app.route('/forgot_password')
 def forgot_password():
     return render_template('forgot_password.html')
+
+@app.route('/pi_access_request', methods=['GET', 'POST'])
+def pi_access_request():
+    name = request.form.get('name')
+    email = request.form.get('email')
+    institution = request.form.get('institution')
+    if request.method == 'POST':
+        try:
+            # Add request to HUA firebase
+            requests_ref = db.collection('request')
+            requests_doc = requests_ref.add({"username":email})
+
+            # Send email
+            recipients = email_credentials.recipients
+
+            emailMessage = Message("Request for PI Access", sender=email,recipients=recipients)
+            emailMessage.body = f"Hello Bob and Donna,\n\n {name} is requesting admin access. {name} is from {institution} and reachable at {email}.\n\n You will find their request on the View Requests for Access page in the Heard and Understood App."
+            mail.send(emailMessage)
+            print('email sent successfully!')
+        except Exception as e:
+            print('problem sending email')
+            print(e)
+
+        return redirect(url_for('homepage'))
+    return render_template('pi_access_request.html')
+
+@app.route('/pre_approved_access_code', methods=['GET', 'POST'])
+def pre_approved_access_code():
+    access_code = request.form.get('PIAccessCode')
+    if request.method == 'POST':
+        try:
+            print(f"pre-approved code {access_code} entered")
+        except:
+            print("issue with pre-approved code")
+        return redirect(url_for('homepage'))
+    return render_template('pre_approved_access_code.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -78,7 +125,7 @@ def login():
 
                 # Check if the password matches
                 if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password.encode('utf-8')):
-                    return redirect(url_for('homepage'))
+                    return redirect(url_for('homepage', email=email))
                 else:
                     flash("Invalid password", "danger")
                     return redirect(url_for('login'))
@@ -95,6 +142,10 @@ def login():
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
+
+@app.route("/ground_truthing")
+def ground_truthing():
+    return render_template("ground_truthing.html")
 
 @app.route("/homepage")
 def homepage():
@@ -139,3 +190,4 @@ def view_files():
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5001, threaded=False)
+
