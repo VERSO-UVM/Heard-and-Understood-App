@@ -6,6 +6,7 @@ from firebase.config import Config
 from db_utils import upload_file_to_db, connect_to_database
 from flask_mail import Mail, Message
 import email_credentials
+from datetime import datetime, timedelta, timezone
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -108,29 +109,133 @@ def pre_approved_access_code():
         return redirect(url_for('homepage'))
     return render_template('pre_approved_access_code.html')
 
-
 @app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
     if request.method == 'POST':
-        email = request.form.get('email')
+        email = request.form.get('email').strip().lower()
         user_ref = db.collection('users').document(email)
-        if user_ref.get().exists:
-            verificationSecret = secrets.token_hex(3)
-            #send email
-            return render_template('reset_password.html', verificationSecret = verificationSecret)
+        user_doc = user_ref.get()
+        
+        if user_doc.exists:
+            verification_secret = secrets.token_hex(3)
+            expiration_time = datetime.now(timezone.utc) + timedelta(minutes=15)
+
+            
+            user_ref.update({
+                'verification_code': verification_secret,
+                'verification_expiry': expiration_time
+            })
+            
+            subject = "HUA Password Reset"
+            body = f"""Hi,
+
+You recently requested a password reset for HUA. Your verification code is below.
+
+{verification_secret}
+
+This code will expire in 15 minutes.
+
+If you didn't request a password reset, you can safely disregard this email.
+
+This account is not monitored, please do not reply to this email.
+"""
+            try:
+                msg = Message(subject, sender="Huaverso@gmail.com", recipients=[email], body=body)
+                mail.send(msg)
+                
+                flash("A verification code has been sent to your email.", "success")
+                return redirect(url_for('enter_code', email=email))
+            except Exception:
+                flash("Failed to send verification email. Please try again later.", "danger")
+                return redirect(url_for('reset_password'))
         else:
             flash("No account with this email exists.", "danger")
-            return redirect(url_for('forgot_password'))
-            
+            return redirect(url_for('reset_password'))
+    
+    return render_template('reset_password.html')
+
+@app.route('/enter_code', methods=['GET', 'POST'])
+def enter_code():
+    email = request.args.get('email')
+    if not email:
+        flash("Invalid request.", "danger")
+        return redirect(url_for('reset_password'))
+    
+    if request.method == 'POST':
+        entered_code = request.form.get('verification_code').strip()
+        user_ref = db.collection('users').document(email)
+        user_doc = user_ref.get()
+        
+        if not user_doc.exists:
+            flash("Invalid request.", "danger")
+            return redirect(url_for('reset_password'))
+        
+        stored_code = user_doc.to_dict().get('verification_code')
+        expiry_time = user_doc.to_dict().get('verification_expiry')
+        
+        if not stored_code or not expiry_time:
+            flash("No verification code found. Please initiate the password reset again.", "danger")
+            return redirect(url_for('reset_password'))
+
+        if entered_code != stored_code:
+            flash("Invalid verification code.", "danger")
+            return redirect(url_for('enter_code', email=email))
+        
+        if datetime.now(timezone.utc) > expiry_time:
+            flash("The verification code has expired. Please request a new one.", "danger")
+            user_ref.update({
+                'verification_code': firestore.DELETE_FIELD,
+                'verification_expiry': firestore.DELETE_FIELD
+            })
+            return redirect(url_for('reset_password'))
+        
+        return redirect(url_for('new_password', email=email))
+    
+    return render_template('enter_code.html', email=email)
+
+@app.route('/new_password', methods=['GET', 'POST'])
+def new_password():
+    email = request.args.get('email')
+    if not email:
+        flash("Invalid request.", "danger")
+        return redirect(url_for('reset_password'))
+    
+    if request.method == 'POST':
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+        
+        if new_password != confirm_password:
+            flash("Passwords do not match.", "danger")
+            return redirect(url_for('new_password', email=email))
+        
+        if len(new_password) < 6:
+            flash("Password must be at least 6 characters long.", "danger")
+            return redirect(url_for('new_password', email=email))
+        
+        # Hash the new password and decode to store as string
+        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        user_ref = db.collection('users').document(email)
+        user_ref.update({'password': hashed_password})
+        
+        user_ref.update({
+            'verification_code': firestore.DELETE_FIELD,
+            'verification_expiry': firestore.DELETE_FIELD
+        })
+        
+        flash("Your password has been successfully reset. You can now log in.", "success")
+        return redirect(url_for('home'))
+    
+    return render_template('new_password.html', email=email)
+
 
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    email = request.form.get('email')
-    password = request.form.get('password')
-
     if request.method == 'POST':
+        print("Form Data:", request.form)
+        email = request.form.get('email')
+        password = request.form.get('password')
         try:
             # Retrieve user data from Firestore
             user_ref = db.collection('users').document(email)
@@ -139,11 +244,21 @@ def login():
             if user_doc.exists:
                 stored_hashed_password = user_doc.to_dict().get('password')
 
-                # Check if the password matches
-                if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password.encode('utf-8')):
-                    return redirect(url_for('homepage', email=email))
+                # Ensure the stored hashed password exists
+                if stored_hashed_password:
+                    # Encode the stored hashed password to bytes
+                    stored_hashed_password_bytes = stored_hashed_password.encode('utf-8')
+
+                    # Check if the password matches
+                    if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password_bytes):
+                        flash("Logged in successfully.", "success")
+                        return redirect(url_for('homepage', email=email))
+                    else:
+                        flash("Invalid password", "danger")
+                        return redirect(url_for('login'))
+
                 else:
-                    flash("Invalid password", "danger")
+                    flash("Password not set for this account.", "danger")
                     return redirect(url_for('login'))
             else:
                 flash("User not found", "danger")
@@ -152,8 +267,10 @@ def login():
         except Exception as e:
             flash(f"An error occurred: {str(e)}", "danger")
             return redirect(url_for('login'))
-    if request.method == "GET":
-        return render_template('login.html')
+    
+    # Handle GET requests
+    return render_template('login.html')
+
 
 @app.route("/dashboard")
 def dashboard():
