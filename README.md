@@ -20,7 +20,7 @@ TBD
 
 ### Dependencies
 
-TBD
+- [Consert Install Guide](flaskApp/consert/CONSERT_INSTALLATION.md)
 
 ### Installing
 
