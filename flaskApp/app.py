@@ -271,6 +271,90 @@ def login():
     # Handle GET requests
     return render_template('login.html')
 
+@app.route("/change-profile", methods=['GET', 'POST'])
+def change_profile():
+    if request.method == 'POST':
+        name = request.form.get("name")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        # TODO: How are passwords handled?
+        # TODO: Replace values stored in database
+        # TODO: maybe show static values, prompt for current password
+        # TODO: once they enter current pass, allow them to see text fields and update data that
+        # TODO: is then stored in database
+        # try:
+        #     # Retrieve user data from Firestore
+        #     user_ref = db.collection('users').document(email)
+        #     user_doc = user_ref.get()
+
+        #     if user_doc.exists:
+        #         stored_hashed_password = user_doc.to_dict().get('password')
+
+        #         # Ensure the stored hashed password exists
+        #         if stored_hashed_password:
+        #             # Encode the stored hashed password to bytes
+        #             stored_hashed_password_bytes = stored_hashed_password.encode('utf-8')
+
+        #             # Check if the password matches
+        #             if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password_bytes):
+        #                 flash("Logged in successfully.", "success")
+        #                 # TODO: This should redirect to the profile info to make changes
+        #                 return redirect(url_for('homepage', email=email))
+        #             else:
+        #                 flash("Invalid password", "danger")
+        #                 return redirect(url_for('login'))
+
+        #         else:
+        #             flash("Password not set for this account.", "danger")
+        #             return redirect(url_for('login'))
+        #     else:
+        #         flash("User not found", "danger")
+        #         return redirect(url_for('login'))
+
+        # except Exception as e:
+        #     flash(f"An error occurred: {str(e)}", "danger")
+        #     return redirect(url_for('login'))
+
+    return render_template("change-profile.html")
+
+def validate_password(password):
+    try:
+        # Retrieve user data from Firestore
+        user_ref = db.collection('users').document("fwalberg@uvm.edu")
+        user_doc = user_ref.get()
+
+        if user_doc.exists:
+            stored_hashed_password = user_doc.to_dict().get('password')
+
+            # Ensure the stored hashed password exists
+            if stored_hashed_password:
+                # Encode the stored hashed password to bytes
+                stored_hashed_password_bytes = stored_hashed_password.encode('utf-8')
+
+                # Check if the password matches
+                if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password_bytes):
+                    flash("Logged in successfully.", "success")
+                    # TODO: This should redirect to the profile info to make changes
+                    return redirect(url_for('change-password'))
+                else:
+                    flash("Invalid password", "danger")
+                    return redirect(url_for('login'))
+
+            else:
+                flash("Password not set for this account.", "danger")
+                return redirect(url_for('login'))
+        else:
+            flash("User not found", "danger")
+            return redirect(url_for('login'))
+
+    except Exception as e:
+        flash(f"An error occurred: {str(e)}", "danger")
+        return redirect(url_for('login'))
+
+
+@app.route("/profile", methods=["POST", "GET"])
+def profile():
+    return render_template("profile.html")
 
 @app.route("/dashboard")
 def dashboard():
