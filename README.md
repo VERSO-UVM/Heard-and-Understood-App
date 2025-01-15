@@ -1,5 +1,7 @@
 # Heard-and-Understood-App
 
+[![DOI](https://zenodo.org/badge/851837059.svg)](https://doi.org/10.5281/zenodo.14649131)
+
 The Heard and Understood App provides a way to explore and classify silence and gaps in conversations.
 
 ## Description
