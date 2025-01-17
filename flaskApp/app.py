@@ -1,3 +1,5 @@
+# Commented email_credentials until bug resolved 
+
 from flask import Flask, render_template, request, redirect, url_for, jsonify, flash, json
 import firebase_admin
 from firebase_admin import credentials, firestore
@@ -5,7 +7,7 @@ import bcrypt, secrets
 from firebase.config import Config
 from db_utils import upload_file_to_db, connect_to_database
 from flask_mail import Mail, Message
-import email_credentials
+#import email_credentials
 from datetime import datetime, timedelta, timezone
 
 app = Flask(__name__)
@@ -28,8 +30,8 @@ db = firestore.client()
 # Configure Flask-Mail email settings
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP email server 
 app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = email_credentials.hua_email
-app.config['MAIL_PASSWORD'] = email_credentials.hua_password
+#app.config['MAIL_USERNAME'] = email_credentials.hua_email
+#app.config['MAIL_PASSWORD'] = email_credentials.hua_password
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
@@ -85,7 +87,7 @@ def pi_access_request():
             requests_doc = requests_ref.add({"username":email})
 
             # Send email
-            recipients = email_credentials.recipients
+            #recipients = email_credentials.recipients
 
             emailMessage = Message("Request for PI Access", sender=email,recipients=recipients)
             emailMessage.body = f"Hello Bob and Donna,\n\n {name} is requesting admin access. {name} is from {institution} and reachable at {email}.\n\n You will find their request on the View Requests for Access page in the Heard and Understood App."
