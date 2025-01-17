@@ -10,7 +10,7 @@ body {
 img {
     display: block;
     margin: auto;
-    margin-top: 5%;
+    margin-top: 3%;
     max-width: 85%;
     height: auto;
 }
@@ -25,6 +25,7 @@ img {
 /* Sign In Header */
 .sign-in {
     margin-bottom: 5%;
+    text-decoration: underline;
 }
 
 /* Sign In Button */
@@ -34,4 +35,9 @@ img {
     border-radius: 10px;
     background-color: black;
     border-color: black;
+}
+
+/* Underline Links */
+a {
+    text-decoration: underline;
 }
