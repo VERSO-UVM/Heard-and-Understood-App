@@ -9,8 +9,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Login Style Sheet-->
-    <link href="/static/styles/login.css" rel="stylesheet">
+    <!-- General Style Sheet-->
+    <link href="/static/styles/style.css" rel="stylesheet">
 
 </head>
 <body>
@@ -23,7 +23,7 @@
 
                 <div class="border-login rounded p-4"> 
 
-                    <h2 class="text-center sign-in">Sign In</h2>
+                    <h2 class="text-center header-style">Sign In</h2>
                 <!-- Flash message for invalid credentials -->
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
