@@ -1,6 +1,6 @@
 /* General body styling */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     background-color: white; 
     margin: 0;
     padding: 0;
@@ -20,4 +20,18 @@ img {
     border-color: black; 
     border-width: 2px;
     border-style: solid;
+}
+
+/* Sign In Header */
+.sign-in {
+    margin-bottom: 5%;
+}
+
+/* Sign In Button */
+.btn {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 10px;
+    background-color: black;
+    border-color: black;
 }
