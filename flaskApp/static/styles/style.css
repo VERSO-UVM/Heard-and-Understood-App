@@ -1,0 +1,49 @@
+/* General body styling */
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: white; 
+    margin: 0;
+    padding: 0;
+}
+
+/* Logo styling */
+img {
+    display: block;
+    margin: auto;
+    margin-top: 3%;
+    max-width: 85%;
+    height: auto;
+}
+
+/* Login Border */
+.border-login {
+    border-color: black; 
+    border-width: 2px;
+    border-style: solid;
+}
+
+/* Sign In Header */
+.header-style {
+    margin-bottom: 5%;
+    text-decoration: underline;
+}
+
+/* Button Style */
+.btn {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 10px;
+    background-color: black;
+    border-color: black;
+    font-size: medium;
+}
+
+/* Hover Button Style */
+.btn:hover {
+    background-color: #1d63d1;
+}
+
+/* Underline Links */
+a {
+    text-decoration: underline;
+}
