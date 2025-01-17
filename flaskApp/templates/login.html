@@ -20,9 +20,10 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h2 class="text-center sign-in">Sign In</h2>
 
                 <div class="border-login rounded p-4"> 
+
+                    <h2 class="text-center sign-in">Sign In</h2>
                 <!-- Flash message for invalid credentials -->
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
@@ -41,8 +42,8 @@
                 <form method="POST" action="/login">
                     <!-- Email input -->
                     <div class="form-group">
-                        <label for="formEmail">Email Address</label>
-                        <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email" required>
+                        <label for="formEmail">Email</label>
+                        <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email address" required>
                     </div>
                     
                     <!-- Password input -->
@@ -58,6 +59,8 @@
                     <div class="d-flex justify-content-between mt-3">
                         <a href="{{ url_for('forgot_password') }}">Forgot password?</a>
                         <a href="{{ url_for('register') }}">Create Account</a>
+                        <!-- PI Access Link Placeholder -->
+                        <p>Request PI Access</p>
                     </div>
                 </form>
             </div>
