@@ -1,0 +1,23 @@
+/* General body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: white; 
+    margin: 0;
+    padding: 0;
+}
+
+/* Logo styling */
+img {
+    display: block;
+    margin: auto;
+    margin-top: 5%;
+    max-width: 85%;
+    height: auto;
+}
+
+/* Login Border */
+.border-login {
+    border-color: black; 
+    border-width: 2px;
+    border-style: solid;
+}
