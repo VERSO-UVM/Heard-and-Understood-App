@@ -41,13 +41,16 @@ TBD
 * Adrien Monks
 * Tucker  Schulz 
 * Felix Walberg
+* Grace Kinney (Designer/UX)
 
 ### Spring 2025
-* Fernanda De Oliveira Girelli (Team Lead)Johnna  Schulz
+* Fernanda De Oliveira Girelli (Team Lead)
+* Johnna  Schulz
 * Tucker  Schulz 
 * Shiloh Chiu
 * Aurelia Kornheiser
-* 
+* Grace Kinney (Designer/UX)
+  
 ## Version History
 
 TBD
