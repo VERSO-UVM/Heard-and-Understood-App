@@ -6,12 +6,20 @@
     <title>Register</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- General Style Sheet-->
+    <link href="/static/styles/style.css" rel="stylesheet">
+
 </head>
 <body>
+    <!-- HUA Logo -->
+    <img src="/static/images/HUA-logo.png" alt="HUA Logo"/>
+
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-4">
-                <h2 class="text-center">Register</h2>
+            <div class="col-md-6">
+                <div class="border-login rounded p-4">
+                <h2 class="text-center header-style">Create Account</h2>
 
                 <!-- Flash message for successful or failed registration -->
                 {% with messages = get_flashed_messages() %}
@@ -25,27 +33,28 @@
                 <form method="POST" action="/register">
                     <!-- Email input -->
                     <div class="form-group">
-                        <label for="formEmail">Email address</label>
-                        <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email" required>
+                        <label for="formEmail">Email</label>
+                        <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email address" required>
                     </div>
                     
                     <!-- Password input -->
                     <div class="form-group">
                         <label for="formPassword">Password</label>
-                        <input type="password" id="formPassword" name="password" class="form-control" placeholder="Password" required>
+                        <input type="password" id="formPassword" name="password" class="form-control" placeholder="Enter password" required>
                     </div>
 
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    <button type="submit" class="btn btn-primary btn-block">Create Account</button>
 
                     <!-- Links to navigate to login page -->
                     <div class="d-flex justify-content-between mt-3">
-                        <a href="/">Already have an account? Sign in</a>
+                        <a href="/" class="mx-auto">Already have an account? Sign in</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
