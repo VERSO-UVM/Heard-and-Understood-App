@@ -1,6 +1,7 @@
+/* Note: use rem for font sizes and percentages for 
+    general sizing to aid in responsive design. */
+
 h1 {
-    /* Note: use rem for font sizes and percentages for 
-            general sizing to aid in responsive design. */
     font-size: 2rem;
     font-weight: bold;
 }
@@ -15,15 +16,19 @@ h3 {
     border: 0.2rem dashed #ccc;
     padding: 5%;
     width: 35%;
-    height: 15rem;
     text-align: center;
     border-radius: 1.25rem;
     font-size: 1.25rem;
     margin-top: 10%;
     cursor: pointer;
 }
+
 .modal-button:hover{
-    background-color: #f4f4f9;
+    background-color: #e6effc;
+}
+
+.modal-button h3 {
+    font-weight: normal;
 }
 
 /* Styling for Entering Access Code Pop-up */
@@ -40,7 +45,7 @@ h3 {
    
 .modal-content {
     background-color: white;
-    margin: 20% auto;
+    margin: 16% auto;
     border: 0.1rem solid #888;
     width: 30%;
     height: 30%;
@@ -71,9 +76,7 @@ h3 {
     border-color: #1679EF;
     font-weight: bold;
     width: 30%;
-    /*
-    height: 20%;
-    text-align: center; */
+    color: black;
 }
 
 /* Styling for Header in Access Code Popup */
@@ -102,4 +105,10 @@ h3 {
     font-weight: 1rem;
     cursor: pointer;
     color: black;
+}
+
+/* Styling for Add Icon */
+.add-icon{
+    width: 20%;
+    margin-bottom: 1.5rem;
 }
