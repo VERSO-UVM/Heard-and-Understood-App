@@ -17,17 +17,23 @@
 </head>
 <body>
     <h1>Welcome, User!</h1>
-    <h3>To access your dashboard and be able to upload audio files, you need to input to your institution's access code</h3>
+    <h3>Enter a project access code to view the project’s dashboard and upload audio files. </h3>
     <!-- Centers access button -->
     <div class="d-flex justify-content-center align-items-center">
     <div class="modal-button" id="openModal">Click Here to Enter Project Access Code</div>
     </div>
     <div id="access-code-modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Enter Access Code</h3>
-            <input type="text" id="accessCode" placeholder="Enter Access Code">
-            <button class="submit-btn" id="submitCode">Submit</button>
+            <div class="modal-header">
+                <h3>Enter Project Access Code</h3>
+                <div class="close">&times;</div>
+            </div>
+            <div class="main-content">
+                <p>You must have an access code to add a project to your profile.</p>
+                <input type="text" id="accessCode"class="input" placeholder="Enter access code">
+                <button class="submit" id="submitCode">Register</button>
+                <!-- Add cancel button -->
+            </div>
         </div>
     </div>
     <div>
