@@ -38,6 +38,28 @@ body {
     font-size: medium;
 }
 
+/* View Password Toggle Button */
+.view-btn {
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border: 1px solid #ced4da;
+    box-shadow: none;
+}
+
+.view-btn:hover {
+    background-color: #a9cafc;
+}
+
+/* Remove Toggle Button Border 
+and Outline When Clicked */
+.view-btn:focus, 
+.view-btn:active {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 /* Hover Button Style */
 .btn:hover {
     background-color: #1d63d1;
