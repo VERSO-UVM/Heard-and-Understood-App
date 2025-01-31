@@ -10,6 +10,9 @@
     <!-- General Style Sheet-->
     <link href="/static/styles/style.css" rel="stylesheet">
 
+    <!-- Font Awesome Link for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </head>
 <body>
     <!-- HUA Logo -->
@@ -37,10 +40,17 @@
                         <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email address" required>
                     </div>
                     
-                    <!-- Password input -->
+                    <!-- Password input with toggle -->
                     <div class="form-group">
                         <label for="formPassword">Password</label>
-                        <input type="password" id="formPassword" name="password" class="form-control" placeholder="Enter password" required>
+                        <div class="input-group">
+                            <input type="password" id="formPassword" name="password" class="form-control" placeholder="Enter password" required>
+                            <div class="input-group-append">
+                                <button type="button" class="view-btn" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Submit button -->
@@ -60,5 +70,16 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Toggle Password  -->
+    <script src="/static/js/togglePassword.js"></script>
+
+    <!-- Initialize Toggle Password function -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            setupPasswordToggle("togglePassword", "formPassword");
+        });
+    </script>
+
 </body>
 </html>
