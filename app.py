@@ -24,6 +24,7 @@ Bootstrap(app)
 ##Information from logged in user
 statusFlag="User"
 StatusEmail=""
+StatusName=""
 
 
 ##Firebase Connection
@@ -87,6 +88,8 @@ def register():
 
             global StatusEmail
             StatusEmail=email
+            global StatusName
+            StatusName=name
             return redirect(url_for('homepage', email=email))
 
         except Exception as e:
@@ -311,6 +314,7 @@ def new_password():
 
 @app.route('/logout')
 def logout():
+    
     return url_for('login')
 
 
@@ -334,14 +338,19 @@ def change_profile():
         name = request.form.get("name")
         email = request.form.get("email")
         password = request.form.get("password")
+        hashed_password = bcrypt.hashpw(
+            password.encode('utf-8'), bcrypt.gensalt())
         
-       
+        user_ref=db.collection("users").document(StatusEmail)
+        user_ref.update({"email":email,"name":name,"password":hashed_password})
+
     if statusFlag=="User":
-        return render_template("UserView/change-profile.html",email=StatusEmail)
+        return render_template("UserView/change-profile.html",email=StatusEmail,name=StatusName)
     elif statusFlag=="PI":
-        return render_template("PIView/change-profile.html",email=StatusEmail)
+        return render_template("PIView/change-profile.html",email=StatusEmail,name=StatusName)
     else:
-        return render_template("AdminView/change-profile.html",email=StatusEmail)
+        return render_template("AdminView/change-profile.html",email=StatusEmail,name=StatusName)
+    
 
  
 
@@ -363,8 +372,13 @@ def dashboard():
     
 @app.route("/ground_truthing")
 def ground_truthing():
-    return render_template("ground_truthing.html")
-
+    if(statusFlag=="User"):
+        return render_template("UserView/ground_truthing.html")
+        
+    elif(statusFlag=="PI"):
+        return render_template("PIView/ground_truthing.html")
+    else:
+        return render_template("AdminView/ground_truthing.html")
 @app.route("/import")
 def upload():
     if (statusFlag=="User"):
