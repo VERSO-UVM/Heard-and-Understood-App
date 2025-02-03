@@ -1,5 +1,7 @@
 # Heard-and-Understood-App
 
+[![DOI](https://zenodo.org/badge/851837059.svg)](https://doi.org/10.5281/zenodo.14649131)
+
 The Heard and Understood App provides a way to explore and classify silence and gaps in conversations.
 
 ## Description
@@ -31,14 +33,24 @@ TBD
 TBD
 ## Help
 
-## Authors
+## Team
 
+### Fall 2024
 * Fernanda De Oliveira Girelli (Team Lead)
 * Johnna  Schulz
 * Adrien Monks
 * Tucker  Schulz 
-* Felix Walberg 
+* Felix Walberg
+* Grace Kinney (Designer/UX)
 
+### Spring 2025
+* Fernanda De Oliveira Girelli (Team Lead)
+* Johnna  Schulz
+* Tucker  Schulz 
+* Shiloh Chiu
+* Aurelia Kornheiser
+* Grace Kinney (Designer/UX)
+  
 ## Version History
 
 TBD
@@ -48,4 +60,4 @@ TBD
 This project is licensed under the Apache 2.0 License - see the LICENSE.md file for details
 
 ## Acknowledgments
-This project would not be possible without Robert "Bob" Gramling, MD and Donna Rizzo and the work by the Vermont Conversation Lab at the University of Vermont (UVM)
+This project would not be possible without Robert "Bob" Gramling, MD and Donna Rizzo and the work by the [Vermont Conversation Lab](https://vermontconversationlab.com/) at the University of Vermont (UVM) and funding through the [EpsCor SOCKS](https://www.uvm.edu/socks/#about) grant.
