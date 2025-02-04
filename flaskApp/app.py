@@ -3,6 +3,15 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import bcrypt, secrets
 from firebase.config import Config
+from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from database import db,create_database,User,Projects,Involvement,groundTruthing
+import sqlite3 
+import secrets
+import datetime
+from google.cloud.firestore_v1.base_query import FieldFilter
+
 from db_utils import upload_file_to_db, connect_to_database
 from flask_mail import Mail, Message
 #import email_credentials
@@ -10,8 +19,15 @@ from datetime import datetime, timedelta, timezone
 
 app = Flask(__name__)
 app.config.from_object(Config)
+Bootstrap(app)
+
+##Information from logged in user
+statusFlag="User"
+StatusEmail=""
+StatusName=""
 
 
+##Firebase Connection
 with open('firebase/serviceAccountKey.json') as f:
     service_account = json.load(f)
     app.secret_key = service_account.get("secret_key")
@@ -21,9 +37,10 @@ def initialize_firebase():
     cred = credentials.Certificate('firebase/serviceAccountKey.json')
     firebase_admin.initialize_app(cred)
 
-
 initialize_firebase()
 db = firestore.client()
+######################
+
 
 # Configure Flask-Mail email settings
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP email server 
@@ -35,10 +52,10 @@ app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
 
 
+###Login/Register Pages################################################
 @app.route("/")
 def home():
     return render_template('login.html')
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -47,6 +64,8 @@ def register():
     else:
         email = request.form.get('email')
         password = request.form.get('password')
+        Institute=request.form.get('Institute')
+        name=request.form.get('name')
 
         hashed_password = bcrypt.hashpw(
             password.encode('utf-8'), bcrypt.gensalt())
@@ -60,22 +79,26 @@ def register():
 
             user_ref.set({
                 'email': email,
-                'password': hashed_password.decode('utf-8')
+                'password': hashed_password.decode('utf-8'),
+                'status':'User',
+                'name':name,
+                'Institute':Institute,
+                'projects':[]
             })
+
+            global StatusEmail
+            StatusEmail=email
+            global StatusName
+            StatusName=name
             return redirect(url_for('homepage', email=email))
 
         except Exception as e:
             flash(f"An error occurred: {str(e)}", "danger")
             return redirect(url_for('register'))
 
-
 @app.route('/forgot_password')
 def forgot_password():
     return render_template('forgot_password.html')
-
-@app.route('/contact')
-def contact():
-    return render_template('contact-admin.html')
 
 @app.route('/pi_access_request', methods=['GET', 'POST'])
 def pi_access_request():
@@ -197,6 +220,65 @@ def enter_code():
     
     return render_template('enter_code.html', email=email)
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        print("Form Data:", request.form)
+        email = request.form.get('email')
+        password = request.form.get('password')
+        try:
+            # Retrieve user data from Firestore
+            user_ref = db.collection('users').document(email)
+            user_doc = user_ref.get()
+
+            if user_doc.exists:
+                stored_hashed_password = user_doc.to_dict().get('password')
+
+                # Ensure the stored hashed password exists
+                if stored_hashed_password:
+                    # Encode the stored hashed password to bytes
+                    stored_hashed_password_bytes = stored_hashed_password.encode('utf-8')
+
+               
+
+                # Check if the password matches
+                if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password.encode('utf-8')):
+                    global statusFlag 
+                    statusFlag = user_doc.to_dict().get('status')
+                    global StatusEmail
+                    StatusEmail=email
+                    return redirect(url_for('homepage', email=email))
+                else:
+                    flash("Invalid password", "danger")
+                    return redirect(url_for('login'))
+            else:
+                flash("User not found", "danger")
+                return redirect(url_for('login'))
+
+        except Exception as e:
+            flash(f"An error occurred: {str(e)}", "danger")
+            return redirect(url_for('login'))
+    
+    # Handle GET requests
+    return render_template('login.html')
+############################################################################
+
+##############Dashboard###########
+@app.route("/homepage")
+def homepage():
+    global StatusEmail
+    user_Ref=db.collection("users").document(StatusEmail)
+    user_Coll=user_Ref.get()
+    project_Coll=user_Coll.get("projects")
+   
+    print(statusFlag)
+    if statusFlag=="Admin":
+        return render_template('AdminView/homeAdmin.html',projects=project_Coll)
+    elif statusFlag=="PI":
+        return render_template('PIView/homePI.html',projects=project_Coll)
+    else:
+        return render_template('UserView/homeUser.html',projects=project_Coll)
+
 @app.route('/new_password', methods=['GET', 'POST'])
 def new_password():
     email = request.args.get('email')
@@ -231,66 +313,81 @@ def new_password():
     
     return render_template('new_password.html', email=email)
 
-
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        print("Form Data:", request.form)
-        email = request.form.get('email')
-        password = request.form.get('password')
-        try:
-            # Retrieve user data from Firestore
-            user_ref = db.collection('users').document(email)
-            user_doc = user_ref.get()
-
-            if user_doc.exists:
-                stored_hashed_password = user_doc.to_dict().get('password')
-
-                # Ensure the stored hashed password exists
-                if stored_hashed_password:
-                    # Encode the stored hashed password to bytes
-                    stored_hashed_password_bytes = stored_hashed_password.encode('utf-8')
-
-                    # Check if the password matches
-                    if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password_bytes):
-                        flash("Logged in successfully.", "success")
-                        return redirect(url_for('homepage', email=email))
-                    else:
-                        flash("Invalid password", "danger")
-                        return redirect(url_for('login'))
-
-                else:
-                    flash("Password not set for this account.", "danger")
-                    return redirect(url_for('login'))
-            else:
-                flash("User not found", "danger")
-                return redirect(url_for('login'))
-
-        except Exception as e:
-            flash(f"An error occurred: {str(e)}", "danger")
-            return redirect(url_for('login'))
+@app.route('/logout')
+def logout():
     
-    # Handle GET requests
-    return render_template('login.html')
+    return url_for('login')
 
+
+@app.route('/contact')
+def contact():
+    return render_template('PIView/contact-admin.html')
+
+@app.route("/profile", methods=["POST", "GET"])
+def profile():
+    global StatusEmail
+    if statusFlag=="User":
+        return render_template("UserView/UserProfile.html",email=StatusEmail)
+    elif statusFlag=="PI":
+        return render_template("PIView/PIProfile.html",email=StatusEmail)
+    else:
+        return render_template("AdminView/AdminProfile.html",email=StatusEmail)
+
+@app.route("/change-profile", methods=['GET', 'POST'])
+def change_profile():
+    if request.method == 'POST':
+        name = request.form.get("name")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        hashed_password = bcrypt.hashpw(
+            password.encode('utf-8'), bcrypt.gensalt())
+        
+        user_ref=db.collection("users").document(StatusEmail)
+        user_ref.update({"email":email,"name":name,"password":hashed_password})
+
+    if statusFlag=="User":
+        return render_template("UserView/change-profile.html",email=StatusEmail,name=StatusName)
+    elif statusFlag=="PI":
+        return render_template("PIView/change-profile.html",email=StatusEmail,name=StatusName)
+    else:
+        return render_template("AdminView/change-profile.html",email=StatusEmail,name=StatusName)
+    
+
+ 
+
+
+#############################
+
+
+###################################Project views######################
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
-
+    if(statusFlag=="User"):
+        return render_template("UserView/dashboardUser.html")
+        
+    elif(statusFlag=="PI"):
+        return render_template("PIView/dashboardPI.html")
+    else:
+        return render_template("AdminView/dashboardAdmin.html")
+    
 @app.route("/ground_truthing")
 def ground_truthing():
-    return render_template("ground_truthing.html")
-
-@app.route("/homepage")
-def homepage():
-    return render_template('home.html')
-
+    if(statusFlag=="User"):
+        return render_template("UserView/ground_truthing.html")
+        
+    elif(statusFlag=="PI"):
+        return render_template("PIView/ground_truthing.html")
+    else:
+        return render_template("AdminView/ground_truthing.html")
 @app.route("/import")
 def upload():
-    return render_template('importPage.html')
+    if (statusFlag=="User"):
+        return render_template('UserView/importPageUser.html')
+    elif(statusFlag=="PI"):
+        return render_template('PIView/importPagePI.html')
+    else:
+        return render_template('AdminView/importPageAdmin.html')
 
 @app.route("/upload_file", methods=['POST'])
 def upload_file():
@@ -323,6 +420,279 @@ def view_files():
     finally:
         cursor.close()
         connection.close()
+
+
+
+
+#-----------------PI View-----------------------#
+
+##Allows PI to see every project
+@app.route("/viewAllProjectsPI", methods=['POST', 'GET'])
+def viewAllProjectsPI():
+
+    if request.method=='POST':
+       
+       
+        ##Project name being searched
+        searchedName=request.form["s_Name"]
+        
+        searched_projects=[]
+
+        project_ref = (db.collection("PI").document("fdeolive@uvm.edu").collection("project"))
+        query_ref=project_ref.where(filter=FieldFilter("project_name", "==",searchedName)).stream()
+
+        for doc in  query_ref:
+         searched_projects.append(doc.to_dict())
+        return render_template('PIView/viewAllProjectsPI.html',all_project=searched_projects)
+    
+    else: 
+
+        all_project_ref=db.collection("PI").document("fdeolive@uvm.edu").collection("project")
+        all_project_coll=all_project_ref.get()
+        all_projects=[]
+
+        for doc in all_project_coll:
+            project = doc.to_dict()  
+            all_projects.append(project)
+    
+        return render_template('PIView/viewAllProjectsPI.html',all_project=all_projects)
+       
+
+# @app.route("/viewAllUsersPI",methods=['POST', 'GET'])
+# def viewAllUsersPI():
+#     if request.method=='POST':
+#         searchedName=request.form["s_Name"]
+#         searched_users=[]
+        
+#         piProjects=db.collection("users").document("PI_username@uvm.edu")
+#         piProjectsColl=piProjects.get()
+#         all_users=[]
+#         piProjectsCollProject=piProjectsColl.get('projects')
+#         if(piProjectsCollProject==0):
+#             all_users=["No members"]
+#         else:
+#                 docs=db.collection("users").where(filter=FieldFilter("projects", "array_contains_any",piProjectsCollProject)).where(filter=FieldFilter("email", "in",searchedName)).stream()
+#                 for doc in docs:
+#                     users=doc.to_dict()
+#                     searchedName.append(users)
+
+
+#         return render_template('PIView/viewAllUsersPI.html',all_users=searched_users)
+
+
+#     else: 
+#         piProjects=db.collection("users").document("PI_username@uvm.edu")
+#         piProjectsColl=piProjects.get()
+#         all_users=[]
+#         piProjectsCollProject=piProjectsColl.get('projects')
+#         if(piProjectsCollProject==0):
+#             all_users=["No members"]
+#         else:
+#                 docs=db.collection("users").where(filter=FieldFilter("projects", "array_contains_any",piProjectsCollProject)).stream()
+#                 for doc in docs:
+#                     users=doc.to_dict()
+#                     all_users.append(users)
+               
+#         return render_template('PIView/viewAllUsersPI.html',all_users=all_users)
+
+###Creates a new project:
+###Creates new project in firebase project's collection
+##Inserts into project array within users collection
+@app.route("/generateNewProject", methods=['POST', 'GET'])
+def generateNewProject():
+    if request.method=='POST':
+        pName=request.form["p_Name"]
+        accessCode=secrets.token_hex(3)
+        
+
+        global StatusEmail
+        ###Updates projects in user
+        user_ref = db.collection("users").document(StatusEmail)
+        user_ref.update({"projects": firestore.ArrayUnion([pName])})
+
+        ##Updates project collection
+        project_ref = db.collection("projects").document(pName)
+        project_ref.set({"access_code":accessCode,'project_name':pName,"projectMembers":[],"PI_email":StatusEmail})
+
+        
+        return redirect(url_for('generateNewProject'))
+
+    else:
+        if (statusFlag=="PI"):
+            return render_template('PIView/newProjectPI.html')
+        else :
+            return render_template('AdminView/newProjectAdmin.html')
+
+
+##Project Name has to be unqiue **Potentially a problem
+@app.route("/generateNewCode/<projectName>")
+def generateNewCode(projectName):
+
+    newCode=secrets.token_hex(3)
+    global StatusEmail
+    projectRef=db.collection("projects").document(projectName)
+    
+    projectRef.update({'access_code':newCode})
+    if(statusFlag=="PI"):
+        return redirect(url_for('PIView/viewAllProjectsPI'))
+    else:
+        return redirect(url_for('AdminView/viewAllProjectsAdmin'))
+
+
+
+@app.route("/groundTruthUpdates")
+def groundTruthUpdates():
+    groundTruthing_ref=db.collection("groundTruthing")
+    groundTruthing_records=[]
+    global StatusEmail
+    query_ref=groundTruthing_ref.where(filter=FieldFilter("PI_email", "==",StatusEmail)).stream()
+    for doc in  query_ref:
+         groundTruthing_records.append(doc.to_dict())
+
+    
+    
+    if (statusFlag=="PI"):  
+        return render_template('PIView/groundTruthingRecordsPI.html',all_groundTruth=groundTruthing_records)
+    
+    else:
+        return render_template('AdminView/groundTruthingRecordsAdmin.html',all_groundTruth=groundTruthing_records)
+   
+    
+
+#-Super PI-#
+
+@app.route('/registerNewPI', methods=['GET', 'POST'])
+def registerNewPI():
+    if request.method == 'GET':
+        return render_template('AdminView/registerNewPi.html')
+    else:
+        email = request.form.get('email')
+        Institute = request.form.get('Institute')
+        name = request.form.get('name')
+       
+        password = secrets.token_hex(3)
+
+        hashed_password = bcrypt.hashpw(
+            password.encode('utf-8'), bcrypt.gensalt())
+
+        try:
+            # Check if a user with this email already exists
+            user_ref = db.collection('users').document(email)
+            if user_ref.get().exists:
+                flash("An account with this email already exists.", "danger")
+                return redirect(url_for('registerNewPI'))
+
+            user_ref.set({
+                 'email': email,
+                'password': hashed_password.decode('utf-8'),
+                'status':'PI',
+                'name':name,
+                'Institute':Institute,
+                'projects':[]
+            })
+
+         
+
+            return redirect(url_for('registerNewPI'))
+
+        except Exception as e:
+            flash(f"An error occurred: {str(e)}", "danger")
+            return redirect(url_for('registerNewPI'))
+
+
+@app.route('/piRequest', methods=['GET','POST'])
+def piRequest():
+   
+    all_request_ref=db.collection("request")
+    all_request_coll=all_request_ref.get()
+
+    all_request=[]
+    for doc in all_request_coll:
+        requests = doc.to_dict()  
+        all_request.append(requests)
+
+    return render_template('AdminView/piRequest.html', all_request=all_request)
+
+@app.route("/acceptRequest/<pName>")
+def acceptRequest(pName):
+    users_ref = (
+    db.collection("users").document(pName))
+    users_ref.update({'status':'PI'})
+
+    db.collection("request").document(pName).delete()
+    return redirect(url_for('piRequest'))
+
+@app.route("/declineRequest/<pName>")
+def declineRequest(pName):
+   
+    db.collection("request").document(pName).delete()
+    
+    return redirect(url_for('piRequest'))
+
+
+@app.route("/viewAllProjectsAdmin", methods=['POST', 'GET'])
+def viewAllProjectsAdmin():
+
+    global StatusEmail
+    project_ref = (db.collection("projects")).where(filter=FieldFilter("PI_email", "==",StatusEmail))
+
+    if request.method=='POST':
+       
+       
+        ##Project name being searched
+        searchedName=request.form["s_Name"]
+        
+        searched_projects=[]
+        
+      
+        query_ref=project_ref.where(filter=FieldFilter("project_name", "==",searchedName)).stream()
+
+        for doc in  query_ref:
+         searched_projects.append(doc.to_dict())
+        return render_template('AdminView/viewAllProjectsAdmin.html',all_project=searched_projects)
+    
+    else: 
+       
+        all_project_coll=project_ref.get()
+        all_projects=[]
+
+        for doc in all_project_coll:
+            project = doc.to_dict()  
+            all_projects.append(project)
+    
+        return render_template('AdminView/viewAllProjectsAdmin.html',all_project=all_projects)
+
+
+@app.route("/viewAllUsersAdmin",methods=['POST', 'GET'])
+def viewAllUsersAdmin():
+    if request.method=='POST':
+        searchedName=request.form["s_Name"]
+        searched_users=[]
+        
+        docs_ref = (
+        db.collection("users").document(searchedName))
+        doc=docs_ref.get()
+
+        foundUser = doc.to_dict()  
+        searched_users.append(foundUser)
+
+
+        return render_template('AdminView/viewAllUsersAdmin.html',all_users=searched_users)
+
+
+    else: 
+        all_users_ref=db.collection("users")
+        all_users_coll=all_users_ref.get()
+
+        all_users=[]
+        for doc in all_users_coll:
+            usersDic = doc.to_dict()  
+            all_users.append(usersDic)
+
+        print(all_users)
+
+        return render_template('AdminView/viewAllUsersAdmin.html',all_users=all_users)
+
 
 
 if __name__ == "__main__":
