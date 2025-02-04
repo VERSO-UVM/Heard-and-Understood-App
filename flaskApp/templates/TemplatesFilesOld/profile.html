@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Login Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <h2 class="text-center">Profile Settings</h2>
+
+                <!-- Flash message for invalid credentials -->
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ messages[0] }}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                        
+                <div id="profileInfo">
+                    <label for="name"><b>Account Email</b></label>
+                    <p id="name">{{email}}</p>
+
+                   
+                </div>
+                    <!-- <form method="POST" action="/profile"> -->
+                        <!-- Change info button -->
+                        <button id="changeButton" type="submit" class="btn btn-primary btn-block">Change Profile Info</button>
+                        <script>
+                            changeButton = document.getElementById("changeButton");
+                            profileContainer = document.getElementById("profileInfo");
+
+                            changeButton.addEventListener("click", function() {
+                                passwordLabel = document.createElement("label");
+                                passwordLabel.for = "passwordPrompt";
+                                passwordLabel.textContent = "Enter Password";
+                                passwordLabel.style.fontWeight = "bold"; 
+
+
+                                passwordPrompt = document.createElement("input");
+                                passwordPrompt.id = "passwordPrompt";
+                                passwordPrompt.type = "password";
+
+                                profileContainer.append(passwordLabel);
+                                profileContainer.innerHTML += "<br>"; 
+                                profileContainer.append(passwordPrompt);
+                                
+                                changeButton.style.display = "none";
+
+                                confirmButton = document.createElement("button");
+                                confirmButton.classList.add("btn");
+                                confirmButton.classList.add("btn-primary");
+                                confirmButton.classList.add("btn-block");
+                                confirmButton.textContent = "Edit Profile";
+                                confirmButton.id = "confirmButton";
+                                
+                                confirmButton.addEventListener("click", function() {
+                                    window.location.href = "/change-profile";
+                                    // TODO: Validate user password before allowing them to make changes
+                                    validate_password(passwordPrompt.value);
+                                });
+
+                                profileContainer.append(confirmButton);
+
+
+                            });
+                        </script>
+                    <!-- </form> -->
+                
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
