@@ -7,6 +7,7 @@ def connect_to_database():
         connection = mysql.connector.connect(
             host="localhost",
             user="root",
+            #change this to your password (and user if applicable) for your mysql
             password="password",
             database="audio_files" 
         )
