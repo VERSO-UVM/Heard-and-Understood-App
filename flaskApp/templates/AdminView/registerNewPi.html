@@ -1,0 +1,54 @@
+{% extends 'dashboardAdmin_base.html' %}
+
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}
+View all Projects
+
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+{% endblock %}
+
+{% block content %}
+
+    <!-- Flash message for successful or failed registration -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ messages[0] }}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<form method="POST" action="/registerNewPI">
+    <!-- Email input -->
+    <div class="form-group">
+        <label for="formEmail">PI's Name</label>
+        <input type="name" id="formName" name="name" class="form-control" placeholder="Enter name" required>
+    </div>
+    <div class="form-group">
+        <label for="formEmail">Institute</label>
+        <input type="Institute" id="formInstitute" name="Institute" class="form-control" placeholder="Enter Institute" required>
+    </div>
+    <div class="form-group">
+        <label for="formEmail">Email address</label>
+        <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email" required>
+    </div>
+    
+   
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block">Register</button>
+
+</form>
+</div>
+</div>
+</div>
+
+</div> 
+
+{% endblock %}

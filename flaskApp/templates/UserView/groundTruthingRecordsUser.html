@@ -1,0 +1,43 @@
+{% extends 'dashboardUser_base.html' %}
+
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}
+View all Projects
+
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+{% endblock %}
+
+{% block content %}
+{% for i in all_groundTruth %}
+<div class="table">
+    <!-- Table of factors that include: ID, Order, Factor -->
+    <table style="width: 100%">
+      <!-- Table row for header-->
+      <tr>
+        
+        <th>Project Name</th>    
+        <th>Modified By</th>
+        <th>Date</th>    
+      </tr>
+     
+      {% for i in all_groundTruth %}
+    <tr>
+        <td >{{ i['projectName']}}</td>
+        <td >{{ i['UpdatedBy']['name']}}</td>
+        <td >{{ i['UpdatedBy']['date']}}</td>
+      
+       
+       
+      
+    {% endfor %}
+    </table>
+</div> 
+{% endfor %}
+{% endblock %}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Bootstrap Login Form</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -11,9 +11,14 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <h2 class="text-center">Register</h2>
+                <h2 class="text-center">Request PI Access</h2>
+                <p>To request PI access, you must create an account 
+                    and submit a request to the administrators.</p>
+                    <p>Already have a pre-approved access code?</p> 
+                    <div class="d-flex justify-content-between mt-3">
+                        <a href="{{ url_for('pre_approved_access_code') }}">Enter PI Access Code</a></div>
 
-                <!-- Flash message for successful or failed registration -->
+                <!-- Flash message for invalid credentials -->
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         <div class="alert alert-danger" role="alert">
@@ -22,17 +27,12 @@
                     {% endif %}
                 {% endwith %}
 
-                <form method="POST" action="/register">
-                    <!-- Name Input -->
+                <form method="POST" action="/pi_access_request">
+                    <!-- Name input -->
                     <div class="form-group">
-                        <label for="formEmail">Name</label>
-                        <input type="name" id="formname" name="name" class="form-control" placeholder="Enter Name" required>
-
-                    <!-- Institute Input -->
-                    <div class="form-group">
-                        <label for="formEmail">Institute</label>
-                        <input type="Institute" id="formInstitute" name="Institute" class="form-control" placeholder="Enter Institute" required>
-
+                        <label for="formName">Name</label>
+                        <input type="text" id="formName" name="name" class="form-control" placeholder="Enter name" required>
+                    </div>
 
                     <!-- Email input -->
                     <div class="form-group">
@@ -40,20 +40,19 @@
                         <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email" required>
                     </div>
                     
-                    <!-- Password input -->
+                    <!-- Institution input -->
                     <div class="form-group">
-                        <label for="formPassword">Password</label>
-                        <input type="password" id="formPassword" name="password" class="form-control" placeholder="Password" required>
+                        <label for="formInstitution">Institution</label>
+                        <input type="text" id="formInstitution" name="institution" class="form-control" placeholder="Enter Institution" required>
                     </div>
 
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
-
-                    <!-- Links to navigate to login page -->
-                    <div class="d-flex justify-content-between mt-3">
-                        <a href="/">Already have an account? Sign in</a>
-                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Request PI Access</button>
                 </form>
+                <div>
+                    <p>Once reviewed, you will receive an email with your request status: access granted or denied. </p>
+                    <p>If access is granted, the next time you login you will have PI access. </p>
+                </div>
             </div>
         </div>
     </div>
