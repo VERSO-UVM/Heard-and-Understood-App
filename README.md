@@ -18,19 +18,25 @@ The methods used in this package are based on the methods used in Matt et al. 20
 Matt et al. 2023: Matt, Jeremy E et al. “An Acoustical and Lexical Machine-Learning Pipeline to Identify Connectional Silences.” Journal of palliative medicine, 10.1089/jpm.2023.0087. 13 Jul. 2023, doi:10.1089/jpm.2023.0087
 
 ## Getting Started
-TBD
 
 ### Dependencies
+You will need Python 3.10 or earlier installed. 
 
-- [Consert Install Guide](flaskApp/consert/CONSERT_INSTALLATION.md)
+Then use pip to install
+- flask
+- Flask-Mail
+- firebase-admin
+- bcrypt
+- mysql-connector
+
+If you want to use CONSert, follow the steps in the [Consert Install Guide](flaskApp/consert/CONSERT_INSTALLATION.md)
 
 ### Installing
-
-TBD
+Clone this repository, then add `serviceAccountKey.json` to `flaskApp/firebase`
 
 ### Executing program
+Run `app.py`
 
-TBD
 ## Help
 
 ## Team
