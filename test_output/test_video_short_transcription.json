@@ -1,0 +1,235 @@
+{
+  "text": " If I knew somehow that even if I weren't on the earth, I could be part of it somehow with the people I love, that would help.",
+  "segments": [
+    {
+      "id": 0,
+      "seek": 0,
+      "start": 0.6,
+      "end": 7.44,
+      "text": " If I knew somehow that even if I weren't on the earth, I could be part of it somehow with",
+      "tokens": [
+        50364,
+        759,
+        286,
+        2586,
+        6063,
+        300,
+        754,
+        498,
+        286,
+        4999,
+        380,
+        322,
+        264,
+        4120,
+        11,
+        286,
+        727,
+        312,
+        644,
+        295,
+        309,
+        6063,
+        365,
+        50734
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23897197511461046,
+      "compression_ratio": 1.3020833333333333,
+      "no_speech_prob": 0.05900229886174202,
+      "confidence": 0.856,
+      "words": [
+        {
+          "text": "If",
+          "start": 0.6,
+          "end": 0.86,
+          "confidence": 0.407
+        },
+        {
+          "text": "I",
+          "start": 0.86,
+          "end": 1.02,
+          "confidence": 0.981
+        },
+        {
+          "text": "knew",
+          "start": 1.02,
+          "end": 1.36,
+          "confidence": 0.991
+        },
+        {
+          "text": "somehow",
+          "start": 1.36,
+          "end": 1.9,
+          "confidence": 0.958
+        },
+        {
+          "text": "that",
+          "start": 1.9,
+          "end": 2.48,
+          "confidence": 0.913
+        },
+        {
+          "text": "even",
+          "start": 2.48,
+          "end": 3.52,
+          "confidence": 0.637
+        },
+        {
+          "text": "if",
+          "start": 3.52,
+          "end": 3.74,
+          "confidence": 0.987
+        },
+        {
+          "text": "I",
+          "start": 3.74,
+          "end": 3.94,
+          "confidence": 0.986
+        },
+        {
+          "text": "weren't",
+          "start": 3.94,
+          "end": 4.18,
+          "confidence": 0.982
+        },
+        {
+          "text": "on",
+          "start": 4.18,
+          "end": 4.5,
+          "confidence": 0.987
+        },
+        {
+          "text": "the",
+          "start": 4.5,
+          "end": 4.7,
+          "confidence": 0.983
+        },
+        {
+          "text": "earth,",
+          "start": 4.7,
+          "end": 4.98,
+          "confidence": 0.705
+        },
+        {
+          "text": "I",
+          "start": 5.16,
+          "end": 5.42,
+          "confidence": 0.641
+        },
+        {
+          "text": "could",
+          "start": 5.42,
+          "end": 5.64,
+          "confidence": 0.978
+        },
+        {
+          "text": "be",
+          "start": 5.64,
+          "end": 5.8,
+          "confidence": 0.979
+        },
+        {
+          "text": "part",
+          "start": 5.8,
+          "end": 6.12,
+          "confidence": 0.927
+        },
+        {
+          "text": "of",
+          "start": 6.12,
+          "end": 6.26,
+          "confidence": 0.991
+        },
+        {
+          "text": "it",
+          "start": 6.26,
+          "end": 6.52,
+          "confidence": 0.961
+        },
+        {
+          "text": "somehow",
+          "start": 6.52,
+          "end": 7.0,
+          "confidence": 0.917
+        },
+        {
+          "text": "with",
+          "start": 7.0,
+          "end": 7.44,
+          "confidence": 0.549
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 7.44,
+      "end": 9.82,
+      "text": " the people I love, that would help.",
+      "tokens": [
+        50734,
+        264,
+        561,
+        286,
+        959,
+        11,
+        300,
+        576,
+        854,
+        13,
+        50852
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23897197511461046,
+      "compression_ratio": 1.3020833333333333,
+      "no_speech_prob": 0.05900229886174202,
+      "confidence": 0.983,
+      "words": [
+        {
+          "text": "the",
+          "start": 7.44,
+          "end": 7.74,
+          "confidence": 0.992
+        },
+        {
+          "text": "people",
+          "start": 7.74,
+          "end": 7.98,
+          "confidence": 0.999
+        },
+        {
+          "text": "I",
+          "start": 7.98,
+          "end": 8.3,
+          "confidence": 0.964
+        },
+        {
+          "text": "love,",
+          "start": 8.3,
+          "end": 8.62,
+          "confidence": 0.962
+        },
+        {
+          "text": "that",
+          "start": 9.12,
+          "end": 9.34,
+          "confidence": 0.973
+        },
+        {
+          "text": "would",
+          "start": 9.34,
+          "end": 9.54,
+          "confidence": 0.996
+        },
+        {
+          "text": "help.",
+          "start": 9.54,
+          "end": 9.82,
+          "confidence": 0.998
+        }
+      ]
+    }
+  ],
+  "language": "English"
+}
