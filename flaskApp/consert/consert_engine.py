@@ -2,9 +2,9 @@ import consert
 
 class ConsertProcess:
     def __init__(self):
-        """Initializes the ConsertProcess with test data and runs consert."""
+        """Initiate consert with the uploaded file"""
         print("starting init")
-        self.media_file = '/Users/tucker/Documents/ORCA/CONSert/test_video.mp3' #TODO will need to adjust for input data
+        self.media_file = '/Users/tucker/Documents/ORCA/Heard-and-Understood-App/flaskApp/test_input/test_video_short.mp3' #TODO will need to adjust for input data
         self.run_consert(self.media_file)
 
     def run_consert(self, media_file):
