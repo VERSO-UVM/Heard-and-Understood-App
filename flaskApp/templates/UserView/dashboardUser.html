@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organization Dashboard</title>
-    <link rel="stylesheet" href="../static/dashboard/dashboard.css">
-  </head>
+{% extends 'dashboardUser_base.html' %}
+{# Extends the 'dashboardUser_base.html' template #}
+
+{% import "bootstrap/wtf.html" as wtf %}
+{# Imports 'wtf.html' from the 'bootstrap' directory with an alias 'wtf' #}
+
+{% block title %}
+Organization Dashboard Page
+{% endblock %}
+<link rel="stylesheet" href="../static/dashboard/dashboard.css">
+{% block styles %}
+  {{ super() }}
+  {% endblock %}
+
+  {% block content %}  
   <body>
     <main>
         <div>
@@ -99,5 +106,4 @@
     </main>
     <script src="index.js"></script>
     <script src="../static/dashboard/dashboard.js"></script>
-  </body>
-</html>
+{% endblock content %}
