@@ -1,7 +1,3 @@
-
-
-
-
 {% extends 'homePI_base.html' %}
 
 
@@ -9,7 +5,7 @@
 
 
 {% block title %}
-Home Page: PI
+Home Page: User
 
 {% endblock %}
 
@@ -18,6 +14,8 @@ Home Page: PI
   <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
 
 {% endblock %}
+
+{% block content%}
 <div class="container mt-5">
     <h3>Contact Admins</h3>
     <br />
@@ -42,11 +40,6 @@ Home Page: PI
         </div>
     </div>
 </div>
-
-{% block content%}
-
-
-
 
 
 {% endblock %}

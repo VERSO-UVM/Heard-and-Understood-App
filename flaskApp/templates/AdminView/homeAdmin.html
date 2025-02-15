@@ -52,19 +52,30 @@ Home Page: Admin
 
 {% block content%}
 <h1>Welcome, User!</h1>
+ <!-- Flash message for invalid credentials -->
+ {% with messages = get_flashed_messages() %}
+ {% if messages %}
+     <div class="alert alert-danger" role="alert">
+         {{ messages[0] }}
+     </div>
+ {% endif %}
+{% endwith %}
 <h3>To access your dashboard and be able to upload audio files, you need to input to your project's access code</h3>
 <div class="modal-button" id="openModal">Click to Enter Access Code</div>
 <div id="access-code-modal" class="modal">
     <div class="modal-content">
+        <form action="{{ url_for('homepage')}}" method="POST" onsubmit="return validateForm()">
         <span class="close">&times;</span>
         <h3>Enter Access Code</h3>
-        <input type="text" id="accessCode" placeholder="Enter Access Code">
-        <button class="submit-btn" id="submitCode">Submit</button>
+        <input type="text" name="accessCode" class="form-control" id="accessCode" placeholder="Enter Access Code">
+        <button class="submit" id="save">Submit</button>
+        </form>
     </div>
-</div>
-<div>
+
    
+
 </div>
+
 </body>
 </html>
 

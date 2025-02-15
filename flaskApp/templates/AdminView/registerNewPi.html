@@ -1,20 +1,20 @@
-{% extends 'dashboardAdmin_base.html' %}
+{% extends 'homeAdmin_base.html' %}
 
 
 {% import "bootstrap/wtf.html" as wtf %}
 
 
 {% block title %}
-View all Projects
+Home Page: PI
 
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
   <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
-{% endblock %}
 
-{% block content %}
+{% endblock %}
+{%block content%}
 
     <!-- Flash message for successful or failed registration -->
     {% with messages = get_flashed_messages() %}
