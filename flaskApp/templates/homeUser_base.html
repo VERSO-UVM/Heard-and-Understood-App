@@ -18,9 +18,9 @@
     <!-- Bootstrap -->
     <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
     {# Links to Bootstrap CSS file #}
-    <link rel="stylesheet" href="/static/css/style.css?version={{ now }}">
+    <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">
     {# Links to a style CSS file with a dynamic version #}
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
     {% endblock styles %}
     {% endblock head %}
   </head>
@@ -31,8 +31,11 @@
     <header>
       
         <nav>
+          <!-- HUA Logo -->
+          <div class="logo">
+            <img src="/static/images/HUA-logo.png" class="header-logo" alt="HUA Logo"/>
+          </div>
             <ul>
-             <h3> Welcome, User!</h3>
              <li><a href="{{ url_for('homepage') }}">Home</a></li>
              <li><a href="{{ url_for('profile') }}">Profile</a></li>
               <li> <a href="{{ url_for('login') }}">Log Out</a></li>
@@ -55,7 +58,8 @@
     </header>
     {%- endblock navbar %}
     {% block content %}{%- endblock content %}
-
+    <!-- <h3>Enter a project access code to view the project’s dashboard and upload audio files. </h3> 
+    <h3>Click Here to Enter Project Access Code</h3> -->
     {% block scripts %}
     <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
     {# Links to jQuery script from Bootstrap CDN #}
