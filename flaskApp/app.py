@@ -8,25 +8,19 @@ from db_utils import upload_file_to_db, connect_to_database
 from flask_mail import Mail, Message
 #import email_credentials
 from datetime import datetime, timedelta, timezone
+import os 
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
-#TODO: before pull request talk to team about with open for service account
-import os #TODO: move with ^^
+#This code gets the direcotry where the code is currently running then builds a path to serviceAccountKey.json
+script_dir = os.path.dirname(os.path.abspath(__file__))
+service_account_file_path = os.path.join(script_dir, "firebase", "serviceAccountKey.json") 
 
-script_dir = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory
-print(script_dir)
-service_account_file_path = os.path.join(script_dir, "firebase", "serviceAccountKey.json")  # Navigate into the subdirectory
-
+#Using the path created above, the code opens the serviceAccountKey.json file and retrieves necessary secret_key
 with open(service_account_file_path) as f:
     service_account = json.load(f)
     app.secret_key = service_account.get("secret_key")
-
-
-# with open('firebase/serviceAccountKey.json') as f:
-#     service_account = json.load(f)
-#     app.secret_key = service_account.get("secret_key")
 
 
 def initialize_firebase():
