@@ -21,5 +21,5 @@ class ConsertProcess:
         # Test 2: Plot results
         consert.plot_classification(media_file, 'test_output')
 
-# Initialize the class to run the process
-process = ConsertProcess()
+# # Initialize the class to run the process
+# process = ConsertProcess()
