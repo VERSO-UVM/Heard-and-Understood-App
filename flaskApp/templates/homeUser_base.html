@@ -29,33 +29,26 @@
     {% block body %}
     {% block navbar %}
     <header>
-      
-        <nav>
-          <!-- HUA Logo -->
-          <div class="logo">
-            <img src="/static/images/HUA-logo.png" class="header-logo" alt="HUA Logo"/>
-          </div>
-            <ul>
-             <li><a href="{{ url_for('homepage') }}">Home</a></li>
-             <li><a href="{{ url_for('profile') }}">Profile</a></li>
-              <li> <a href="{{ url_for('login') }}">Log Out</a></li>
-              <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                      {% for i in projects%}
-                    <li><a href="{{ url_for('dashboard')}}">{{i}}</a></li>
-                    {% endfor%}
-                    </ul>
-                    </li>
-                   
-                    
-            
-      
-                 
-                      
-            </ul>
-          </nav>
+      <!-- HUA Logo -->
+      <div class="logo">
+        <img src="/static/images/HUA-logo.png" class="header-logo" alt="HUA Logo"/>
+      </div>
     </header>
+    <nav class = "home-container">
+        <ul>
+         <li><a href="{{ url_for('homepage') }}">Home</a></li>
+         <li><a href="{{ url_for('profile') }}">Profile</a></li>
+          <li> <a href="{{ url_for('login') }}">Log Out</a></li>
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                  {% for i in projects%}
+                <li><a href="{{ url_for('dashboard')}}">{{i}}</a></li>
+                {% endfor%}
+                </ul>
+          </li>       
+        </ul>
+      </nav>
     {%- endblock navbar %}
     {% block content %}{%- endblock content %}
     <!-- <h3>Enter a project access code to view the project’s dashboard and upload audio files. </h3> 
