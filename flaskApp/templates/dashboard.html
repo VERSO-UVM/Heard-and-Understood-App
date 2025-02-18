@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Organization Dashboard</title>
     <link rel="stylesheet" href="../static/dashboard/dashboard.css">
+    <script>
+        function runConsert() {
+            fetch('/run_consert', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
   </head>
   <body>
     <main>
@@ -38,7 +46,7 @@
             <!-- Buttons to generate popups -->
             <section>
                 <div>
-                    <button type="submit" id="algorithm" value="Algorithm" onclick="runAlgorithm()" disabled>Run Algorithm</button>
+                    <button type="submit" id="algorithm" value="Algorithm" onclick="runConsert()" disabled>Run Algorithm</button>
                 </div>
                 <div>
                     <button type="submit" id="confusionMatrix" value="Confusion Matrix" disabled>View Confusion Matrix</button>
