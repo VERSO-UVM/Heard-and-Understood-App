@@ -1,0 +1,32 @@
+.home-container {
+    position:  fixed;
+    background-color: #1C26A5;
+    color: white;
+    width: 250px;
+    list-style-type: none !important;
+    padding: 0;
+}
+
+.home-container ul {
+    margin: 0;
+    padding: 0;
+}
+
+.home-container li {
+    text-align: center;
+    font-size: large;
+}
+
+.home-container a {
+    display: block;
+    color: white;
+    /* font-weight: bold; */
+    text-decoration: none;
+    padding: 10px;
+}
+
+.home-container a:hover {
+    background-color: white; 
+    text-decoration: underline;
+    color: #1C26A5;
+}
