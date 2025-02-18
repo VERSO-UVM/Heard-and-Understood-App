@@ -7,6 +7,7 @@ from db_utils import upload_file_to_db, connect_to_database
 from flask_mail import Mail, Message
 #import email_credentials
 from datetime import datetime, timedelta, timezone
+import pandas as pd
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -232,8 +233,6 @@ def new_password():
     return render_template('new_password.html', email=email)
 
 
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -282,7 +281,50 @@ def dashboard():
 
 @app.route("/ground_truthing")
 def ground_truthing():
+    data = pd.read_csv('static/test_video_classification.csv')
+    del data[data.columns[0]]
+    # print(data)
+
+    data.to_csv('static/modifications.csv', index=False)
     return render_template("ground_truthing.html")
+
+#TODO: Add a New Pause
+@app.route('/add_new_pause', methods=['POST'])
+def add_new_pause():
+    modifications = pd.read_csv('static/modifications.csv')
+
+    start_time = request.form.get('startTime')
+    end_time = request.form.get('endTime')
+
+    pause_type = request.form.get('new-pause-type')
+
+    # create a new row in the modifications dataframe.
+    modifications.loc[0] = [start_time, end_time, '', '', pause_type]
+    # sort the pauses
+
+    # modifications.sort()
+    print(modifications)
+
+    return render_template("ground_truthing.html")
+        
+
+#TODO: Extend Clip
+# @app.route('/extend_clip', methods=['GET', 'POST'])
+# def extend_clip():
+#     if request.method == 'GET':
+
+#TODO: Edit Transcription
+# @app.route('/edit_transcription', methods=['POST'])
+# def edit_transcription():
+#     text = request.form['text']
+#     return text
+        
+#TODO: Ground-Truth Connection
+# @app.route('/ground_truth_connection', methods=['GET', 'POST'])
+# def ground_truth_connection():
+#     if request.method == 'GET':
+  
+#TODO: the final submit button consolidates the modifications file into the "test" file
 
 @app.route("/homepage")
 def homepage():
