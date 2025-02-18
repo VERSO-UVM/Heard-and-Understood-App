@@ -1,0 +1,9 @@
+flaskApp/firebase/serviceAccountKey.json
+flaskApp/test_input
+.env
+__pycache__/
+*.pyc
+*.log
+email_credentials.py
+**/.DS_Store
+test_output/
