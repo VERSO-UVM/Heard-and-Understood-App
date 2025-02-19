@@ -29,7 +29,7 @@ Then use pip to install
 - bcrypt
 - mysql-connector
 
-If you want to use CONSert, follow the steps in the [Consert Install Guide](flaskApp/consert/CONSERT_INSTALLATION.md)
+If you want to use CONSert, follow the steps in the [Consert Install Guide](hua/consert/CONSERT_INSTALLATION.md)
 
 ### Installing
 Clone this repository, then add `serviceAccountKey.json` to `flaskApp/firebase`
