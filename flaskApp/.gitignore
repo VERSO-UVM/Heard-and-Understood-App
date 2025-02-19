@@ -1,7 +1,0 @@
-
-firebase/serviceAccountKey.json
-.env
-__pycache__/
-*.pyc
-*.log
-email_credentials.py

@@ -1,0 +1,30 @@
+# credentials
+flaskApp/firebase/serviceAccountKey.json
+email_credentials.py
+.env
+
+# builds/logging
+__pycache__/
+*.pyc
+*.log
+dist/
+build/
+
+# vscode
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+
+# jetbrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# macos
+*.DS_Store
+
+# virtual environments
+/venv
