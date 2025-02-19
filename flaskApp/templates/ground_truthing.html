@@ -26,8 +26,6 @@
                 </form>
             </section>
            
-   
-
             <!-- Checkboxes for pause selection -->
             <section>
                 <h3>Select Pause type to view:</h3>
@@ -79,10 +77,16 @@
                     <label for="non-connective">Non-Connective Pause</label>
                     <input type="radio" name = "new-pause-type" value="non-connectional">
                 </div>
-                <div>
+                <!-- <div>
                     <label for="no-pause">No Pause</label>
-                    <input type="radio" name = "new-pause-type" id="no-pause">
-                </div>
+                    <input type="radio" name = "new-pause-type" value="no-pause">
+                </div> -->
+
+                <label for="editTranscription">
+                    <h4>Transcription:</h4>
+                </label>
+            
+                <input type="text" name="transcription" id = "transcription">
 
                 <div>
                     <button type="submit" name = "new-pause" id="update" value="update"> Add Update</button>
@@ -91,32 +95,27 @@
             </section>
 
              <!-- Extend Pause -->
+              <!-- Modify a pause, and make it longer, or delete it. -->
              <section>
-                <h3>Extend pause:</h3>
+                <h3>Modify pause:</h3>
              <div>
-                <label for="startTime">
-                    <h4>Start</h4>
-                </label>
-                <input type="time" id="startTime">
-
-                <label for="endTime">
-                    <h4>to</h4>
-                </label>
-                <input type="time" id="endTime" >
-
                 <label for="editTranscription">
                     <h4>Edit Transcription:</h4>
                 </label>
                 <input type="text" id="editTranscription" >
             </div>
-           
-
-           
+            <div>
+                <label for="deletePause">Emotional Pause</label>
+                <input type="checkbox" id="emotionalCheckbox">
+            </div>
             </section>
+
              <!-- Ground Truthing Connection -->
+             <!-- the model classified the wrong kind of connection -->
              <section>
                 <h3>Ground Truthing Connection</h3>
-                <div>
+            
+            <div>
                 <label for="startTime">
                     <h4>Start</h4>
                 </label>
@@ -127,6 +126,7 @@
                 </label>
                 <input type="number" id="endTime" >
             </div>
+            
                 <div>
                     <label for="emotionalCheckbox">Emotional Pause</label>
                     <input type="checkbox" id="emotionalCheckbox">

@@ -1,5 +1,4 @@
 start,stop,context,class,pause_type
-0.0,2.5,,0.0,non-connectional
 17.5,20.0, My name is Bob Grammer. I'm with the palliative care team. I'm one of the palliative care doctors. Okay. Is it okay if I have a seat? Sure.,2.0,invitational
 20.5,23.0, I'm with the palliative care team. I'm one of the palliative care doctors. Okay. Is it okay if I have a seat? Sure.,2.0,invitational
 35.5,38.0, I would come by to see if I could be of help. I don't know if anybody can help right now but...,1.0,emotional
@@ -39,6 +38,7 @@ start,stop,context,class,pause_type
 661.0,664.0," that's one day less, and if I don't know, I might think, okay, I have one day more instead.",1.0,emotional
 701.5,703.5, I feel like I'm choking to death at the end because I had a lot of trouble breathing. They took all that fluid out but it's okay.,1.0,emotional
 823.0,826.5," Yeah, exactly. Yeah. Wow. I do have a lot of questions, but I'm...",1.0,emotional
+900.0,900.4,meoq,2.0,invitational
 962.0,964.0," And so having your back with your family, it will allow me to help navigate where that balance is for you.",2.0,invitational
 978.0,980.5, I see it happening. It's really just to address whenever that time comes. We can do it well. We'll do it together with you and your family.,1.0,emotional
 981.0,984.5, comes. We can do it well and we'll do it together with you and your family. That does help.,0.0,non-connectional

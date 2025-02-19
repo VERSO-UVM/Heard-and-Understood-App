@@ -291,19 +291,30 @@ def ground_truthing():
 #TODO: Add a New Pause
 @app.route('/add_new_pause', methods=['POST'])
 def add_new_pause():
+    pause_classes = ['non-connectional', 'emotional', 'invitational']
+
     modifications = pd.read_csv('static/modifications.csv')
 
-    start_time = request.form.get('startTime')
-    end_time = request.form.get('endTime')
+    start_time = float(request.form.get('startTime'))
+    end_time = float(request.form.get('endTime'))
 
     pause_type = request.form.get('new-pause-type')
 
-    # create a new row in the modifications dataframe.
-    modifications.loc[0] = [start_time, end_time, '', '', pause_type]
-    # sort the pauses
+    transcription = request.form.get('transcription')
 
-    # modifications.sort()
-    print(modifications)
+    pause_class = float(pause_classes.index(pause_type))
+
+    if start_time < end_time:
+        # create a new row in the modifications dataframe.
+        modifications.loc[0] = [start_time, end_time, transcription, pause_class, pause_type]
+        # sort the pauses
+        modifications = modifications.sort_values(by='start')
+
+        modifications.to_csv('static/modifications.csv', index=False)
+    # else:
+        #TODO: error message
+
+    # print(modifications)
 
     return render_template("ground_truthing.html")
         
