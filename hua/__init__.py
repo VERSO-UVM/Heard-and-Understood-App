@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, flash, json
+from flask import Flask, render_template, request, redirect, url_for, flash, json
 import firebase_admin
 from firebase_admin import credentials, firestore
 import bcrypt, secrets
@@ -8,13 +8,13 @@ from flask_mail import Mail, Message
 import email_credentials
 from datetime import datetime, timedelta, timezone
 
-FIREBASE_CREDS = 'hua/firebase/serviceAccountKey.json'
+FIREBASE_CREDS = 'serviceAccountKey.json'
 
 def initialize_firebase():
     cred = credentials.Certificate(FIREBASE_CREDS)
     firebase_admin.initialize_app(cred)
 
-def create_app(test_config=None):
+def create_app():
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(Config)
@@ -26,7 +26,7 @@ def create_app(test_config=None):
 
     # initialize firebase
     initialize_firebase()
-    db = firestore.client()  # todo should this be used somewhere
+    db = firestore.client()
 
     # Configure Flask-Mail email settings
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP email server
