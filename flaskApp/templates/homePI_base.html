@@ -20,17 +20,23 @@
     {# Links to Bootstrap CSS file #}
     <link rel="stylesheet" href="/static/css/style.css?version={{ now }}">
     {# Links to a style CSS file with a dynamic version #}
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     {% endblock styles %}
     {% endblock head %}
+
+    <header>
+      <!-- HUA Logo -->
+      <div class="logo">
+        <img src="/static/images/HUA-logo.png" class="header-logo" alt="HUA Logo"/>
+      </div>
+    </header>
   </head>
 
   <body{% block body_attribs %}{% endblock body_attribs %}>
     {% block body %}
-    {% block navbar %}
-    <header>
-      
-        <nav>
+      <div class="container-fluid">
+        <div class="row">
+        <nav class= "col-md-3 side-nav-container">
             <ul>
              <h3> Welcome, User!</h3>
              <li><a href="{{ url_for('homepage') }}">Home</a></li>
@@ -45,18 +51,17 @@
                     <li><a href="{{ url_for('dashboard')}}">{{i}}</a></li>
                     {% endfor%}
                     </ul>
-                    </li>
-                   
-                    
-            
-      
-                 
-                      
+                    </li>    
             </ul>
           </nav>
-    </header>
-    {%- endblock navbar %}
-    {% block content %}{%- endblock content %}
+    
+        <!-- Main content on the right -->
+        <div class="col-md-9">
+          {% block content %}
+          {% endblock content %}
+        </div>
+      </div>
+    </div>
 
     {% block scripts %}
     <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
@@ -65,7 +70,7 @@
     {# Links to Bootstrap JS file from CDN #}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     {% endblock scripts %}
-    {%- endblock body %}
+    {% endblock body %}
    
   </body>
   {% endblock html %}
