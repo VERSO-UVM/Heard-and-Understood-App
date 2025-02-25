@@ -11,43 +11,7 @@ Home Page: User
 
 {% block styles %}
   {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
-  <style>
-    .modal-button{
-        border: 2px dashed #ccc;
-        padding: 20px;
-        width: 250px;
-        height: 200px;
-        text-align: center;
-        border-radius: 10px;
-        font-size: 18px;
-        margin-top: 100px;
-        cursor: pointer;
-    }
-    .modal-button:hover{
-        background-color: #f4f4f9;
-    }
-
-    .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);}
-
-    .modal-content {
-        background-color: white;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 300px;
-        border-radius: 10px;
-    }
-
-</style>
+  <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">   
 {% endblock %}
 
 {% block content%}
@@ -60,20 +24,22 @@ Home Page: User
      </div>
  {% endif %}
 {% endwith %}
-<h3>To access your dashboard and be able to upload audio files, you need to input to your project's access code</h3>
-<div class="modal-button" id="openModal">Click to Enter Access Code</div>
+<h3>To access your dashboard and be able to upload audio files, you need to input to your project's access code.</h3>
+<div class="modal-button" id="openModal">Click to Enter Project Access Code</div>
 <div id="access-code-modal" class="modal">
     <div class="modal-content">
         <form action="{{ url_for('homepage')}}" method="POST" onsubmit="return validateForm()">
-        <span class="close">&times;</span>
-        <h3>Enter Access Code</h3>
-        <input type="text" name="accessCode" class="form-control" id="accessCode" placeholder="Enter Access Code">
-        <button class="submit" id="save">Submit</button>
+        <div class= "modal-header">
+            <span class="close">&times;</span>
+            <h3>Enter Project Access Code</h3>
+        </div>
+        <div class= "modal-body">
+            <p>You must have an access code to add a project to your profile.</p>
+            <input type="text" name="accessCode" class="form-control" id="accessCode" placeholder="Enter project access code here">
+            <button class="submit" id="save">Submit</button>
+        </div>
         </form>
     </div>
-
-   
-
 </div>
 <div>
     <div>
@@ -82,7 +48,6 @@ Home Page: User
 </div>
 </body>
 </html>
-
 
 <script>
     var modal = document.getElementById("access-code-modal");
