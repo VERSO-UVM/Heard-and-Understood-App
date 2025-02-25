@@ -1,7 +1,8 @@
 /* General body styling */
-body {
+body, html {
     font-family: 'Times New Roman', Times, serif;
     background-color: white; 
+    height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -74,7 +75,7 @@ header {
     display: flex;
     align-items: center;
     padding: 1rem;
-    height: 8rem;
+    height: 18%;
     background-color: #a9cafc;
 }
 
@@ -90,6 +91,17 @@ header .header-logo {
     max-height: 100%;
     width: auto;
     max-width: 70%;
+}
+
+/* Header HUA Slogan Styling */
+.slogan-header h1 {
+    font-weight: bold;
+}
+
+.slogan-header h3 {
+    font-style: italic;
+    font-size: 20px;
+    margin-top: 15px; 
 }
 
 /* Navbar Styling */
@@ -123,4 +135,187 @@ header .navbar a {
 
 .home-icon {
     width: 15%;
+}
+
+/* Main content area on the right */
+.col-md-9 {
+    margin-left: 300px; /* Space for the sidebar */
+    padding: 20px;
+}
+
+/* Full width and height container */
+.container-fluid {
+    height: 100%;
+}
+
+/* Ensure the row takes up the full height */
+.row {
+    height: 100%;
+}
+
+
+/* Note: use rem for font sizes and percentages for 
+    general sizing to aid in responsive design. */
+    
+/* Styling for Access Code Button */
+.modal-button{
+    border: 0.45rem dashed #ccc;
+    padding: 5%;
+    width: 40%;
+    height: 150%;
+    text-align: center;
+    border-radius: 1.25rem;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 10%;
+    cursor: pointer;
+    /* Centering */
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -10%);
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.modal-button:hover{
+    background-color: #e6effc;
+}
+
+/* Styling for Entering Access Code Pop-up */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+    
+/* ****************************************** */
+.modal-content {
+    background-color: white;
+    margin: 18% auto;
+    width: 30%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content, .input,
+.submit {
+    box-sizing: none !important;
+}
+
+/* Styling for Header in Access Code Popup */
+.modal-header {
+    background-color: #a9cafc;
+    border-top-left-radius: 0.6rem;
+    border-top-right-radius: 0.6rem;
+    width: 100%;
+    max-width: inherit;
+    margin: 0;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 0 !important;
+    position: relative;
+    width: 454px;
+}
+
+/* Styling for Close 'X-out' Button */
+.close {
+    position: absolute;
+    top: 1rem; 
+    right: 1rem; 
+    font-size: 4rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    align-items: center;
+    /*padding-right: 3%;*/
+}
+
+/* Centers text and removes extra spacing */
+.modal-header h3 {
+    text-decoration: underline;
+    text-align: center;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center */
+    align-items: center; /* Horizontally center */
+}
+
+.modal-body p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Center text input */
+.modal-body input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #888;
+    text-align: left;
+    width: 100%; /* Makes it responsive */
+    max-width: 40rem;
+    align-content: center;
+    margin-top: 2%;
+}
+
+/* Center the submit button and add padding on top */
+.modal-content .submit {
+    display: block;
+    margin: 20px auto 0;
+    background-color: #1679EF;
+    font-weight: bold;
+    height: 25%;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    border: none;
+}
+
+.modal-content .submit:hover {
+    background-color: #1C26A5;
+    color: white;
+    border: none;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    justify-content: center;
+    align-items: center;
+}
+
+.input {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+    border-radius: 0.2rem;
+    border-color: #888;
+}
+
+.submit {
+    border-radius: 1.5rem;
+    background-color: #1679EF;
+    border-color: #1679EF;
+    font-weight: bold;
+    width: 30%;
+    color: black;
+}
+
+/* Styling for Add Icon */
+.add-icon{
+    width: 20%;
+    margin-bottom: 1.5rem;
 }
