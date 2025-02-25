@@ -23,36 +23,51 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
     {% endblock styles %}
     {% endblock head %}
-  </head>
 
-  <body{% block body_attribs %}{% endblock body_attribs %}>
-    {% block body %}
-    {% block navbar %}
     <header>
       <!-- HUA Logo -->
       <div class="logo">
         <img src="/static/images/HUA-logo.png" class="header-logo" alt="HUA Logo"/>
       </div>
+
+      <!-- ******************************************************************************************** -->
+      <div class="slogan-header">
+        <h1>Heard and Understood</h1>
+        <h3> Quality Through Compassionate Conversations</h3>
+      </div>
+      <!-- ******************************************************************************************** -->
+
     </header>
-    <nav class = "home-container">
-        <ul>
-         <li><a href="{{ url_for('homepage') }}">Home</a></li>
-         <li><a href="{{ url_for('profile') }}">Profile</a></li>
-          <li> <a href="{{ url_for('login') }}">Log Out</a></li>
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                  {% for i in projects%}
-                <li><a href="{{ url_for('dashboard')}}">{{i}}</a></li>
-                {% endfor%}
-                </ul>
-          </li>       
-        </ul>
-      </nav>
-    {%- endblock navbar %}
-    {% block content %}{%- endblock content %}
-    <!-- <h3>Enter a project access code to view the project’s dashboard and upload audio files. </h3> 
-    <h3>Click Here to Enter Project Access Code</h3> -->
+  </head>
+
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body %}
+      <div class="container-fluid">
+        <div class="row">
+          <nav class= "col-md-3 side-nav-container">
+            <ul>
+             <li><a href="{{ url_for('homepage') }}">Home</a></li>
+             <li><a href="{{ url_for('profile') }}">Profile</a></li>
+              <li> <a href="{{ url_for('login') }}">Log Out</a></li>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      {% for i in projects%}
+                    <li><a href="{{ url_for('dashboard')}}">{{i}}</a></li>
+                    {% endfor%}
+                    </ul>
+              </li>       
+            </ul>
+          </nav>
+
+        <!-- Main content on the right -->
+        <div class="col-md-9">
+          {% block content %}
+          {% endblock content %}
+        </div>
+      </div>
+    </div>
+    
     {% block scripts %}
     <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
     {# Links to jQuery script from Bootstrap CDN #}
@@ -60,7 +75,7 @@
     {# Links to Bootstrap JS file from CDN #}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     {% endblock scripts %}
-    {%- endblock body %}
+    {% endblock body %}
    
   </body>
   {% endblock html %}
