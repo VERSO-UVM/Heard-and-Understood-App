@@ -29,7 +29,9 @@ To install for production/testing, download the .whl file for the appropriate ve
 If you want to use CONSert, follow the steps in the [Consert Install Guide](hua/consert/CONSERT_INSTALLATION.md)
 
 ### Executing program
-Make sure you have `serviceAccountKey.json` and `email_credentials.py` to the project's root directory.
+Make sure you have `serviceAccountKey.json` and `email_credentials.py`.
+If you installed from source for development, they'll need to be in the project's root directory.
+if you installed from a `.whl` for production/testing, they'll simply need to be in whatever directory you run the app from.
 
 Run `flask --app hua run`
 
