@@ -8,10 +8,8 @@ from flask_mail import Mail, Message
 import email_credentials
 from datetime import datetime, timedelta, timezone
 
-FIREBASE_CREDS = 'serviceAccountKey.json'
-
 def initialize_firebase():
-    cred = credentials.Certificate(FIREBASE_CREDS)
+    cred = credentials.Certificate('serviceAccountKey.json')
     firebase_admin.initialize_app(cred)
 
 def create_app():
@@ -20,7 +18,7 @@ def create_app():
     app.config.from_object(Config)
 
     # load firebase credentials
-    with open(FIREBASE_CREDS) as f:
+    with open('serviceAccountKey.json') as f:
         service_account = json.load(f)
         app.secret_key = service_account.get("secret_key")
 

@@ -3,7 +3,6 @@ name = "hua"
 version = "1.0.0"
 description = "The Heard and Understood App provides a way to explore and classify silence and gaps in conversations."
 readme = "README.md"
-license = "Apache 2.0"
 license = {file = "LICENSE"}
 dependencies = [
     "flask",
@@ -20,8 +19,10 @@ build-backend = "flit_core.buildapi"
 [tool.flit.module]
 name = "hua"
 
-#[tool.flit.sdist]
-#include = [
-#    "hua/consert",
-#    "hua/firebase"
-#]
+[tool.flit.sdist]
+include = [
+    "hua/consert",
+    "hua/firebase",
+    "hua/static",
+    "hua/templates"
+]
