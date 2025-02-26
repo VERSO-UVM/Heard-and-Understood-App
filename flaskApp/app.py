@@ -283,12 +283,10 @@ def dashboard():
 def ground_truthing():
     data = pd.read_csv('static/test_video_classification.csv')
     del data[data.columns[0]]
-    # print(data)
 
     data.to_csv('static/modifications.csv', index=False)
     return render_template("ground_truthing.html")
 
-#TODO: Add a New Pause
 @app.route('/add_new_pause', methods=['POST'])
 def add_new_pause():
     pause_classes = ['non-connectional', 'emotional', 'invitational']

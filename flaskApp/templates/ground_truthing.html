@@ -65,6 +65,7 @@
                     </label>
                     <input type="number" name="endTime" step = "0.1">
                 </div>
+
                 <div>
                     <label for="emotional">Emotional Pause</label>
                     <input type="radio" name = "new-pause-type" value="emotional">
@@ -77,10 +78,6 @@
                     <label for="non-connective">Non-Connective Pause</label>
                     <input type="radio" name = "new-pause-type" value="non-connectional">
                 </div>
-                <!-- <div>
-                    <label for="no-pause">No Pause</label>
-                    <input type="radio" name = "new-pause-type" value="no-pause">
-                </div> -->
 
                 <label for="editTranscription">
                     <h4>Transcription:</h4>
@@ -89,65 +86,66 @@
                 <input type="text" name="transcription" id = "transcription">
 
                 <div>
-                    <button type="submit" name = "new-pause" id="update" value="update"> Add Update</button>
+                    <button type="submit" name = "new-pause" id="update" value="update"> Add new pause</button>
                 </div>
             </form>
             </section>
 
-             <!-- Extend Pause -->
-              <!-- Modify a pause, and make it longer, or delete it. -->
+              <!-- Modify a pause (length or transcription) -->
              <section>
                 <h3>Modify pause:</h3>
              <div>
+                <label for="pauseAt">
+                    <h4>Pause at</h4>
+                </label>
+                <input type="number" id="pauseAt">
+
+                <div>
+                    <button type="submit" name = "pause-at" id="pause-at" value="update">Modify length</button>
+                </div>
+
                 <label for="editTranscription">
                     <h4>Edit Transcription:</h4>
                 </label>
                 <input type="text" id="editTranscription" >
-            </div>
-            <div>
-                <label for="deletePause">Emotional Pause</label>
-                <input type="checkbox" id="emotionalCheckbox">
-            </div>
-            </section>
+                <div>
+                    <button type="submit" name = "modify-transcription" id="update" value="update">Modify transcription</button>
+                </div>
 
-             <!-- Ground Truthing Connection -->
-             <!-- the model classified the wrong kind of connection -->
-             <section>
-                <h3>Ground Truthing Connection</h3>
-            
-            <div>
-                <label for="startTime">
-                    <h4>Start</h4>
+                <label for="modify-pause-type">
+                    <h4>Modify pause type:</h4>
                 </label>
-                <input type="number" id="startTime">
-
-                <label for="endTime">
-                    <h4>to</h4>
-                </label>
-                <input type="number" id="endTime" >
-            </div>
-            
                 <div>
-                    <label for="emotionalCheckbox">Emotional Pause</label>
-                    <input type="checkbox" id="emotionalCheckbox">
+                    <label for="emotional">Emotional Pause</label>
+                    <input type="radio" name = "modify-pause-type" value="emotional">
                 </div>
                 <div>
-                    <label for="invitationalCheckbox">Invitational Pause</label>
-                    <input type="checkbox" id="invitationalCheckbox">
+                    <label for="invitational">Invitational Pause</label>
+                    <input type="radio" name = "modify-pause-type" value="invitational">
                 </div>
                 <div>
-                    <label for="non-connectiveCheckbox">Non-Connective Pause</label>
-                    <input type="checkbox" id="non-connectiveCheckbox">
-                </div>
-                <div>
-                    <label for="noPauseCheckbox">No Pause</label>
-                    <input type="checkbox" id="non-noPauseCheckbox">
+                    <label for="non-connective">Non-Connective Pause</label>
+                    <input type="radio" name = "modify-pause-type" value="non-connectional">
                 </div>
                 <div>
                     <button type="submit" id="update" value="update">Add Update</button>
                 </div>
-           
+            </div>
+
+            <!-- Delete Pause -->
+              <section>
+                <h3>Delete pause:</h3>
+             <div>
+                <label for="pauseAt">
+                    <h4>Pause at</h4>
+                </label>
+                <input type="number" id="pauseAt">
+
+                <div>
+                    <button type="submit" name = "delete-pause" id="update" value="update"> Delete this pause</button>
+                </div>
             </section>
+
             <div>
                 <button type="submit" id="update" value="update"  disabled> Save and update changes</button>
             </div>
