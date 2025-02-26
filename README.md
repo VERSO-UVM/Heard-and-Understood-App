@@ -19,23 +19,26 @@ Matt et al. 2023: Matt, Jeremy E et al. “An Acoustical and Lexical Machine-Lea
 
 ## Getting Started
 
-### Dependencies
-You will need Python 3.10 or earlier installed. 
-
-Then use pip to install
-- flask
-- Flask-Mail
-- firebase-admin
-- bcrypt
-- mysql-connector
-
-If you want to use CONSert, follow the steps in the [Consert Install Guide](flaskApp/consert/CONSERT_INSTALLATION.md)
-
 ### Installing
-Clone this repository, then add `serviceAccountKey.json` to `flaskApp/firebase`
+You will need Python 3.10 or earlier installed.
+
+To install for development, clone this repository, navigate to it, and run `pip install -e .` (don't miss the period at the end)
+
+To install for production/testing, download the .whl file for the appropriate version from the releases tab and run `pip install hua-1.0.0-py2.py3-none-any.whl` replacing the version to match your downloaded file.
+
+If you want to use CONSert, follow the steps in the [Consert Install Guide](hua/consert/CONSERT_INSTALLATION.md)
 
 ### Executing program
-Run `app.py`
+Make sure you have `serviceAccountKey.json` and `email_credentials.py`.
+If you installed from source for development, they'll need to be in the project's root directory.
+if you installed from a `.whl` for production/testing, they'll simply need to be in whatever directory you run the app from.
+
+Run `flask --app hua run`
+
+### Building program
+If you haven't already, install `build` by running `pip install build`
+
+Then, whenever you'd like to build a new `.whl` file, run `python -m build --wheel` in the project's root directory. The `.whl` file will appear in the `dist` directory.
 
 ## Help
 
