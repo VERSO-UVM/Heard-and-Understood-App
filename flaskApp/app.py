@@ -312,15 +312,44 @@ def add_new_pause():
     # else:
         #TODO: error message
 
-    # print(modifications)
-
     return render_template("ground_truthing.html")
         
 
-#TODO: Extend Clip
-# @app.route('/extend_clip', methods=['GET', 'POST'])
-# def extend_clip():
-#     if request.method == 'GET':
+# Extend Clip
+@app.route('/extend_clip', methods=['POST'])
+def extend_clip():
+
+    input_time = float(request.form.get('pauseAt'))
+    start_time = float(request.form.get('modifyStartTime'))
+    end_time = float(request.form.get('modifyEndTime'))
+
+    modifications = pd.read_csv('static/modifications.csv')
+    found_pause = False
+    pause_index = -1
+
+    try:
+        assert start_time < end_time, "Start time must be less than end time. "
+    except AssertionError as message:
+        print(message)
+
+    for i, row in modifications.iterrows():
+        if input_time >= float(row['start']) and input_time <= float(row['stop']):
+            found_pause = True
+            pause_index = i
+    
+    print(found_pause)
+
+    if found_pause:
+        modifications.at[pause_index, 'start'] = start_time
+        modifications.at[pause_index, 'stop'] = end_time
+
+        modifications = modifications.sort_values(by='start')
+
+        modifications.to_csv('static/modifications.csv', index=False)
+    # else, TODO: display error message1
+
+    return render_template("ground_truthing.html")
+    
 
 #TODO: Edit Transcription
 # @app.route('/edit_transcription', methods=['POST'])
@@ -329,11 +358,12 @@ def add_new_pause():
 #     return text
         
 #TODO: Ground-Truth Connection
-# @app.route('/ground_truth_connection', methods=['GET', 'POST'])
+# @app.route('/ground_truth_connection', methods=['POST'])
 # def ground_truth_connection():
 #     if request.method == 'GET':
   
 #TODO: the final submit button consolidates the modifications file into the "test" file
+
 
 @app.route("/homepage")
 def homepage():
