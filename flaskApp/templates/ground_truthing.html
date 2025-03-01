@@ -58,12 +58,12 @@
                     <label for="startTime">
                         <h4>Start</h4>
                     </label>
-                    <input type="number" name="startTime" step = "0.1" required>
+                    <input type="number" name="startTime" step = "0.1">
     
                     <label for="endTime">
                         <h4>to</h4>
                     </label>
-                    <input type="number" name="endTime" step = "0.1" required>
+                    <input type="number" name="endTime" step = "0.1">
                 </div>
 
                 <div>
@@ -93,76 +93,73 @@
 
               <!-- Modify a pause (length or transcription) -->
             <section>
-                <form method="POST" action="/extend_clip">
+            <form method="POST" action="/extend_clip">
                 <h3>Modify pause:</h3>
              <div>
                 <label for="pauseAt">
-                    <h4>Pause at</h4>
+                    <h4>Pause is at</h4>
                 </label>
                 <input type="number" name="pauseAt" id="pauseAt" step = "0.1" required>
 
                 <div>
                     <label for="startTime">
-                        <h4>Start</h4>
+                        <h4>New Start Time</h4>
                     </label>
-                    <input type="number" name="modifyStartTime" id="modifyStartTime" step = "0.1" required>
+                    <input type="number" name="modifyStartTime" id="modifyStartTime" step = "0.1">
     
                     <label for="endTime">
-                        <h4>to</h4>
+                        <h4>New End Time</h4>
                     </label>
-                    <input type="number" name="modifyEndTime" id="modifyEndTime" step = "0.1" required>
+                    <input type="number" name="modifyEndTime" id="modifyEndTime" step = "0.1">
                 </div>
 
-                <div>
-                    <button type="submit" name="pause-at" id="pause-at" value="update">Modify length</button>
-                </div>
-            </form>
-            </section>
+                
 
-            <section>
                 <label for="editTranscription">
                     <h4>Edit Transcription:</h4>
                 </label>
-                <input type="text" id="editTranscription">
-                <div>
-                    <button type="submit" name = "edit-transcription" id = "edit-transcription" value="update">Modify transcription</button>
-                </div>
-            </section>
+                
+                <input type="text" name="editTranscription" id="editTranscription">
 
-            <section>
                 <label for="modify-pause-type">
                     <h4>Modify pause type:</h4>
                 </label>
                 <div>
                     <label for="emotional">Emotional Pause</label>
-                    <input type="radio" name = "modify-pause-type" value="emotional" required>
+                    <input type="radio" name = "modify-pause-type" value="emotional">
                 </div>
                 <div>
                     <label for="invitational">Invitational Pause</label>
-                    <input type="radio" name = "modify-pause-type" value="invitational" required>
+                    <input type="radio" name = "modify-pause-type" value="invitational">
                 </div>
                 <div>
                     <label for="non-connective">Non-Connective Pause</label>
-                    <input type="radio" name = "modify-pause-type" value="non-connectional" required>
+                    <input type="radio" name = "modify-pause-type" value="non-connectional">
                 </div>
+                <!-- <div>
+                    <button type="submit" id="modify-pause-type" value="update">Modify pause type</button>
+                </div> -->
                 <div>
-                    <button type="submit" id="modify-pause-type" value="update">Add Update</button>
+                    <button type="submit" name="pause-at" id="pause-at" value="update">Modify length</button>
                 </div>
-            </div>
+            </form>
         </section>
 
             <!-- Delete Pause -->
-              <section>
-                <h3>Delete pause:</h3>
-             <div>
-                <label for="pauseAt">
-                    <h4>Pause at</h4>
-                </label>
-                <input type="number" id="pauseAt" required>
+            <section>
+            <div>
+                <div>
+                    <label for="pauseAtDelete">
+                        <h3>Delete pause:</h3>
+                    </label>
+                </div>
+                
+                <input type="number" id="pauseAtDelete" required>
 
                 <div>
                     <button type="submit" id="delete-pause" value="update"> Delete this pause</button>
                 </div>
+            </div>
             </section>
 
             <div>
@@ -178,6 +175,7 @@
             </div>
             
         </div>
+    </div>
       
     </div>
 

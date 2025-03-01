@@ -318,17 +318,39 @@ def add_new_pause():
 # Extend Clip
 @app.route('/extend_clip', methods=['POST'])
 def extend_clip():
+    pause_classes = ['non-connectional', 'emotional', 'invitational']
+
+    change_start_time = False
+    change_end_time = False
+    edit_transcript = False
+    modify_pause_type = False
 
     input_time = float(request.form.get('pauseAt'))
-    start_time = float(request.form.get('modifyStartTime'))
-    end_time = float(request.form.get('modifyEndTime'))
+
+    if request.form.get('modifyStartTime'):
+        start_time = float(request.form.get('modifyStartTime'))
+        change_start_time = True
+        
+    if request.form.get('modifyEndTime'):
+        end_time = float(request.form.get('modifyEndTime'))
+        change_end_time = True
+
+    if request.form.get('editTranscription'):
+        transcription = request.form.get('editTranscription')
+        edit_transcript = True
+
+    if request.form.get('modify-pause-type'):
+        pause_type = request.form.get('modify-pause-type')
+        modify_pause_type = True
+        
 
     modifications = pd.read_csv('static/modifications.csv')
     found_pause = False
     pause_index = -1
 
     try:
-        assert start_time < end_time, "Start time must be less than end time. "
+        if change_start_time and change_end_time:
+            assert start_time < end_time, "Start time must be less than end time. "
     except AssertionError as message:
         print(message)
 
@@ -336,33 +358,49 @@ def extend_clip():
         if input_time >= float(row['start']) and input_time <= float(row['stop']):
             found_pause = True
             pause_index = i
-    
-    print(found_pause)
 
     if found_pause:
-        modifications.at[pause_index, 'start'] = start_time
-        modifications.at[pause_index, 'stop'] = end_time
+        if change_start_time:
+            modifications.at[pause_index, 'start'] = start_time
+        if change_end_time:
+            modifications.at[pause_index, 'stop'] = end_time
+        if edit_transcript:
+            modifications.at[pause_index, 'context'] = transcription
+        if modify_pause_type:
+            modifications.at[pause_index, 'pause_type'] = pause_type
+            modifications.at[pause_index, 'class'] = pause_classes.index(pause_type)
 
         modifications = modifications.sort_values(by='start')
-
         modifications.to_csv('static/modifications.csv', index=False)
     # else, TODO: display error message1
 
     return render_template("ground_truthing.html")
     
 
-#TODO: Edit Transcription
-# @app.route('/edit_transcription', methods=['POST'])
-# def edit_transcription():
-#     text = request.form['text']
-#     return text
-        
-#TODO: Ground-Truth Connection
-# @app.route('/ground_truth_connection', methods=['POST'])
+# #TODO: Delete Pause
+@app.route('/delete_pause', methods=['POST'])
+def delete_pause():
+#     input_time = float(request.form.get('pauseAt'))
+    
+
+#     for i, row in modifications.iterrows():
+#         if input_time >= float(row['start']) and input_time <= float(row['stop']):
+#             found_pause = True
+#             pause_index = i
+
+#     if found_pause:
+#         modifications.at[pause_index, 'context'] = new_transcription
+#         modifications = modifications.sort_values(by='start')
+
+#         modifications.to_csv('static/modifications.csv', index=False)
+
+#     modifications = pd.read_csv('static/modifications.csv')
+#     return render_template("ground_truthing.html")
+
+#TODO: Save changes
+# @app.route('/save_changes', methods=['POST'])
 # def ground_truth_connection():
-#     if request.method == 'GET':
-  
-#TODO: the final submit button consolidates the modifications file into the "test" file
+    # return render_template("ground_truthing.html")
 
 
 @app.route("/homepage")

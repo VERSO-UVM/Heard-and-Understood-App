@@ -1,5 +1,6 @@
 start,stop,context,class,pause_type
 0.0,2.5,,0.0,non-connectional
+1.0,10.0,hello,0.0,non-connectional
 17.5,20.0, My name is Bob Grammer. I'm with the palliative care team. I'm one of the palliative care doctors. Okay. Is it okay if I have a seat? Sure.,2.0,invitational
 20.5,23.0, I'm with the palliative care team. I'm one of the palliative care doctors. Okay. Is it okay if I have a seat? Sure.,2.0,invitational
 35.5,38.0, I would come by to see if I could be of help. I don't know if anybody can help right now but...,1.0,emotional
@@ -8,7 +9,7 @@ start,stop,context,class,pause_type
 123.0,125.0, This is a lot on your plate. Yeah. I'm overwhelmed.,1.0,emotional
 156.0,158.0," everything better and I thought I was better. And then to get hit with this, I don't know what.",1.0,emotional
 159.0,161.5," And then to get hit with this, I don't know what. I just had... It's too much.",1.0,emotional
-160.0,165.0," I just... It's too much. While we're talking, is it okay if I hold your hand? Yeah. What's the most important thing?",2.0,invitational
+164.5,171.0," I just... It's too much. While we're talking, is it okay if I hold your hand? Yeah. What's the most important thing?",2.0,invitational
 175.5,177.5, What's the most bothersome piece of all of this? Or even if you know? Scared.,2.0,invitational
 179.5,181.5, What's the most bothersome piece of all of this? Or even if you know? Scared. I'm so scared.,1.0,emotional
 188.5,192.5, scared. I know everybody dies but...,1.0,emotional
@@ -34,7 +35,6 @@ start,stop,context,class,pause_type
 559.5,561.5," And I remember that, wait, no, there's something more than that. That's the best I can put it. You're putting it very well, very clearly.",1.0,emotional
 562.0,564.5," No, it's something more than that. It's the best I can put it. You're putting it very well, very clearly.",1.0,emotional
 589.5,592.0," I've got two dogs, I've got friends, I've got, there's so much beauty in this world and I don't know if I'm ever going to see any of it again.",1.0,emotional
-598.5,601.0, It impresses me the beauty that you bring into this world and have done for so many people. Thank you.,1.0,emotional
 657.5,659.5," say, I might panic thinking about, OK, that's one day less, that's one day less, and if I don't know, I might think, OK, I have one day more.",1.0,emotional
 661.0,664.0," that's one day less, and if I don't know, I might think, okay, I have one day more instead.",1.0,emotional
 701.5,703.5, I feel like I'm choking to death at the end because I had a lot of trouble breathing. They took all that fluid out but it's okay.,1.0,emotional
