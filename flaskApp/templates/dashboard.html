@@ -6,30 +6,7 @@
     <title>Organization Dashboard</title>
     <link rel="stylesheet" href="../static/dashboard/dashboard.css">
     <script>
-        // function runConsert() {
-        //     fetch('/run_consert', { method: 'POST' })
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             alert(data.message)
-
-        //             const imagePath = 'static/testOutput/output.png';
-        //             displayImage(imagePath);
-        //         })
-        //         .catch(error => console.error('Error:', error));
-        // }
-
-        // function displayImage(imagePath) {
-        //     let imgContainer = document.getElementById('generatedImage');
-            
-        //     if (!imgContainer) {
-        //         imgContainer = document.createElement('div');
-        //         imgContainer.id = 'generatedImage';
-        //         document.body.appendChild(imgContainer);
-        //     }
-
-        //     imgContainer.innerHTML = `<img src="${imagePath}" alt="Generated Output">`;
-        // }
-
+        
         function runConsert() {
             fetch('/run_consert', { method: 'POST' })
                 .then(response => response.json())
@@ -65,7 +42,7 @@
                 imgContainer.id = 'generatedImage';
                 document.body.appendChild(imgContainer);
             }
-            
+
             imgContainer.innerHTML = `<img src="${imagePath}" alt="Generated Output">`;
         }
 
