@@ -136,17 +136,16 @@
                     <label for="non-connective">Non-Connective Pause</label>
                     <input type="radio" name = "modify-pause-type" value="non-connectional">
                 </div>
-                <!-- <div>
-                    <button type="submit" id="modify-pause-type" value="update">Modify pause type</button>
-                </div> -->
+                
                 <div>
                     <button type="submit" name="pause-at" id="pause-at" value="update">Modify length</button>
                 </div>
             </form>
         </section>
 
-            <!-- Delete Pause -->
-            <section>
+        <!-- Delete Pause -->
+        <section>
+            <form method = "POST" action = "/delete_pause">
             <div>
                 <div>
                     <label for="pauseAtDelete">
@@ -154,20 +153,21 @@
                     </label>
                 </div>
                 
-                <input type="number" id="pauseAtDelete" required>
+                <input type="number" name="pauseAtDelete" id="pauseAtDelete" required>
 
                 <div>
                     <button type="submit" id="delete-pause" value="update"> Delete this pause</button>
                 </div>
             </div>
+            </form>
             </section>
 
             <div>
-                <button type="submit" id="update" value="update"  disabled> Save and update changes</button>
+                <form method = "POST" action = "/save_changes">
+                    <button type="submit" id="update" value="update"> Save and update changes</button>
+                </form>
             </div>
        
-
-
             <div id="modalBackground" class="modalBackground">
                 <div id="modalPopup" class="modalPopup">
                     <span id="modalContent" class="modalContent"></span>

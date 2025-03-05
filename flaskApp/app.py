@@ -376,31 +376,29 @@ def extend_clip():
 
     return render_template("ground_truthing.html")
     
-
-# #TODO: Delete Pause
 @app.route('/delete_pause', methods=['POST'])
 def delete_pause():
-#     input_time = float(request.form.get('pauseAt'))
-    
+    input_time = float(request.form.get('pauseAtDelete'))
+    modifications = pd.read_csv('static/modifications.csv')
 
-#     for i, row in modifications.iterrows():
-#         if input_time >= float(row['start']) and input_time <= float(row['stop']):
-#             found_pause = True
-#             pause_index = i
+    for i, row in modifications.iterrows():
+        if input_time >= float(row['start']) and input_time <= float(row['stop']):
+            found_pause = True
+            pause_index = i
 
-#     if found_pause:
-#         modifications.at[pause_index, 'context'] = new_transcription
-#         modifications = modifications.sort_values(by='start')
+    if found_pause:
+        modifications = modifications.drop(pause_index)
 
-#         modifications.to_csv('static/modifications.csv', index=False)
+        modifications.to_csv('static/modifications.csv', index=False)
 
-#     modifications = pd.read_csv('static/modifications.csv')
-#     return render_template("ground_truthing.html")
+    return render_template("ground_truthing.html")
 
-#TODO: Save changes
-# @app.route('/save_changes', methods=['POST'])
-# def ground_truth_connection():
-    # return render_template("ground_truthing.html")
+@app.route('/save_changes', methods=['POST'])
+def ground_truth_connection():
+    modifications = pd.read_csv('static/modifications.csv')
+
+    modifications.to_csv('static/test_video_classification.csv', index=False)
+    return render_template("ground_truthing.html")
 
 
 @app.route("/homepage")
