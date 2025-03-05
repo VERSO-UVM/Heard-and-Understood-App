@@ -1,5 +1,5 @@
 from consert_module.consert_process import ConsertProcess
-from flask import Flask, render_template, request, redirect, url_for, jsonify, flash, json
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash, json, send_from_directory
 import firebase_admin
 from firebase_admin import credentials, firestore
 import bcrypt, secrets
@@ -287,6 +287,9 @@ def login():
     # Handle GET requests
     return render_template('login.html')
 
+@app.route('/testOutput/<filename>')
+def get_output_file(filename):
+    return send_from_directory('test_output', filename)
 
 @app.route("/dashboard")
 def dashboard():

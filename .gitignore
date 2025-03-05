@@ -6,4 +6,5 @@ __pycache__/
 *.log
 email_credentials.py
 **/.DS_Store
-test_output/
+flaskApp/static/test_output/
+

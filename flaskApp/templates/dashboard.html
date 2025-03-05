@@ -6,12 +6,69 @@
     <title>Organization Dashboard</title>
     <link rel="stylesheet" href="../static/dashboard/dashboard.css">
     <script>
+        // function runConsert() {
+        //     fetch('/run_consert', { method: 'POST' })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             alert(data.message)
+
+        //             const imagePath = 'static/testOutput/output.png';
+        //             displayImage(imagePath);
+        //         })
+        //         .catch(error => console.error('Error:', error));
+        // }
+
+        // function displayImage(imagePath) {
+        //     let imgContainer = document.getElementById('generatedImage');
+            
+        //     if (!imgContainer) {
+        //         imgContainer = document.createElement('div');
+        //         imgContainer.id = 'generatedImage';
+        //         document.body.appendChild(imgContainer);
+        //     }
+
+        //     imgContainer.innerHTML = `<img src="${imagePath}" alt="Generated Output">`;
+        // }
+
         function runConsert() {
             fetch('/run_consert', { method: 'POST' })
                 .then(response => response.json())
-                .then(data => alert(data.message))
-                .catch(error => console.error('Error:', error));
+                .then(data => {
+                    alert(data.message);
+                    checkImage(); // Start checking for image readiness
+                }
+            )
+            .catch(error => console.error('Error:', error));
         }
+
+        function checkImage() {
+            const imagePath = 'static/testOutput/output.png?' + new Date().getTime(); // Prevent caching
+            fetch(imagePath, { method: 'HEAD' }) // Check if the file exists
+                .then(response => {
+                    if (response.ok) {
+                        displayImage(imagePath);
+                    } else {
+                        setTimeout(checkImage, 2000); // Retry after 2 seconds
+                    }
+            })
+            .catch(error => {
+                console.error('Error checking image:', error);
+                setTimeout(checkImage, 2000); // Retry after 2 seconds
+            });
+        }
+
+        function displayImage(imagePath) {
+            let imgContainer = document.getElementById('generatedImage');
+
+            if (!imgContainer) {
+                imgContainer = document.createElement('div');
+                imgContainer.id = 'generatedImage';
+                document.body.appendChild(imgContainer);
+            }
+            
+            imgContainer.innerHTML = `<img src="${imagePath}" alt="Generated Output">`;
+        }
+
     </script>
   </head>
   <body>
@@ -80,6 +137,15 @@
                       </label>
                       <label>View Accuracy</label>
                 </div>
+            </section>
+
+            <!-- CONsert output -->
+            <section>
+                <div id="imageContainer">
+                    <h2>Generated Output</h2>
+                    <img id="generatedImage" src="" alt="Generated Output" style="display: none; max-width: 100%;">
+                </div>
+                
             </section>
 
             <!-- CSV Download -->
