@@ -21,22 +21,25 @@ body, html {
     border-color: black; 
     border-width: 2px;
     border-style: solid;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    /*display: flex;
+    flex-direction: column;
+    align-items: center;*/
+
+}
+
+/* Ensure main container is centered while considering the sidebar */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Sign In Header */
 .header-style {
     margin-bottom: 5%;
     text-decoration: underline;
-}
-
-/* Button Style */
-.btn {
-    margin-top: 5%;
-    margin-bottom: 5%;
-    border-radius: 10px;
-    background-color: black;
-    border-color: black;
-    font-size: medium;
 }
 
 /* View Password Toggle Button */
@@ -61,9 +64,35 @@ and Outline When Clicked */
     box-shadow: none !important;
 }
 
-/* Hover Button Style */
-.btn:hover {
-    background-color: #1d63d1;
+/* Button Style */
+.btn {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 10px;
+    background-color: black;
+    border-color: black;
+    font-size: medium;
+}
+
+.btn:hover, .btn-small:hover {
+    background-color: #1C26A5 !important;
+}
+
+.btn-small {
+    width:50%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 10px;
+    background-color: black;
+    border-color: black;
+    font-size: medium;
+    
+}
+
+.center-btn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .login-links:hover {
@@ -144,6 +173,13 @@ header .navbar a {
 .col-md-9 {
     margin-left: 300px; /* Space for the sidebar */
     padding: 20px;
+}
+
+.center-profile {
+    width: 40%;
+    align-items: center;
+    align-content: center;
+    margin-left: 25%;
 }
 
 /* Full width and height container */
@@ -272,24 +308,42 @@ header .navbar a {
     margin-top: 2%;
 }
 
-/* Center the submit button and add padding on top */
+/*
 .modal-content .submit {
     display: block;
     margin: 20px auto 0;
-    background-color: #1679EF;
+    background-color: #1C26A5;
     font-weight: bold;
     height: 25%;
-    color: black;
-    padding: 10px;
+    color: white;
+    padding: 5px;
     text-align: center;
     border: none;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .modal-content .submit:hover {
-    background-color: #1C26A5;
+    text-decoration: underline;
+    background-color: white;
+    color: #1C26A5;
+    border: 2px solid #1C26A5;
+}
+
+
+.submit-profile {
+    background-color: #1C26A5 !important;
     color: white;
+    width: 75%;
     border: none;
 }
+
+.submit-profile:hover {
+    text-decoration: underline;
+    background-color: white !important;
+    color: #1C26A5;
+    border: 2px solid #1C26A5;
+}*/
 
 .main-content {
     display: flex;

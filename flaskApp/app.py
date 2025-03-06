@@ -450,6 +450,7 @@ def generateNewProject():
             return render_template('PIView/newProjectPI.html',projects=all_projects)
         else :
             return render_template('AdminView/newProjectAdmin.html',projects=all_projects)
+
 #############################
 
 

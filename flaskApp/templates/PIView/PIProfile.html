@@ -77,7 +77,9 @@ Home Page: PI
             </div>
                 <!-- <form method="POST" action="/profile"> -->
                     <!-- Change info button -->
-                    <button id="changeButton" type="submit" class="btn btn-primary btn-block">Change Profile Info</button>
+                    <div class="center-btn">
+                        <button id="changeButton" type="submit" class="btn-small btn-primary btn-block">Change Profile Info</button>
+                    </div>
                    
                 <!-- </form> -->
             
@@ -110,7 +112,7 @@ Home Page: PI
         changeButton.style.display = "none";
 
         confirmButton = document.createElement("button");
-        confirmButton.classList.add("btn");
+        confirmButton.classList.add("btn-small");
         confirmButton.classList.add("btn-primary");
         confirmButton.classList.add("btn-block");
         confirmButton.textContent = "Edit Profile";

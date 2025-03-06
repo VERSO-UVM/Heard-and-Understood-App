@@ -17,7 +17,7 @@
     {# Sets the favicon for the page #}
     <!-- Bootstrap -->
     <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
-    {# Links to Bootstrap CSS file #}
+    {# Links to General Style CSS file #}
     <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">
     {# Links to a style CSS file with a dynamic version #}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
@@ -49,6 +49,7 @@
              <li><a href="{{ url_for('homepage') }}">Home</a></li>
              <li><a href="{{ url_for('profile') }}">Profile</a></li>
               <li> <a href="{{ url_for('login') }}">Log Out</a></li>
+              <li><a href="{{ url_for('pi_access_request') }}">Request PI Access</a></li>
               <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
                   <ul class="dropdown-menu">

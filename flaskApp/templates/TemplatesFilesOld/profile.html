@@ -10,8 +10,10 @@
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-9"> 
                 <h2 class="text-center">Profile Settings</h2>
+
+                <div class="border-login rounded p-4">
 
                 <!-- Flash message for invalid credentials -->
                 {% with messages = get_flashed_messages() %}
@@ -53,7 +55,7 @@
                                 changeButton.style.display = "none";
 
                                 confirmButton = document.createElement("button");
-                                confirmButton.classList.add("btn");
+                                confirmButton.classList.add("btn-small");
                                 confirmButton.classList.add("btn-primary");
                                 confirmButton.classList.add("btn-block");
                                 confirmButton.textContent = "Edit Profile";
@@ -71,7 +73,6 @@
                             });
                         </script>
                     <!-- </form> -->
-                
                 
             </div>
         </div>
