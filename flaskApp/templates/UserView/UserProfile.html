@@ -5,55 +5,19 @@
 
 
 {% block title %}
-Home Page: PI
+Home Page: User
 
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
-  <!-- <style>
-    .modal-button{
-        border: 2px dashed #ccc;
-        padding: 20px;
-        width: 250px;
-        height: 200px;
-        text-align: center;
-        border-radius: 10px;
-        font-size: 18px;
-        margin-top: 100px;
-        cursor: pointer;
-    }
-    .modal-button:hover{
-        background-color: #f4f4f9;
-    }
-
-    .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);}
-
-    .modal-content {
-        background-color: white;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 300px;
-        border-radius: 10px;
-    }
-
-</style> -->
+  `<link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
 {% endblock %}
 
 {% block content%}
-<div class="container mt-5">
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="center-profile">
             <h2 class="text-center">Profile Settings</h2>
 
             <!-- Flash message for invalid credentials -->
@@ -65,19 +29,19 @@ Home Page: PI
                 {% endif %}
             {% endwith %}
                     
-            <div id="profileInfo">
-                <label for="name"><b>Account Email</b></label>
-                <p id="name">{{email}}</p>
-
-               
-            </div>
+            <div class="border-login rounded p-4"> 
+                <div id="profileInfo">
+                    <label for="name"><b>Account Email</b></label>
+                    <p id="name">{{email}}</p>
+                </div>
                 <!-- <form method="POST" action="/profile"> -->
                     <!-- Change info button -->
-                    <button id="changeButton" type="submit" class="btn btn-primary btn-block">Change Profile Info</button>
-                   
+                <div class="center-btn">
+                    <button id="changeButton" type="submit" class="btn-small btn-primary btn-block">Change Profile Info</button>
                 <!-- </form> -->
+                </div>
             
-            
+            </div>
         </div>
     </div>
 </div>
@@ -85,42 +49,55 @@ Home Page: PI
 
 
 <script>
-    changeButton = document.getElementById("changeButton");
-    profileContainer = document.getElementById("profileInfo");
-
-    changeButton.addEventListener("click", function() {
-        passwordLabel = document.createElement("label");
-        passwordLabel.for = "passwordPrompt";
-        passwordLabel.textContent = "Enter Password";
-        passwordLabel.style.fontWeight = "bold"; 
-
-
-        passwordPrompt = document.createElement("input");
-        passwordPrompt.id = "passwordPrompt";
-        passwordPrompt.type = "password";
-
-        profileContainer.append(passwordLabel);
-        profileContainer.innerHTML += "<br>"; 
-        profileContainer.append(passwordPrompt);
-        
-        changeButton.style.display = "none";
-
-        confirmButton = document.createElement("button");
-        confirmButton.classList.add("btn");
-        confirmButton.classList.add("btn-primary");
-        confirmButton.classList.add("btn-block");
-        confirmButton.textContent = "Edit Profile";
-        confirmButton.id = "confirmButton";
-        
-        confirmButton.addEventListener("click", function() {
-            window.location.href = "/change-profile";
-            // TODO: Validate user password before allowing them to make changes
-            validate_password(passwordPrompt.value);
+    document.addEventListener("DOMContentLoaded", function() {
+        let changeButton = document.getElementById("changeButton");
+        let profileContainer = document.getElementById("profileInfo");
+    
+        changeButton.addEventListener("click", function() {
+            // Create label
+            let passwordLabel = document.createElement("label");
+            passwordLabel.setAttribute("for", "passwordPrompt");
+            passwordLabel.textContent = "Enter Password";
+            passwordLabel.style.fontWeight = "bold"; 
+    
+            // Password input field
+            let passwordPrompt = document.createElement("input");
+            passwordPrompt.id = "passwordPrompt";
+            passwordPrompt.type = "password";
+            passwordPrompt.classList.add("form-control");
+    
+            // Append elements
+            profileContainer.append(passwordLabel);
+            profileContainer.append(document.createElement("br")); 
+            profileContainer.append(passwordPrompt);
+    
+            // Hide the change button
+            changeButton.style.display = "none";
+    
+            // Center-btn container
+            let centerBtnContainer = document.createElement("div");
+            centerBtnContainer.classList.add("center-btn");
+    
+            // Confirm button
+            let confirmButton = document.createElement("button");
+            confirmButton.classList.add("btn-small", "btn-primary", "btn-block");
+            confirmButton.textContent = "Edit Profile";
+            confirmButton.id = "confirmButton";
+    
+            // Add click event to confirm button
+            confirmButton.addEventListener("click", function() {
+                window.location.href = "/change-profile";
+                // TODO: Validate user password before allowing them to make changes
+                validate_password(passwordPrompt.value);
+            });
+    
+            // Append confirm button to center-btn container
+            centerBtnContainer.appendChild(confirmButton);
+    
+            // Append center-btn container to profileContainer
+            profileContainer.appendChild(centerBtnContainer);
         });
-
-        profileContainer.append(confirmButton);
-
-
     });
+    
 </script>
 {% endblock %}
