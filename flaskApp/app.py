@@ -232,7 +232,6 @@ def new_password():
     
     return render_template('new_password.html', email=email)
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -274,7 +273,6 @@ def login():
     # Handle GET requests
     return render_template('login.html')
 
-
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
@@ -282,7 +280,6 @@ def dashboard():
 @app.route("/ground_truthing")
 def ground_truthing():
     data = pd.read_csv('static/test_video_classification.csv')
-    del data[data.columns[0]]
 
     data.to_csv('static/modifications.csv', index=False)
     return render_template("ground_truthing.html")
@@ -312,9 +309,8 @@ def add_new_pause():
     # else:
         #TODO: error message
 
-    return render_template("ground_truthing.html")
+    return ("", 204)
         
-
 # Extend Clip
 @app.route('/extend_clip', methods=['POST'])
 def extend_clip():
@@ -374,7 +370,7 @@ def extend_clip():
         modifications.to_csv('static/modifications.csv', index=False)
     # else, TODO: display error message1
 
-    return render_template("ground_truthing.html")
+    return ("", 204)
     
 @app.route('/delete_pause', methods=['POST'])
 def delete_pause():
@@ -391,7 +387,7 @@ def delete_pause():
 
         modifications.to_csv('static/modifications.csv', index=False)
 
-    return render_template("ground_truthing.html")
+    return ("", 204)
 
 @app.route('/save_changes', methods=['POST'])
 def ground_truth_connection():
