@@ -1,4 +1,3 @@
-
 class Config:
     FIREBASE_API_KEY = "AIzaSyD6H_1OfT0tVO6VeCQewvafIHJGHd0QnvE"
     FIREBASE_AUTH_DOMAIN = "hua-app-7e6c0.firebaseapp.com"
