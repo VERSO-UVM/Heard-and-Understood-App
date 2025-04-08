@@ -6,7 +6,7 @@
     <title>Organization Dashboard</title>
     <link rel="stylesheet" href="../static/dashboard/dashboard.css">
     <script>
-        
+
         function runConsert() {
             fetch('/run_consert', { method: 'POST' })
                 .then(response => response.json())
@@ -19,7 +19,7 @@
         }
 
         function checkImage() {
-            const imagePath = 'static/testOutput/output.png?' + new Date().getTime(); // Prevent caching
+            const imagePath = 'static/test_output/test_video_short_classification.png';  // Prevent caching
             fetch(imagePath, { method: 'HEAD' }) // Check if the file exists
                 .then(response => {
                     if (response.ok) {
@@ -35,16 +35,17 @@
         }
 
         function displayImage(imagePath) {
-            let imgContainer = document.getElementById('generatedImage');
+            let imgElement = document.getElementById('generatedImage');
 
-            if (!imgContainer) {
-                imgContainer = document.createElement('div');
-                imgContainer.id = 'generatedImage';
-                document.body.appendChild(imgContainer);
+            if (!imgElement) {
+                console.error("Image element with ID 'generatedImage' not found.");
+                return;
             }
 
-            imgContainer.innerHTML = `<img src="${imagePath}" alt="Generated Output">`;
+            imgElement.src = imagePath;
+            imgElement.style.display = "block"; // Ensure it's visible
         }
+
 
     </script>
   </head>

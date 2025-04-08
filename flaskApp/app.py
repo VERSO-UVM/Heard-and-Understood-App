@@ -51,7 +51,8 @@ def run_consert():
     """Trigger the Consert process when the button is clicked."""
     try:
         process = ConsertProcess()  # Run the process
-        return jsonify({"status": "success", "message": "Consert process started!"})
+        return jsonify({"status": "success", "message": "Consert process finished!"}) #TODO: replace the pop up window when done testing/implementing css
+    
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)})
     
