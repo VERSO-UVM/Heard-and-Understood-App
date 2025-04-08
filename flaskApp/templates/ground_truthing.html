@@ -20,7 +20,7 @@
             <section>
                 <form>
                     <label for="recordingsInput">Recording</label>
-                    <input list="recordings" id="recordingsInput" disabled>
+                    <input list="recordings" id="recordingsInput">
                     <datalist id="recordings">
                     </datalist>
                 </form>
@@ -58,12 +58,12 @@
                     <label for="startTime">
                         <h4>Start</h4>
                     </label>
-                    <input type="number" name="startTime" step = "0.1">
+                    <input type="number" name="startTime" step = "0.1" required>
     
                     <label for="endTime">
                         <h4>to</h4>
                     </label>
-                    <input type="number" name="endTime" step = "0.1">
+                    <input type="number" name="endTime" step = "0.1" required>
                 </div>
 
                 <div>
