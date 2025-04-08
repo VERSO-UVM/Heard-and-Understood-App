@@ -1,12 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, json
+from flask import Flask, render_template, request, redirect, url_for, flash, json, jsonify, send_from_directory
 import firebase_admin
 from firebase_admin import credentials, firestore
 import bcrypt, secrets
 from hua.firebase.config import Config
 from hua.db_utils import upload_file_to_db, connect_to_database
+from hua.consert.consert_process import ConsertProcess
 from flask_mail import Mail, Message
-import email_credentials
+import email_credentials as email_credentials
 from datetime import datetime, timedelta, timezone
+import os
 
 def initialize_firebase():
     cred = credentials.Certificate('serviceAccountKey.json')
@@ -268,6 +270,20 @@ def create_app():
 
         # Handle GET requests
         return render_template('login.html')
+    
+    @app.route('/run_consert', methods=['POST'])
+    def run_consert():
+        """Trigger the Consert process when the button is clicked."""
+        try:
+            process = ConsertProcess()  # Run the process
+            return jsonify({"status": "success", "message": "Consert process finished!"}) #TODO: replace the pop up window when done testing/implementing css
+
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)})
+
+    @app.route('/testOutput/<filename>')
+    def get_output_file(filename):
+        return send_from_directory('test_output', filename)
 
     @app.route("/dashboard")
     def dashboard():
