@@ -30,4 +30,4 @@ bin/
 /venv
 
 # consert
-/hua/static/consert_ouput/
+hua/static/consert_ouput/
