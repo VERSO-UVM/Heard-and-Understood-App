@@ -28,3 +28,6 @@ bin/
 
 # virtual environments
 /venv
+
+# consert
+/hua/static/consert_ouput/
