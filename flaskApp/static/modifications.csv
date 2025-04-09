@@ -1,5 +1,4 @@
 start,stop,context,class,pause_type
-17.5,20.0, My name is Bob Grammer. I'm with the palliative care team. I'm one of the palliative care doctors. Okay. Is it okay if I have a seat? Sure.,2.0,invitational
 20.5,23.0, I'm with the palliative care team. I'm one of the palliative care doctors. Okay. Is it okay if I have a seat? Sure.,2.0,invitational
 21.0,22.0,meow,2.0,invitational
 35.5,38.0, I would come by to see if I could be of help. I don't know if anybody can help right now but...,1.0,emotional
@@ -12,6 +11,7 @@ start,stop,context,class,pause_type
 175.5,177.5, What's the most bothersome piece of all of this? Or even if you know? Scared.,2.0,invitational
 179.5,181.5, What's the most bothersome piece of all of this? Or even if you know? Scared. I'm so scared.,1.0,emotional
 188.5,192.5, scared. I know everybody dies but...,1.0,emotional
+200.0,250.0,e,2.0,invitational
 233.0,235.5, But I don't want to leave him. I love him so much. He's so good to me.,1.0,emotional
 252.5,254.5," They're not children anymore. They're in their 20s, but they'll always be my kids, you know. What are their names? Joshua and Zachary.",2.0,invitational
 262.0,264.5, Zachary. And I haven't even told him yet because I don't know how.,1.0,emotional
