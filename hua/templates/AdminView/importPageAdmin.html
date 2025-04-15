@@ -1,12 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Files</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+{% extends 'dashboardAdmin_base.html' %}
+
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}
+View all Projects
+
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+{% endblock %}
+
+{% block content%}
     <div class=" container justify-content-center mt-5">
         <h3>Upload Audio Files</h3>
         <form action="/upload_file" method="post" enctype="multipart/form-data">
@@ -24,3 +32,4 @@
         document.getElementById('status').innerText = 'successfully uploaded!';
     });
 </script>
+{% endblock %}

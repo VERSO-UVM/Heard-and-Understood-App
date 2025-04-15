@@ -1,0 +1,73 @@
+{% block doc %}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% endblock html_attribs %}>
+  {% block html %}
+
+  <head>
+    {% block head %}
+    <title>{% block title %}{{title|default}}{% endblock title %}</title>
+    
+
+    {% block metas %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% endblock metas %}
+
+    {% block styles %}
+    {# Sets the favicon for the page #}
+    <!-- Bootstrap -->
+    <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
+    {# Links to Bootstrap CSS file #}
+    <link rel="stylesheet" href="/static/css/style.css?version={{ now }}">
+    {# Links to a style CSS file with a dynamic version #}
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}"> -->
+    {% endblock styles %}
+    {% endblock head %}
+  </head>
+
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body %}
+    {% block navbar %}
+    <header>
+      
+        <nav>
+            <ul>
+             <h3> Welcome, User!</h3>
+             <li><a href="{{ url_for('homepage') }}">Home</a></li>
+             <li><a href="{{ url_for('profile') }}">Profile</a></li>
+              <li> <a href="{{ url_for('login') }}">Log Out</a></li>
+              <li> <a href="{{ url_for('contact') }}">Contact Admin</a></li>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      <li><a href="{{ url_for('generateNewProject')}}">New Project</a></li>
+                      {% for i in projects%}
+                    <li><a href="{{ url_for('dashboard')}}">{{i}}</a></li>
+                    {% endfor%}
+                    </ul>
+                    </li>
+                   
+                    
+            
+      
+                 
+                      
+            </ul>
+          </nav>
+    </header>
+    {%- endblock navbar %}
+    {% block content %}{%- endblock content %}
+
+    {% block scripts %}
+    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+    {# Links to jQuery script from Bootstrap CDN #}
+    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+    {# Links to Bootstrap JS file from CDN #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    {% endblock scripts %}
+    {%- endblock body %}
+   
+  </body>
+  {% endblock html %}
+</html>
+{% endblock doc %}
