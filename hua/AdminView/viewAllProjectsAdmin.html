@@ -1,0 +1,43 @@
+{% extends 'homeAdmin_base.html' %}
+
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}
+Home Page: User
+
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+
+{% endblock %}
+
+{% block content%}
+
+<div class = "">
+  <form action="{{ url_for('viewAllProjectsAdmin')}}" method="post" onsubmit="return validateForm()">
+    <input type="text" name="s_Name" class = "inputText" placeholder="Search..."><br>
+    <button type="submit" class="save">Search</button>
+  </form>
+  </div>
+
+{% for i in all_project %}
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ i['project_name'] }}<span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <h4>Access Code: {{ i['access_code']}}</h4>
+    <h4># of Memeber:{{ i['members'] | length}}</h4>
+    <h4>{{ i['members']}}</h4>
+  
+  </ul>
+</li>
+<td>
+  <br>
+  <a href="/generateNewCode/{{i.projectName}}">Generate New Code</a>
+  <a href="/deleteProject/{{i.projectName}}">Delete Project</a>
+</td>
+{% endfor %}
+{% endblock %}
