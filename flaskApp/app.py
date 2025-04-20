@@ -127,18 +127,8 @@ def pi_access_request():
             print(e)
 
         
-    return render_template('AdminView/pi_access_request.html')
+    return render_template('UserView/pi_access_request.html')
 
-@app.route('/pre_approved_access_code', methods=['GET', 'POST'])
-def pre_approved_access_code():
-    access_code = request.form.get('PIAccessCode')
-    if request.method == 'POST':
-        try:
-            print(f"pre-approved code {access_code} entered")
-        except:
-            print("issue with pre-approved code")
-        return redirect(url_for('homepage'))
-    return render_template('pre_approved_access_code.html')
 
 @app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
@@ -284,8 +274,14 @@ def get_projects():
         for doc in  query_ref:
             doc_df=doc.to_dict()
             project_name=doc_df["project_name"]
+            project_code = doc_df["project_code"]
+    
+        project_cache.append({
+        "project_name": project_name,
+        "project_code": project_code
+        })
            
-            project_cache.append(project_name)
+           
 
    
     return project_cache
@@ -307,7 +303,6 @@ def homepage():
         query_ref=projects_ref.where(filter=FieldFilter("access_code", "==",access_code)).stream()
 
         if any(query_ref):
-            print("hey")
             for doc in query_ref:
                 doc_ref = db.collection("projects").document(doc.id)
                 doc_ref.update({'project_members': firestore.ArrayUnion([user_email])})
@@ -455,10 +450,11 @@ def generateNewProject():
 
 ########################Project View#####################################################
 
-@app.route("/dashboard")
-def dashboard():
+@app.route("/dashboard/<projectCode>")
+def dashboard(projectCode):
     user = session.get("user")
     user_status= user.get("status")
+    session["project"]=projectCode
 
     if(user_status=="User"):
         return render_template("UserView/dashboardUser.html")
@@ -557,44 +553,6 @@ def viewAllProjectsPI():
         return render_template('PIView/viewAllProjectsPI.html',all_project=all_projects)
        
 
-# @app.route("/viewAllUsersPI",methods=['POST', 'GET'])
-# def viewAllUsersPI():
-#     if request.method=='POST':
-#         searchedName=request.form["s_Name"]
-#         searched_users=[]
-        
-#         piProjects=db.collection("users").document("PI_username@uvm.edu")
-#         piProjectsColl=piProjects.get()
-#         all_users=[]
-#         piProjectsCollProject=piProjectsColl.get('projects')
-#         if(piProjectsCollProject==0):
-#             all_users=["No members"]
-#         else:
-#                 docs=db.collection("users").where(filter=FieldFilter("projects", "array_contains_any",piProjectsCollProject)).where(filter=FieldFilter("email", "in",searchedName)).stream()
-#                 for doc in docs:
-#                     users=doc.to_dict()
-#                     searchedName.append(users)
-
-
-#         return render_template('PIView/viewAllUsersPI.html',all_users=searched_users)
-
-
-#     else: 
-#         piProjects=db.collection("users").document("PI_username@uvm.edu")
-#         piProjectsColl=piProjects.get()
-#         all_users=[]
-#         piProjectsCollProject=piProjectsColl.get('projects')
-#         if(piProjectsCollProject==0):
-#             all_users=["No members"]
-#         else:
-#                 docs=db.collection("users").where(filter=FieldFilter("projects", "array_contains_any",piProjectsCollProject)).stream()
-#                 for doc in docs:
-#                     users=doc.to_dict()
-#                     all_users.append(users)
-               
-#         return render_template('PIView/viewAllUsersPI.html',all_users=all_users)
-
-
 
 
 @app.route("/deleteProject/<project_name>")
@@ -646,12 +604,13 @@ def groundTruthUpdates():
     user_status=user.get("status")
     user_email=user.get("email")
 
-    groundTruthing_ref=db.collection("groundTruthing")
+    groundTruthing_ref=db.collection("projects")
     groundTruthing_records=[]
    
     query_ref=groundTruthing_ref.where(filter=FieldFilter("PI_email", "==",user_email)).stream()
     for doc in  query_ref:
-         groundTruthing_records.append(doc.to_dict())
+         ground_truthing_info=doc.to_dict["ground_truthing"]
+         groundTruthing_records.append(ground_truthing_info)
 
     if (user_status=="PI"):  
         return render_template('PIView/groundTruthingRecordsPI.html',all_groundTruth=groundTruthing_records)
