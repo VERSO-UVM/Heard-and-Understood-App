@@ -22,27 +22,19 @@ View all Projects
       <!-- Table row for header-->
       <tr>
         
-        <th>Project Name</th>    
+         
         <th>Modified By</th>
         <th>Date</th>    
       </tr>
 
-      {% for i in all_groundTruth %}
-      <tr>
-      
-          
-          {% for record in i['record'] %}
-          <td>{{ i['project_name'] }}</td>
-              <td>{{ record['updatedBy'] }}</td>
-              <td>{{ record['Date'] }}</td>
-         
-      </tr>
+      {% for sublist in all_groundTruth %}
+      {% for record in sublist %}
+          <tr>
+              <td>{{ record['user'] }}</td>
+              <td>{{ record['time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+          </tr>
       {% endfor %}
-  
-       
-       
-      
-    {% endfor %}
+  {% endfor %}
     </table>
 </div> 
 {% endfor %}

@@ -42,7 +42,7 @@
                   <ul class="dropdown-menu">
                       <li><a href="{{ url_for('generateNewProject')}}">New Project</a></li>
                       {% for i in projects%}
-                    <li><a href="{{ url_for('dashboard,projectCode=i.project_code')}}">{{i.project_name}}</a></li>
+                    <li><a href="{{ url_for('projectInfo',projectCode=i.project_code)}}">{{i.project_name}}</a></li>
                     {% endfor%}
                     </ul>
                     </li>

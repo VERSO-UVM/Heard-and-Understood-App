@@ -19,13 +19,13 @@ Home Page: User
 
 
 {% for i in all_request %}
-<td>
-    {{i['name']}} : {{i['email']}}
-</td>
-<td>
-  <br>
-  <a href="/acceptRequest/{{i['email']}}">Accept</a>
-  <a href="/declineRequest/{{i['email']}}">Decline</a>
-</td>
+
+  <td>
+      {{ i['name'] }} : {{ i['email'] }}  
+      <a href="/acceptRequest/{{ i['email'] }}">Accept</a>
+      <a href="/declineRequest/{{ i['email'] }}">Decline</a>
+  </td>
+
+
 {% endfor %}
 {% endblock %}

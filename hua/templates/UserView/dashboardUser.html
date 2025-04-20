@@ -14,6 +14,53 @@ Organization Dashboard Page
 
   {% block content %}  
   <body>
+   
+    <script>
+
+        function runConsert() {
+            fetch('/run_consert', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    checkImage(); // Start checking for image readiness
+                }
+            )
+            .catch(error => console.error('Error:', error));
+        }
+
+        function checkImage() {
+            const imagePath = '/static/consert_output/test_video_short_classification.png';
+;  
+            fetch(imagePath, { method: 'HEAD' }) // Check if the file exists
+                .then(response => {
+                    if (response.ok) {
+                        console.log("image found")
+                        displayImage(imagePath);
+                    } else {
+                        console.log("image not found, trying again in 2 seonds")
+                        setTimeout(checkImage, 2000); // Retry after 2 seconds
+
+                    }
+            })
+            .catch(error => {
+                console.error('Error checking image:', error);
+                setTimeout(checkImage, 2000); // Retry after 2 seconds
+            });
+        }
+
+        function displayImage(imagePath) {
+            let imgElement = document.getElementById('generatedImage');
+
+            if (!imgElement) {
+                console.error("Image element with ID 'generatedImage' not found.");
+                return;
+            }
+
+            imgElement.src = imagePath;
+            imgElement.style.display = "block"; // Ensure it's visible
+        }
+    </script>
+
     <main>
         <div>
             <h1>Organization Dashboard Page</h1>
@@ -45,7 +92,7 @@ Organization Dashboard Page
             <!-- Buttons to generate popups -->
             <section>
                 <div>
-                    <button type="submit" id="algorithm" value="Algorithm" onclick="runAlgorithm()" disabled>Run Algorithm</button>
+                    <button type="submit" id="algorithm" value="Algorithm" onclick="runConsert()" disabled>Run Algorithm</button>
                 </div>
                 <div>
                     <button type="submit" id="confusionMatrix" value="Confusion Matrix" disabled>View Confusion Matrix</button>
@@ -79,6 +126,15 @@ Organization Dashboard Page
                       </label>
                       <label>View Accuracy</label>
                 </div>
+            </section>
+
+             <!-- CONsert output -->
+             <section>
+                <div id="imageContainer">
+                    <h2>Generated Output</h2>
+                    <img id="generatedImage" src="" alt="Generated Output" style="display: none; max-width: 100%;">
+                </div>
+                
             </section>
 
             <!-- CSV Download -->
