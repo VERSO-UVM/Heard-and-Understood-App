@@ -1,18 +1,33 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, json,session
+# from flask import Flask, render_template, request, redirect, url_for, flash, json,session
+# from flask_session import Session
+# import firebase_admin
+# from firebase_admin import credentials, firestore
+# import bcrypt, secrets
+# from firebase.config import Config
+# from flask_bootstrap import Bootstrap
+# import secrets
+# import datetime
+# from google.cloud.firestore_v1.base_query import FieldFilter
+# from db_utils import upload_file_to_db, connect_to_database
+# from flask_mail import Mail, Message
+# from datetime import datetime, timedelta, timezone
+# import uuid
+#########
+from flask import Flask, render_template, request, redirect, url_for, flash, json, jsonify, send_from_directory,session
 from flask_session import Session
 import firebase_admin
+from flask_bootstrap import Bootstrap
 from firebase_admin import credentials, firestore
 import bcrypt, secrets
-from firebase.config import Config
-from flask_bootstrap import Bootstrap
-import secrets
-import datetime
 from google.cloud.firestore_v1.base_query import FieldFilter
-from db_utils import upload_file_to_db, connect_to_database
+from hua.firebase.config import Config
+from hua.db_utils import upload_file_to_db, connect_to_database
+from hua.consert.consert_process import ConsertProcess
 from flask_mail import Mail, Message
+import email_credentials as email_credentials
 from datetime import datetime, timedelta, timezone
+import os
 import uuid
-
 
 
 ##Flash if no project exist with that access code
@@ -36,12 +51,12 @@ mail = Mail(app)
 
 project_cache=[]
 ##Firebase Connection
-with open('firebase/serviceAccountKey.json') as f:
+with open('serviceAccountKey.json') as f:
     service_account = json.load(f)
     app.secret_key = service_account.get("secret_key")
 
 def initialize_firebase():
-    cred = credentials.Certificate('firebase/serviceAccountKey.json')
+    cred = credentials.Certificate('serviceAccountKey.json')
     firebase_admin.initialize_app(cred)
 initialize_firebase()
 db = firestore.client()
