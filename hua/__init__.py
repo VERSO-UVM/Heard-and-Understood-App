@@ -274,11 +274,11 @@ def create_app():
          get_projects.cache = []
         
         if (len(get_projects.cache)==0):
-            ##Getting all the projects where 
+            ##Getting all the projects 
             projects_ref = db.collection("projects")
             query_ref=projects_ref.where(filter=FieldFilter("project_members", "array_contains",user_email)).stream()
         
-            ##Keeping only the name of the project
+            ##Keeping only the name and access code of the project
             for doc in  query_ref:
                 doc_df=doc.to_dict()
                 project_name=doc_df["project_name"]
@@ -308,12 +308,14 @@ def create_app():
             access_code=request.form.get('accessCode')
             
             projects_ref = db.collection("projects")
-            query_ref=projects_ref.where(filter=FieldFilter("access_code", "==",access_code)).stream()
+            query_ref=projects_ref.where(filter=FieldFilter("access_code", "==",access_code)).limit(1)
+            docs=list(query_ref.stream())
 
-            if any(query_ref):
-                for doc in query_ref:
-                    doc_ref = db.collection("projects").document(doc.id)
-                    doc_ref.update({'project_members': firestore.ArrayUnion([user_email])})
+            if docs:
+                doc=docs[0]
+                doc_ref = db.collection("projects").document(doc.id)
+                doc_ref.update({'project_members': firestore.ArrayUnion([user_email])})
+                get_projects.cache = [] 
             else:
                 flash("This project does not exist", "danger")
                 
@@ -364,6 +366,7 @@ def create_app():
     @app.route('/logout')
     def logout():
         session.clear()
+        get_projects.cache = [] 
         return url_for('login')
 
 

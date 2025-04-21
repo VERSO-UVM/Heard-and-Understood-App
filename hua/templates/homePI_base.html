@@ -32,7 +32,7 @@
       
         <nav>
             <ul>
-             <h3> Welcome, User!</h3>
+            
              <li><a href="{{ url_for('homepage') }}">Home</a></li>
              <li><a href="{{ url_for('profile') }}">Profile</a></li>
               <li> <a href="{{ url_for('login') }}">Log Out</a></li>
@@ -42,8 +42,8 @@
                   <ul class="dropdown-menu">
                       <li><a href="{{ url_for('generateNewProject')}}">New Project</a></li>
                       {% for i in projects%}
-                    <li><a href="{{ url_for('projectInfo',projectCode=i.project_code)}}">{{i.project_name}}</a></li>
-                    {% endfor%}
+                      <li><a href="{{ url_for('projectInfo', project_code=i.project_code)}}">{{i.project_name}}</a></li>
+                      {% endfor%}
                     </ul>
                     </li>
                    
