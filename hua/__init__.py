@@ -537,10 +537,25 @@ def create_app():
         finally:
             cursor.close()
             connection.close()
+    
+    @app.route('/run_consert', methods=['POST'])
+    def run_consert():
+        """Trigger the Consert process when the button is clicked."""
+        try:
+            process = ConsertProcess()  # Run the process
+            return jsonify({"status": "success", "message": "Consert process finished!"}) #TODO: replace the pop up window when done testing/implementing css
+
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)})
+
+    @app.route('/testOutput/<filename>')
+    def get_output_file(filename):
+        return send_from_directory('test_output', filename)
 
 
 
     #-----------------PI View-----------------------#
+
 
     ##Allows PI to see every project
     @app.route("/viewAllProjectsPI", methods=['POST', 'GET'])
