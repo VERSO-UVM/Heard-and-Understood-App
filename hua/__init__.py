@@ -45,8 +45,8 @@ def create_app():
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP email server 
     app.config['MAIL_PORT'] = 587
     app.config['SESSION_TYPE'] = 'filesystem'
-    #app.config['MAIL_USERNAME'] = email_credentials.hua_email
-    #app.config['MAIL_PASSWORD'] = email_credentials.hua_password
+    app.config['MAIL_USERNAME'] = email_credentials.hua_email
+    app.config['MAIL_PASSWORD'] = email_credentials.hua_password
     app.config['MAIL_USE_TLS'] = True
     app.config['MAIL_USE_SSL'] = False
     mail = Mail(app)
@@ -123,11 +123,11 @@ def create_app():
                 requests_doc = requests_ref.set({"email":user_email,"name":user_name})
 
                 # Send email
-            # recipients = email_credentials.recipients
+                recipients = email_credentials.recipients
 
-            # emailMessage = Message("Request for PI Access", sender=email,recipients=recipients)
-                #emailMessage.body = f"Hello Bob and Donna,\n\n {name} is requesting admin access. {name} is from {institution} and reachable at {email}.\n\n You will find their request on the View Requests for Access page in the Heard and Understood App."
-                #mail.send(emailMessage)
+                emailMessage = Message("Request for PI Access", sender=user_email,recipients=recipients)
+                emailMessage.body = f"Hello Bob and Donna,\n\n {user_name} is requesting admin access. {name} is from {institution} and reachable at {email}.\n\n You will find their request on the View Requests for Access page in the Heard and Understood App."
+                mail.send(emailMessage)
                 print('email sent successfully!')
             except Exception as e:
                 print('problem sending email')
