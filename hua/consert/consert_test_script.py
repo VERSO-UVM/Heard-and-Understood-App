@@ -5,7 +5,7 @@ media_file = 'path/to/media/file'
 # Test 1: run the pauses identification and classification
 consert.classify_pauses(
     input_filepath = media_file,
-    output_directory = 'flaskApp/consert/test_output',
+    output_directory = 'hua/consert/test_output',
     save_output_file = True,
     save_intermediate_files = True,
     # use_intermediate_files =
@@ -25,4 +25,4 @@ consert.classify_pauses(
 )
 
 # Test 2: plot results
-consert.plot_classification(media_file, 'flaskApp/consert/test_output')
+consert.plot_classification(media_file, 'hua/consert/test_output')

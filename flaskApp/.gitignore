@@ -1,9 +1,0 @@
-
-firebase/serviceAccountKey.json
-.env
-__pycache__/
-*.pyc
-*.log
-email_credentials.py
-static/test_video_classification.csv
-static/modifications.csv

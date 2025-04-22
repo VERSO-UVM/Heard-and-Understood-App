@@ -18,19 +18,28 @@ The methods used in this package are based on the methods used in Matt et al. 20
 Matt et al. 2023: Matt, Jeremy E et al. “An Acoustical and Lexical Machine-Learning Pipeline to Identify Connectional Silences.” Journal of palliative medicine, 10.1089/jpm.2023.0087. 13 Jul. 2023, doi:10.1089/jpm.2023.0087
 
 ## Getting Started
-TBD
-
-### Dependencies
-
-- [Consert Install Guide](flaskApp/consert/CONSERT_INSTALLATION.md)
 
 ### Installing
+You will need Python 3.10 or earlier installed.
 
-TBD
+To install for development, clone this repository, navigate to it, and run `pip install -e .` (don't miss the period at the end)
+
+To install for production/testing, download the .whl file for the appropriate version from the releases tab and run `pip install hua-1.0.0-py2.py3-none-any.whl` replacing the version to match your downloaded file.
+
+If you want to use CONSert, follow the steps in the [Consert Install Guide](hua/consert/CONSERT_INSTALLATION.md)
 
 ### Executing program
+Make sure you have `serviceAccountKey.json` and `email_credentials.py`.
+If you installed from source for development, they'll need to be in the project's root directory.
+if you installed from a `.whl` for production/testing, they'll simply need to be in whatever directory you run the app from.
 
-TBD
+Run `flask --app hua run`
+
+### Building program
+If you haven't already, install `build` by running `pip install build`
+
+Then, whenever you'd like to build a new `.whl` file, run `python -m build --wheel` in the project's root directory. The `.whl` file will appear in the `dist` directory.
+
 ## Help
 
 ## Team

@@ -1,0 +1,51 @@
+start,stop,context,class,pause_type
+<<<<<<< HEAD
+2.0,3.0,transcription1,2.0,invitational
+=======
+>>>>>>> d42380dfe86d0afff5adc0c026a8697283fc58b1
+20.5,23.0, I'm with the palliative care team. I'm one of the palliative care doctors. Okay. Is it okay if I have a seat? Sure.,2.0,invitational
+21.0,22.0,meow,2.0,invitational
+35.5,38.0, I would come by to see if I could be of help. I don't know if anybody can help right now but...,1.0,emotional
+116.5,119.0, Yesterday you learned that you had cancer and that was what was causing this. Yeah. This is a lot on your plate. Yeah.,2.0,invitational
+120.0,122.0, This is a lot on your plate. Yeah.,2.0,invitational
+123.0,125.0, This is a lot on your plate. Yeah. I'm overwhelmed.,1.0,emotional
+156.0,158.0," everything better and I thought I was better. And then to get hit with this, I don't know what.",1.0,emotional
+159.0,161.5," And then to get hit with this, I don't know what. I just had... It's too much.",1.0,emotional
+164.5,171.0," I just... It's too much. While we're talking, is it okay if I hold your hand? Yeah. What's the most important thing?",2.0,invitational
+175.5,177.5, What's the most bothersome piece of all of this? Or even if you know? Scared.,2.0,invitational
+179.5,181.5, What's the most bothersome piece of all of this? Or even if you know? Scared. I'm so scared.,1.0,emotional
+188.5,192.5, scared. I know everybody dies but...,1.0,emotional
+200.0,250.0,e,2.0,invitational
+233.0,235.5, But I don't want to leave him. I love him so much. He's so good to me.,1.0,emotional
+252.5,254.5," They're not children anymore. They're in their 20s, but they'll always be my kids, you know. What are their names? Joshua and Zachary.",2.0,invitational
+262.0,264.5, Zachary. And I haven't even told him yet because I don't know how.,1.0,emotional
+270.0,272.0," I don't know how. What is your husband's name? Sean. Have you talked to Sean, this evening? He knows, yeah.",2.0,invitational
+273.5,278.5," And what is your husband's name? Sean. Have you talked to Sean, does he know? He knows, yeah. And it breaks my heart.",2.0,invitational
+332.5,336.0," I just, I think it's because I have people that I love so much. Oh, are there tissues in here?",2.0,invitational
+340.5,343.0, Are there any tissues in here? No. Thank you. You know.,0.0,non-connectional
+347.0,350.0," you. You know, when you love people that way, you just put them first.",1.0,emotional
+371.0,373.5," Sometimes it helps and sometimes it doesn't, but mostly it helps when I remind myself that as scared as I am, I'm not the only one.",1.0,emotional
+376.5,379.5," As scared as I am, I'm not the only one.",1.0,emotional
+392.0,394.0," Were you able to tell them the way you're feeling now? Or tell me what you were able to talk to Sean about. Well, I think I'm letting go more with you.",2.0,invitational
+395.0,397.0," Or tell me what you were able to talk to Sean about. Well, I think I'm letting go more with you. I told him that.",1.0,emotional
+422.0,424.0," But I tried not to break down too much or for too long, because I didn't want him to feel helpless.",1.0,emotional
+424.5,426.5, Break down too much or for too long because I didn't want him to feel helpless,1.0,emotional
+427.0,430.0, Because I didn't want him to feel helpless.,1.0,emotional
+442.5,446.5, I know this is scary and this is an incredible amount of stuff and you might not even know. Right. But what's most scary to you? The unknown.,2.0,invitational
+458.5,461.0," If I knew somehow that even if I weren't on the earth, I could be part of it somehow with the people I love, that would help.",1.0,emotional
+503.5,506.5," a higher power that I don't have all the answers, but there is this energy or whatever it does that does.",1.0,emotional
+530.0,533.5," When you feel connected to that energy, are there things that you do that help you feel more connected? Is it places that you are or is it just about you all the time?",2.0,invitational
+559.5,561.5," And I remember that, wait, no, there's something more than that. That's the best I can put it. You're putting it very well, very clearly.",1.0,emotional
+562.0,564.5," No, it's something more than that. It's the best I can put it. You're putting it very well, very clearly.",1.0,emotional
+589.5,592.0," I've got two dogs, I've got friends, I've got, there's so much beauty in this world and I don't know if I'm ever going to see any of it again.",1.0,emotional
+598.5,601.0, It impresses me the beauty that you bring into this world and have done for so many people. Thank you.,1.0,emotional
+657.5,659.5," say, I might panic thinking about, OK, that's one day less, that's one day less, and if I don't know, I might think, OK, I have one day more.",1.0,emotional
+661.0,664.0," that's one day less, and if I don't know, I might think, okay, I have one day more instead.",1.0,emotional
+701.5,703.5, I feel like I'm choking to death at the end because I had a lot of trouble breathing. They took all that fluid out but it's okay.,1.0,emotional
+823.0,826.5," Yeah, exactly. Yeah. Wow. I do have a lot of questions, but I'm...",1.0,emotional
+962.0,964.0," And so having your back with your family, it will allow me to help navigate where that balance is for you.",2.0,invitational
+978.0,980.5, I see it happening. It's really just to address whenever that time comes. We can do it well. We'll do it together with you and your family.,1.0,emotional
+981.0,984.5, comes. We can do it well and we'll do it together with you and your family. That does help.,0.0,non-connectional
+1109.5,1111.5," Okay, thank you. That's good, because I just want it to be as easy as possible for everybody.",1.0,emotional
+1117.5,1119.5," as easy as possible for everybody. It's really remarkable how you're spending your time thinking of others. It really is. Well, the...",1.0,emotional
+1144.0,1146.5," That's good, because I'm not remembering too much these days. Is there anything though that I didn't ask or something you want me to know about you that I didn't already learn that you think would be helpful?",2.0,invitational
