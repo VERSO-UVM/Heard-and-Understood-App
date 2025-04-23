@@ -115,6 +115,7 @@ def create_app():
         user=session.get("user")
         user_email=user.get("email")
         user_name=user.get("name")
+        user_inst=user.get("Institute")
         
         if request.method == 'POST':
             try:
@@ -126,7 +127,7 @@ def create_app():
                 recipients = email_credentials.recipients
 
                 emailMessage = Message("Request for PI Access", sender=user_email,recipients=recipients)
-                emailMessage.body = f"Hello Bob and Donna,\n\n {user_name} is requesting admin access. {name} is from {institution} and reachable at {email}.\n\n You will find their request on the View Requests for Access page in the Heard and Understood App."
+                emailMessage.body = f"Hello Bob and Donna,\n\n {user_name} is requesting admin access. {user_name} is from {user_inst} and reachable at {user_email}.\n\n You will find their request on the View Requests for Access page in the Heard and Understood App."
                 mail.send(emailMessage)
                 print('email sent successfully!')
             except Exception as e:
