@@ -6,6 +6,7 @@ body, html {
     margin: 0;
     padding: 0;
 }
+/******************************************************************************************/
 
 /* Logo styling */
 .login-logo {
@@ -15,6 +16,7 @@ body, html {
     max-width: 85%;
     height: auto;
 }
+/******************************************************************************************/
 
 /* Login Border */
 .border-login {
@@ -107,6 +109,7 @@ header {
     height: 18%;
     background-color: #a9cafc;
 }
+/******************************************************************************************/
 
 /* Logo Styling */
 header .logo {
@@ -135,6 +138,28 @@ header .header-logo {
     font-weight: bold;
     margin-bottom: 20px !important;
 }
+
+/******************************************************************************************/
+/* Site Header Styles */
+.site-header {
+    display: flex;
+    background-color: #a9cafc;
+}
+
+/* Logo Styling */
+.site-header .logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.site-header .header-logo {
+    max-height: 100%;
+    width: auto;
+    max-width: 70%;
+}
+/******************************************************************************************/
 
 /* Navbar Styling */
 header .navbar {
@@ -168,6 +193,7 @@ header .navbar a {
 .home-icon {
     width: 15%;
 }
+/******************************************************************************************/
 
 /* Main content area on the right */
 .col-md-9 {

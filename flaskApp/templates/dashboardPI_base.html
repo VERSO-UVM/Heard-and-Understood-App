@@ -25,15 +25,15 @@
     {% endblock styles %}
     {% endblock head %}
 
-    <header>
-        <!-- HUA Logo -->
+    <header class="site-header">
+      <!-- HUA Logo -->
       <div class="logo">
         <img src="/static/images/HUA-logo.png" class="header-logo" alt="HUA Logo"/>
       </div>
       
       <div class="container-fluid">
         <div class="row">
-          <nav class= "col-md-3 side-nav-container">
+          <nav class= "site-navbar">
               <ul>
                 <li> <a href="{{ url_for('homepage') }}">Home</a></li>
                 <li> <a href="{{ url_for('dashboard') }}">Dashboard</a></li>

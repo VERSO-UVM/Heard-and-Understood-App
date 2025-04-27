@@ -24,33 +24,36 @@
     {% endblock styles %}
     {% endblock head %}
 
-    <header>
+    <header class="site-header">
       <!-- HUA Logo -->
       <div class="logo">
         <img src="/static/images/HUA-logo.png" class="header-logo" alt="HUA Logo"/>
       </div>
       
-      <nav>
-        <ul>
-          <li> <a href="{{ url_for('homepage') }}">Home</a></li>
-          <li> <a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-          <li> <a href="{{ url_for('upload') }}">Upload</a></li>
-          <li><a href="{{ url_for('view_files') }}">View Data</a></li>
-          <li><a href="{{ url_for('ground_truthing') }}">Ground Truthing</a></li>
-          <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin View <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-          <li><a href="{{ url_for('viewAllProjectsAdmin') }}">View all projects</a></li>
-          <li><a href="{{ url_for('groundTruthUpdates') }}">View Ground Truth Updates</a></li>  
-        </ul>
-      </nav>
+      <div class="container-fluid">
+        <div class="row">
+          <nav class= "site-navbar">
+            <ul>
+              <li> <a href="{{ url_for('homepage') }}">Home</a></li>
+              <li> <a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+              <li> <a href="{{ url_for('upload') }}">Upload</a></li>
+              <li><a href="{{ url_for('view_files') }}">View Data</a></li>
+              <li><a href="{{ url_for('ground_truthing') }}">Ground Truthing</a></li>
+              <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin View <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+              <li><a href="{{ url_for('viewAllProjectsAdmin') }}">View all projects</a></li>
+              <li><a href="{{ url_for('groundTruthUpdates') }}">View Ground Truth Updates</a></li>  
+            </ul>
+          </nav>
+        </div>
+      </div>
     </header>
-
   </head>
 
   <body{% block body_attribs %}{% endblock body_attribs %}>
     {% block body %}
-      <h3>Amin</h3>
+      <h3>Admin</h3>
     {% block content %}
     {% endblock content %}
 

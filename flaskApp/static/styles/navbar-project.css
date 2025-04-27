@@ -1,33 +1,33 @@
-.side-nav-container {
+.site-navbar {
     position: absolute;
-    background-color: #1C26A5;
-    color: white;
-    width: 250px;
     list-style-type: none !important;
     padding: 0;
+    width: 100%;
 }
 
-.side-nav-container ul {
+.site-navbar ul {
     margin: 0;
     padding: 0;
+    list-style-type: none !important;
+    display: flex;
+    gap: 5%;
 }
 
-.side-nav-container li {
+.site-navbar li {
     text-align: center;
     font-size: large;
 }
 
-.side-nav-container a {
+.site-navbar a {
     display: block;
-    color: white;
+    color: black;
     /* font-weight: bold; */
     text-decoration: none;
     padding: 10px;
     transition: 0.4s;
 }
 
-.side-nav-container a:hover {
+.site-navbar a:hover {
     background-color: white; 
     text-decoration: underline;
-    color: #1C26A5;
 }

@@ -18,13 +18,13 @@
     <!-- Bootstrap -->
     <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
     {# Links to Bootstrap CSS file #}
-    <link rel="stylesheet" href="/static/css/style.css?version={{ now }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
     {# Links to a style CSS file with a dynamic version #}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar-project.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar-project.css') }}">
     {% endblock styles %}
     {% endblock head %}
 
-    <header>
+    <header class="site-header">
       <!-- HUA Logo -->
       <div class="logo">
         <img src="/static/images/HUA-logo.png" class="header-logo" alt="HUA Logo"/>
@@ -32,7 +32,7 @@
 
       <div class="container-fluid">
         <div class="row">
-          <nav class= "col-md-3 side-nav-container">
+          <nav class= "site-navbar">
             <ul>
               <li> <a href="{{ url_for('homepage') }}">Home</a></li>
               <li> <a href="{{ url_for('dashboard') }}">Dashboard</a></li>
@@ -44,12 +44,11 @@
         </div>
       </div>
     </header>
-
   </head>
 
   <body{% block body_attribs %}{% endblock body_attribs %}>
     {% block body %}
-      <h3>User</h3>
+      <h3>User?</h3>
     {% block content %}
     {% endblock content %}
 
