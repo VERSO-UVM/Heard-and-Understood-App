@@ -1,0 +1,31 @@
+{% extends 'homeAdmin_base.html' %}
+
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}
+Home Page: User
+
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+
+{% endblock %}
+
+{% block content%}
+
+
+{% for i in all_request %}
+
+  <td>
+      {{ i['name'] }} : {{ i['email'] }}  
+      <a href="/acceptRequest/{{ i['email'] }}">Accept</a>
+      <a href="/declineRequest/{{ i['email'] }}">Decline</a>
+  </td>
+
+
+{% endfor %}
+{% endblock %}
