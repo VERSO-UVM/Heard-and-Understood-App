@@ -1,0 +1,126 @@
+{% extends 'homeUser_base.html' %}
+
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}
+Home Page: PI
+
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+  <style>
+    .modal-button{
+        border: 2px dashed #ccc;
+        padding: 20px;
+        width: 250px;
+        height: 200px;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 18px;
+        margin-top: 100px;
+        cursor: pointer;
+    }
+    .modal-button:hover{
+        background-color: #f4f4f9;
+    }
+
+    .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);}
+
+    .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 300px;
+        border-radius: 10px;
+    }
+
+</style>
+{% endblock %}
+
+{% block content%}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h2 class="text-center">Profile Settings</h2>
+
+            <!-- Flash message for invalid credentials -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+                    
+            <div id="profileInfo">
+                <label for="name"><b>Account Email</b></label>
+                <p id="name">{{email}}</p>
+
+               
+            </div>
+                <!-- <form method="POST" action="/profile"> -->
+                    <!-- Change info button -->
+                    <button id="changeButton" type="submit" class="btn btn-primary btn-block">Change Profile Info</button>
+                   
+                <!-- </form> -->
+            
+            
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    changeButton = document.getElementById("changeButton");
+    profileContainer = document.getElementById("profileInfo");
+
+    changeButton.addEventListener("click", function() {
+        passwordLabel = document.createElement("label");
+        passwordLabel.for = "passwordPrompt";
+        passwordLabel.textContent = "Enter Password";
+        passwordLabel.style.fontWeight = "bold"; 
+
+
+        passwordPrompt = document.createElement("input");
+        passwordPrompt.id = "passwordPrompt";
+        passwordPrompt.type = "password";
+
+        profileContainer.append(passwordLabel);
+        profileContainer.innerHTML += "<br>"; 
+        profileContainer.append(passwordPrompt);
+        
+        changeButton.style.display = "none";
+
+        confirmButton = document.createElement("button");
+        confirmButton.classList.add("btn");
+        confirmButton.classList.add("btn-primary");
+        confirmButton.classList.add("btn-block");
+        confirmButton.textContent = "Edit Profile";
+        confirmButton.id = "confirmButton";
+        
+        confirmButton.addEventListener("click", function() {
+            window.location.href = "/change-profile";
+            // TODO: Validate user password before allowing them to make changes
+            validate_password(passwordPrompt.value);
+        });
+
+        profileContainer.append(confirmButton);
+
+
+    });
+</script>
+{% endblock %}
