@@ -18,12 +18,18 @@
         
             <!-- Recording Selector -->
             <section>
-                <form>
+                <!-- <form>
                     <label for="recordingsInput">Recording</label>
                     <input list="recordings" id="recordingsInput">
                     <datalist id="recordings">
                     </datalist>
+                </form> -->
+                <h3>Import Recording</h3>
+                <form action="/csv_upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" accept=".csv" required />
+                    <input type="submit" value="Upload CSV" class="btn btn-primary" />
                 </form>
+                <p id="status"></p>
             </section>
            
             <!-- Checkboxes for pause selection -->
@@ -180,7 +186,7 @@
     </div>
 
 </main>
-<script src="index.js"></script>
+<!-- <script src="index.js"></script> -->
 <script src="../static/dashboard/dashboard.js"></script>
 </body>
 </html>

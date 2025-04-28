@@ -8,6 +8,7 @@ from flask_mail import Mail, Message
 #import email_credentials
 from datetime import datetime, timedelta, timezone
 import pandas as pd
+import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -396,7 +397,19 @@ def ground_truth_connection():
     modifications.to_csv('static/test_video_classification.csv', index=False)
     return render_template("ground_truthing.html")
 
-
+@app.route('/csv_upload', methods=['POST'])
+def csv_upload():
+    if 'file' not in request.files:
+        return "no file uploaded", 400
+    file = request.files['file']
+    if file.filename == '':
+        return "no file selected", 400
+    if file and file.filename.endswith('.csv'):
+        file.save(os.path.join('static', 'test_video_classification.csv'))
+        return redirect(url_for('ground_truthing')) 
+    else:
+        return "Invalid, please upload a CSV file.", 400
+    
 @app.route("/homepage")
 def homepage():
     return render_template('home.html')
@@ -421,7 +434,8 @@ def upload_file():
             return redirect(url_for('upload'))
         else:
             return "Failed to upload", 500
-
+        
+        
 @app.route("/view-files")
 def view_files():
     connection = connect_to_database()
