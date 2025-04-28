@@ -1,0 +1,33 @@
+.side-nav-container {
+    position: absolute;
+    background-color: #1C26A5;
+    color: white;
+    width: 250px;
+    list-style-type: none !important;
+    padding: 0;
+}
+
+.side-nav-container ul {
+    margin: 0;
+    padding: 0;
+}
+
+.side-nav-container li {
+    text-align: center;
+    font-size: large;
+}
+
+.side-nav-container a {
+    display: block;
+    color: white;
+    /* font-weight: bold; */
+    text-decoration: none;
+    padding: 10px;
+    transition: 0.2s;
+}
+
+.side-nav-container a:hover {
+    background-color: white; 
+    /* text-decoration: underline;*/
+    color: #1C26A5;
+}
