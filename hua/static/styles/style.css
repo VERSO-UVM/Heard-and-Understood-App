@@ -31,6 +31,30 @@ body, html {
 
 }
 
+.border-profile {
+    border-color: black; 
+    border-width: 2px;
+    border-style: solid;
+    padding: 5rem;
+    border-radius: 0.5rem;
+    /*display: flex;
+    flex-direction: column;
+    align-items: center;*/
+
+}
+
+.border-request-pi {
+    border-color: black; 
+    border-width: 2px;
+    border-style: solid;
+    padding: 5rem;
+    border-radius: 0.5rem;
+    /*display: flex;
+    flex-direction: column;
+    align-items: center;*/
+
+}
+
 /* Ensure main container is centered while considering the sidebar */
 .profile-container {
     display: flex;
