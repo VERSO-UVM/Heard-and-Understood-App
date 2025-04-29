@@ -70,11 +70,12 @@ body, html {
 
 /* View Password Toggle Button */
 .view-btn {
-    border-radius: 10px;
+    border-radius: 0.25rem;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border: 1px solid #ced4da;
     box-shadow: none;
+    height: 36px;
 }
 
 .view-btn:hover {
@@ -358,43 +359,6 @@ header .navbar a {
     margin-top: 2%;
 }
 
-/*
-.modal-content .submit {
-    display: block;
-    margin: 20px auto 0;
-    background-color: #1C26A5;
-    font-weight: bold;
-    height: 25%;
-    color: white;
-    padding: 5px;
-    text-align: center;
-    border: none;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.modal-content .submit:hover {
-    text-decoration: underline;
-    background-color: white;
-    color: #1C26A5;
-    border: 2px solid #1C26A5;
-}
-
-
-.submit-profile {
-    background-color: #1C26A5 !important;
-    color: white;
-    width: 75%;
-    border: none;
-}
-
-.submit-profile:hover {
-    text-decoration: underline;
-    background-color: white !important;
-    color: #1C26A5;
-    border: 2px solid #1C26A5;
-}*/
-
 .main-content {
     display: flex;
     flex-direction: column;
@@ -425,4 +389,63 @@ header .navbar a {
 .add-icon{
     width: 20%;
     margin-bottom: 1.5rem;
+}
+
+/* Styling for View All Users */
+.user-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.user-card p {
+margin: 5px 0;
+font-size: 16px;
+}
+
+.user-card strong {
+color: #333;
+}
+
+/* Custom search button styling */
+.btn-search {
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 17px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  
+.btn-search:hover {
+background-color: #1d63d1;
+}
+
+.input-group {
+display: flex;
+align-items: center;
+}
+
+.input-group .form-control {
+border-radius: 1rem 0 0 1rem;  /* Rounded corners on left */
+width: 50% !important;
+height: 36px;
+}
+
+.input-group-append .btn-search {
+border-radius: 0 1rem 1rem 0; /* Rounded corners on right */
+padding: 6px 15px;
+}
+
+.input-group .fa-search {
+font-size: 16px;
+color: white;
+}
+
+/* Optional: Adjusting the space between the input and button */
+.input-group {
+margin-top: 10px;
 }
