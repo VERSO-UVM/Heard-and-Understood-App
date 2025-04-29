@@ -22,7 +22,6 @@
     {# Links to a style CSS file with a dynamic version #}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
     {% endblock styles %}
-    {% endblock head %}
 
     <header>
       <!-- HUA Logo -->
@@ -39,6 +38,7 @@
     </header>
 
   </head>
+  {% endblock head %}
 
   <body{% block body_attribs %}{% endblock body_attribs %}>
     {% block body %}
