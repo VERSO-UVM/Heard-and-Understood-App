@@ -53,47 +53,47 @@ var optionsText = '';
 for(i = 0; i < recordings.length; ++i) {
     optionsText += '<option value="' + recordings[i] + '" />';
 }
-recordingsList.innerHTML = optionsText;
+// recordingsList.innerHTML = optionsText;
 
 projects = ["Vermont Conversation Lab", "Project 2", "Project 3", "Project 4"];
 var projectsOptions = '';
 for(i = 0; i < projects.length; ++i) {
     projectsOptions += '<option value="' + projects[i] + '" />';
 }
-projectsList.innerHTML = projectsOptions;
+// projectsList.innerHTML = projectsOptions;
 
-confusionMatrixButton.onclick = function() {
-    modalPopup.style.display = "block";
-    background.style.display = "block";
-    modalContent.textContent = confusionMatrixButton.value + " for " + recordingVal;
-    if(showAccuracy){
-        // Hard coded accuracy until we get actual data
-        modalContent.textContent += " with 96% accuracy";
-    }
-}
-rawDataButton.onclick = function() {
-    modalPopup.style.display = "block";
-    background.style.display = "block";
-    modalContent.textContent = rawDataButton.value + " for " + recordingVal;
-}
-projectsInput.addEventListener("input", function(){
-    projectVal = this.value;
-    if(projects.includes(projectVal)) {
-        recordingsInput.disabled = false;
-    } else {
-        recordingsInput.disabled = true;
-        resetPage();
-    }
-})
+// confusionMatrixButton.onclick = function() {
+//     modalPopup.style.display = "block";
+//     background.style.display = "block";
+//     modalContent.textContent = confusionMatrixButton.value + " for " + recordingVal;
+//     if(showAccuracy){
+//         // Hard coded accuracy until we get actual data
+//         modalContent.textContent += " with 96% accuracy";
+//     }
+// }
+// rawDataButton.onclick = function() {
+//     modalPopup.style.display = "block";
+//     background.style.display = "block";
+//     modalContent.textContent = rawDataButton.value + " for " + recordingVal;
+// }
+// projectsInput.addEventListener("input", function(){
+//     projectVal = this.value;
+//     if(projects.includes(projectVal)) {
+//         recordingsInput.disabled = false;
+//     } else {
+//         recordingsInput.disabled = true;
+//         resetPage();
+//     }
+// })
 
-recordingsInput.addEventListener("input", function(){
-    recordingVal = this.value;
-    if (recordings.includes(recordingVal)) {
-        algorithmButton.disabled = false;
-    } else {
-        algorithmButton.disabled = true;
-    }
-});
+// recordingsInput.addEventListener("input", function(){
+//     recordingVal = this.value;
+//     if (recordings.includes(recordingVal)) {
+//         algorithmButton.disabled = false;
+//     } else {
+//         algorithmButton.disabled = true;
+//     }
+// });
 
 emotionalCheckbox.addEventListener("input", function(){
     showEmotional = !showEmotional;
@@ -105,17 +105,17 @@ invitationalCheckbox.addEventListener("input", function(){
     currentlyVisiblePauses();
     isolateData();
 });
-nonConnectiveCheckbox.addEventListener("input", function(){
-    showNonConnective = !showNonConnective;
-    currentlyVisiblePauses();
-    isolateData();
-});
-accuracyToggle.addEventListener("input", function(){
-    showAccuracy = !showAccuracy;
-    if(showAccuracy){
-        console.log("Showing accuracy");
-    }
-})
+// nonConnectiveCheckbox.addEventListener("input", function(){
+//     showNonConnective = !showNonConnective;
+//     currentlyVisiblePauses();
+//     isolateData();
+// });
+// accuracyToggle.addEventListener("input", function(){
+//     showAccuracy = !showAccuracy;
+//     if(showAccuracy){
+//         console.log("Showing accuracy");
+//     }
+// })
 
 // Only for showing that the values are kept track of temporarily
 currentlyVisiblePauses = function() {
