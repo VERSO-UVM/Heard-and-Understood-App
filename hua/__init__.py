@@ -9,10 +9,11 @@ from hua.firebase.config import Config
 from hua.db_utils import upload_file_to_db, connect_to_database
 from hua.consert.consert_process import ConsertProcess
 from flask_mail import Mail, Message
-import email_credentials as email_credentials
+from hua import email_credentials
 from datetime import datetime, timedelta, timezone
 import os
 import uuid
+import pandas as pd
 
 
 
@@ -790,5 +791,134 @@ def create_app():
             return render_template('AdminView/viewAllUsersAdmin.html',all_users=all_users)
 
 
-    return app
 
+########################## Ground Truthing Logic #########################
+
+    @app.route('/add_new_pause', methods=['POST'])
+    def add_new_pause():
+        pause_classes = ['non-connectional', 'emotional', 'invitational']
+
+        modifications = pd.read_csv('static/modifications.csv')
+
+        start_time = float(request.form.get('startTime'))
+        end_time = float(request.form.get('endTime'))
+
+        pause_type = request.form.get('new-pause-type')
+
+        transcription = request.form.get('transcription')
+
+        pause_class = float(pause_classes.index(pause_type))
+
+        if start_time < end_time:
+            # create a new row in the modifications dataframe.
+            modifications.loc[0] = [start_time, end_time, transcription, pause_class, pause_type]
+            # sort the pauses
+            modifications = modifications.sort_values(by='start')
+
+            modifications.to_csv('static/modifications.csv', index=False)
+        # else:
+            #TODO: error message
+
+        return ("", 204)
+            
+    # Extend Clip
+    @app.route('/extend_clip', methods=['POST'])
+    def extend_clip():
+        pause_classes = ['non-connectional', 'emotional', 'invitational']
+
+        change_start_time = False
+        change_end_time = False
+        edit_transcript = False
+        modify_pause_type = False
+
+        input_time = float(request.form.get('pauseAt'))
+
+        if request.form.get('modifyStartTime'):
+            start_time = float(request.form.get('modifyStartTime'))
+            change_start_time = True
+            
+        if request.form.get('modifyEndTime'):
+            end_time = float(request.form.get('modifyEndTime'))
+            change_end_time = True
+
+        if request.form.get('editTranscription'):
+            transcription = request.form.get('editTranscription')
+            edit_transcript = True
+
+        if request.form.get('modify-pause-type'):
+            pause_type = request.form.get('modify-pause-type')
+            modify_pause_type = True
+            
+
+        modifications = pd.read_csv('static/modifications.csv')
+        found_pause = False
+        pause_index = -1
+
+        try:
+            if change_start_time and change_end_time:
+                assert start_time < end_time, "Start time must be less than end time. "
+        except AssertionError as message:
+            print(message)
+
+        for i, row in modifications.iterrows():
+            if input_time >= float(row['start']) and input_time <= float(row['stop']):
+                found_pause = True
+                pause_index = i
+
+        if found_pause:
+            if change_start_time:
+                modifications.at[pause_index, 'start'] = start_time
+            if change_end_time:
+                modifications.at[pause_index, 'stop'] = end_time
+            if edit_transcript:
+                modifications.at[pause_index, 'context'] = transcription
+            if modify_pause_type:
+                modifications.at[pause_index, 'pause_type'] = pause_type
+                modifications.at[pause_index, 'class'] = pause_classes.index(pause_type)
+
+            modifications = modifications.sort_values(by='start')
+            modifications.to_csv('static/modifications.csv', index=False)
+        # else, TODO: display error message1
+
+        return ("", 204)
+        
+    @app.route('/delete_pause', methods=['POST'])
+    def delete_pause():
+        input_time = float(request.form.get('pauseAtDelete'))
+        modifications = pd.read_csv('static/modifications.csv')
+
+        for i, row in modifications.iterrows():
+            if input_time >= float(row['start']) and input_time <= float(row['stop']):
+                found_pause = True
+                pause_index = i
+
+        if found_pause:
+            modifications = modifications.drop(pause_index)
+
+            modifications.to_csv('static/modifications.csv', index=False)
+
+        return ("", 204)
+
+    @app.route('/save_changes', methods=['POST'])
+    def ground_truth_connection():
+        modifications = pd.read_csv('static/modifications.csv')
+
+        modifications.to_csv('static/test_video_classification.csv', index=False)
+        return ground_truthing()
+    
+
+    @app.route('/csv_upload', methods=['POST'])
+    def csv_upload():
+        if 'file' not in request.files:
+            return "no file uploaded", 400
+        file = request.files['file']
+        if file.filename == '':
+            return "no file selected", 400
+        if file and file.filename.endswith('.csv'):
+            file.save(os.path.join('static', 'test_video_classification.csv'))
+            return ground_truthing()
+        else:
+            return "Invalid, please upload a CSV file.", 400
+            
+
+    return app
