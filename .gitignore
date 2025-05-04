@@ -10,6 +10,12 @@ __pycache__/
 dist/
 build/
 
+#Flask
+flask_session/
+
+#Output
+hua/static/
+
 # vscode
 .settings/
 .vscode/
