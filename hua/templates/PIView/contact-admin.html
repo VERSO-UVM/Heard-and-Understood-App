@@ -5,7 +5,7 @@
 
 
 {% block title %}
-Home Page: User
+HUA - Contact Admins
 
 {% endblock %}
 
@@ -18,28 +18,26 @@ Home Page: User
 {% block content%}
 <div class="container mt-5">
     <h3>Contact Admins</h3>
-    <br />
+    <br/>
     <div class="row align-items-start">
         <div class="col">
-            <img src="{{ url_for('static', filename='images/Robert-E-Gramling-MD.jpg') }}" alt="Bob" width="70%">            </div>
+            <img src="{{ url_for('static', filename='images/Robert-E-Gramling-MD.jpg') }}" alt="Bob Gramling" width="20%">            </div>
         <div class="col">
-            <h4>Robert Gramling</h4>
-            <p>Phone: (802) 847-4848 (?)</p>
-            <p>Email: robert.gramling@med.uvm.edu</p>
+            <h3><b>Robert Gramling</b></h3>
+            <p><b>Phone:</b> (802) 847-4848</p>
+            <p><b>Email:</b> robert.gramling@med.uvm.edu</p>
         </div>
     </div>
     <br />
     <div class="row align-items-start">
         <div class="col">
-            <img src="{{ url_for('static', filename='images/donna.jpg') }}" alt="Donna" width="70%">           
+            <img src="{{ url_for('static', filename='images/donna.jpg') }}" alt="Donna Rizzo" width="20%">           
         </div>
         <div class="col">
-            <h4>Donna Rizzo</h4>
-            <p>Phone: (802)-656-1495 (?)</p>
-            <p>Email: drizzo@uvm.edu</p>
+            <h3><b>Donna Rizzo</b></h3>
+            <p><b>Phone:</b> (802)-656-1495</p>
+            <p><b>Email:</b> drizzo@uvm.edu</p>
         </div>
     </div>
 </div>
-
-
 {% endblock %}

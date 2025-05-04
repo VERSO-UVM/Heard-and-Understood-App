@@ -16,7 +16,6 @@ HUA - Change Profile
   <!-- Font Awesome Link for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?version={{ now }}"> 
 
-
 {% endblock %}
 
 {% block content%}
@@ -33,7 +32,6 @@ HUA - Change Profile
             {% endwith %}
             <div class="border-request-pi rounded p-4"> 
                 <h2 class="text-center">Change Profile</h2>
-
                 <form method="POST" action="/change-profile">
                     <!-- Name input -->
                     <div class="form-group">
@@ -49,8 +47,8 @@ HUA - Change Profile
                     
                     <!-- -->
                     <div class="form-group">
-                        <label for="formPassword">Password</label>
-                        <input type="password" id="formPassword" name="password" class="form-control" placeholder="Enter password" required>
+                        <label for="passwordPrompt">Enter password</label><br>
+                        <input type="password" id="passwordPrompt" name="password" class="form-control" placeholder="Enter password" required>
                     </div>
 
                     <!-- Submit button -->
@@ -71,11 +69,14 @@ HUA - Change Profile
         passwordLabel.for = "passwordPrompt";
         passwordLabel.textContent = "Enter Password";
         passwordLabel.style.fontWeight = "bold"; 
-
+        profileContainer.innerHTML += "<br>"; 
 
         passwordPrompt = document.createElement("input");
         passwordPrompt.id = "passwordPrompt";
         passwordPrompt.type = "password";
+        passwordPrompt.placeholder = "Enter password";
+        passwordPrompt.classList.add("form-group");
+        passwordPrompt.classList.add("inputText");
 
         profileContainer.append(passwordLabel);
         profileContainer.innerHTML += "<br>"; 
@@ -101,5 +102,4 @@ HUA - Change Profile
 
     });
 </script>
-
 {% endblock %}

@@ -63,6 +63,9 @@ HUA - View Admin Profile
         passwordPrompt = document.createElement("input");
         passwordPrompt.id = "passwordPrompt";
         passwordPrompt.type = "password";
+        passwordPrompt.placeholder = "Enter password";
+        passwordPrompt.classList.add("form-control");
+        passwordPrompt.classList.add("inputText");
 
         profileContainer.append(passwordLabel);
         profileContainer.innerHTML += "<br>"; 
