@@ -5,26 +5,30 @@
 
 
 {% block title %}
-View all Users
-
+HUA - View All Users
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+  <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">  
+
 {% endblock %}
 
-{% block content %}
+{% block content%}
 <div class = "">
-  <form action="{{ url_for('viewAllUsersPI')}}" method="post" onsubmit="return validateForm()">
-    <input type="text" name="s_Name" class = "inputText" placeholder="Search..."><br>
-    <button type="submit" class="save">Search</button>
+  <form action="{{ url_for('viewAllUsersPI') }}" method="post" onsubmit="return validateForm()" class="mt-4 mb-4">
+    <div class="row g-2 align-items-center">
+      <div class="col-auto">
+        <input type="text" name="s_Name" class="form-control" placeholder="Search by username..." aria-label="Search">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </div>
   </form>
-  </div>
+</div>
 {% for i in all_users %}
-<h3>{{ i['email'] }}</h4>
-<h3>{{ i['projects'] }}</h4>
-
-
+  <p><strong>Email:</strong><h3>{{ i['email'] }}</p>
+  <p><strong>Project:</strong> {{ i['projects'] }}</p>
 {% endfor %}
 {% endblock %}

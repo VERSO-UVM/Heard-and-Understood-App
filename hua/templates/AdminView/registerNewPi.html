@@ -5,50 +5,94 @@
 
 
 {% block title %}
-Home Page: PI
+HUA - Register New PI
 
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+  <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}"> 
+
+  <!-- Font Awesome Link for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?version={{ now }}"> 
 
 {% endblock %}
 {%block content%}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="center-profile">
+            <!-- Flash message for successful or failed registration -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}   
+            <div class="border-request-pi rounded p-4">    
+                <h2 class="text-center">Register New PI</h2>
 
-    <!-- Flash message for successful or failed registration -->
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <div class="alert alert-danger" role="alert">
-            {{ messages[0] }}
+                <form method="POST" action="/registerNewPI">
+                    <!-- Email input -->
+                    <div class="form-group">
+                        <label for="formEmail">PI's Name</label>
+                        <input type="name" id="formName" name="name" class="form-control" placeholder="Enter name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formEmail">Institute</label>
+                        <input type="Institute" id="formInstitute" name="Institute" class="form-control" placeholder="Enter institute" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formEmail">Email Address</label>
+                        <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email" required>
+                    </div>
+                    
+                
+                    <!-- Submit button -->
+                    <button id="changeButton" type="submit" class="btn btn-primary btn-block">Register</button>
+                </form>
+            </div>
         </div>
-    {% endif %}
-{% endwith %}
-
-<form method="POST" action="/registerNewPI">
-    <!-- Email input -->
-    <div class="form-group">
-        <label for="formEmail">PI's Name</label>
-        <input type="name" id="formName" name="name" class="form-control" placeholder="Enter name" required>
     </div>
-    <div class="form-group">
-        <label for="formEmail">Institute</label>
-        <input type="Institute" id="formInstitute" name="Institute" class="form-control" placeholder="Enter Institute" required>
-    </div>
-    <div class="form-group">
-        <label for="formEmail">Email address</label>
-        <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email" required>
-    </div>
-    
-   
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary btn-block">Register</button>
-
-</form>
-</div>
-</div>
-</div>
-
 </div> 
 
+<script>
+    changeButton = document.getElementById("changeButton");
+    profileContainer = document.getElementById("profileInfo");
+
+    changeButton.addEventListener("click", function() {
+        passwordLabel = document.createElement("label");
+        passwordLabel.for = "passwordPrompt";
+        passwordLabel.textContent = "Enter Password";
+        passwordLabel.style.fontWeight = "bold"; 
+
+
+        passwordPrompt = document.createElement("input");
+        passwordPrompt.id = "passwordPrompt";
+        passwordPrompt.type = "password";
+
+        profileContainer.append(passwordLabel);
+        profileContainer.innerHTML += "<br>"; 
+        profileContainer.append(passwordPrompt);
+        
+        changeButton.style.display = "none";
+
+        confirmButton = document.createElement("button");
+        confirmButton.classList.add("btn");
+        confirmButton.classList.add("btn-primary");
+        confirmButton.classList.add("btn-block");
+        confirmButton.textContent = "Edit Profile";
+        confirmButton.id = "confirmButton";
+        
+        confirmButton.addEventListener("click", function() {
+            window.location.href = "/change-profile";
+            // TODO: Validate user password before allowing them to make changes
+            validate_password(passwordPrompt.value);
+        });
+
+        profileContainer.append(confirmButton);
+
+
+    });
+</script>
 {% endblock %}
