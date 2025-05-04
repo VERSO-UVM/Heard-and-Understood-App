@@ -7,7 +7,7 @@ import bcrypt, secrets
 from google.cloud.firestore_v1.base_query import FieldFilter
 from hua.firebase.config import Config
 from hua.db_utils import upload_file_to_db, connect_to_database
-from hua.consert.consert_process import ConsertProcess
+# from hua.consert.consert_process import ConsertProcess
 from flask_mail import Mail, Message
 from hua import email_credentials
 from datetime import datetime, timedelta, timezone
@@ -540,15 +540,15 @@ def create_app():
             cursor.close()
             connection.close()
     
-    @app.route('/run_consert', methods=['POST'])
-    def run_consert():
-        """Trigger the Consert process when the button is clicked."""
-        try:
-            process = ConsertProcess()  # Run the process
-            return jsonify({"status": "success", "message": "Consert process finished!"}) #TODO: replace the pop up window when done testing/implementing css
+    # @app.route('/run_consert', methods=['POST'])
+    # def run_consert():
+    #     """Trigger the Consert process when the button is clicked."""
+    #     try:
+    #         process = ConsertProcess()  # Run the process
+    #         return jsonify({"status": "success", "message": "Consert process finished!"}) #TODO: replace the pop up window when done testing/implementing css
 
-        except Exception as e:
-            return jsonify({"status": "error", "message": str(e)})
+    #     except Exception as e:
+    #         return jsonify({"status": "error", "message": str(e)})
 
     @app.route('/testOutput/<filename>')
     def get_output_file(filename):
@@ -798,7 +798,7 @@ def create_app():
     def add_new_pause():
         pause_classes = ['non-connectional', 'emotional', 'invitational']
 
-        modifications = pd.read_csv('static/modifications.csv')
+        modifications = pd.read_csv('hua/static/modifications.csv')
 
         start_time = float(request.form.get('startTime'))
         end_time = float(request.form.get('endTime'))
@@ -815,7 +815,7 @@ def create_app():
             # sort the pauses
             modifications = modifications.sort_values(by='start')
 
-            modifications.to_csv('static/modifications.csv', index=False)
+            modifications.to_csv('hua/static/modifications.csv', index=False)
         # else:
             #TODO: error message
 
@@ -850,7 +850,7 @@ def create_app():
             modify_pause_type = True
             
 
-        modifications = pd.read_csv('static/modifications.csv')
+        modifications = pd.read_csv('hua/static/modifications.csv')
         found_pause = False
         pause_index = -1
 
@@ -877,7 +877,7 @@ def create_app():
                 modifications.at[pause_index, 'class'] = pause_classes.index(pause_type)
 
             modifications = modifications.sort_values(by='start')
-            modifications.to_csv('static/modifications.csv', index=False)
+            modifications.to_csv('hua/static/modifications.csv', index=False)
         # else, TODO: display error message1
 
         return ("", 204)
@@ -885,7 +885,7 @@ def create_app():
     @app.route('/delete_pause', methods=['POST'])
     def delete_pause():
         input_time = float(request.form.get('pauseAtDelete'))
-        modifications = pd.read_csv('static/modifications.csv')
+        modifications = pd.read_csv('hua/static/modifications.csv')
 
         for i, row in modifications.iterrows():
             if input_time >= float(row['start']) and input_time <= float(row['stop']):
@@ -895,15 +895,15 @@ def create_app():
         if found_pause:
             modifications = modifications.drop(pause_index)
 
-            modifications.to_csv('static/modifications.csv', index=False)
+            modifications.to_csv('hua/static/modifications.csv', index=False)
 
         return ("", 204)
 
     @app.route('/save_changes', methods=['POST'])
     def ground_truth_connection():
-        modifications = pd.read_csv('static/modifications.csv')
+        modifications = pd.read_csv('hua/static/modifications.csv')
 
-        modifications.to_csv('static/test_video_classification.csv', index=False)
+        modifications.to_csv('hua/static/test_video_classification.csv', index=False)
         return ground_truthing()
     
 
@@ -915,7 +915,7 @@ def create_app():
         if file.filename == '':
             return "no file selected", 400
         if file and file.filename.endswith('.csv'):
-            file.save(os.path.join('static', 'test_video_classification.csv'))
+            file.save(os.path.join('hua/static', 'test_video_classification.csv'))
             return ground_truthing()
         else:
             return "Invalid, please upload a CSV file.", 400
