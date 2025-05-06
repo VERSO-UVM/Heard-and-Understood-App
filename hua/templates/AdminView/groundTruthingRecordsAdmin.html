@@ -27,14 +27,16 @@ View all Projects
         <th>Date</th>    
       </tr>
 
+      {% if all_groundTruth %}
       {% for sublist in all_groundTruth %}
-      {% for record in sublist %}
+        {% for record in sublist %}
           <tr>
-              <td>{{ record['user'] }}</td>
-              <td>{{ record['time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>{{ record['name'] }}</td>
+            <td>{{ record['time'] }}</td>
           </tr>
+        {% endfor %}
       {% endfor %}
-  {% endfor %}
+    {% endif %}
     </table>
 </div> 
 {% endfor %}

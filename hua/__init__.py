@@ -9,7 +9,7 @@ from hua.firebase.config import Config
 from hua.db_utils import upload_file_to_db, connect_to_database
 # from hua.consert.consert_process import ConsertProcess
 from flask_mail import Mail, Message
-
+# import email_credentials as email_credentials
 from datetime import datetime, timedelta, timezone
 import os
 import uuid
