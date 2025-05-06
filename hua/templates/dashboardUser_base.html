@@ -17,13 +17,27 @@
     {# Sets the favicon for the page #}
     <!-- Bootstrap -->
     <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
-    {# Links to Bootstrap CSS file #}
-    <link rel="stylesheet" href="/static/css/style.css?version={{ now }}">
+    {# Links to General Style CSS file #}
+    <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">
     {# Links to a style CSS file with a dynamic version #}
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
     {% endblock styles %}
-    {% endblock head %}
+
+    <header>
+      <!-- HUA Logo -->
+      <div class="logo">
+        <img src="/static/images/HUA-logo.png" class="header-logo" alt="HUA Logo"/>
+      </div>
+
+      <!-- ******************************************************************************************** -->
+      <div class="slogan-header">
+        <h1>Heard and Understood</h1>
+        <h3> Quality Through Compassionate Conversations</h3>
+      </div>
+      <!-- ******************************************************************************************** -->
+    </header>
   </head>
+  {% endblock head %}
 
   <body{% block body_attribs %}{% endblock body_attribs %}>
     {% block body %}

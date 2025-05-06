@@ -1,172 +1,91 @@
 {% extends 'dashboardAdmin_base.html' %}
-{# Extends the 'dashboardUser_base.html' template #}
-
 {% import "bootstrap/wtf.html" as wtf %}
-{# Imports 'wtf.html' from the 'bootstrap' directory with an alias 'wtf' #}
 
 {% block title %}
-Ground Truthing Page
+HUA - Ground Truthing
 {% endblock %}
-<link rel="stylesheet" href="../static/dashboard/dashboard.css">
-{% block styles %}
-  {{ super() }}
-  {% endblock %}
 
-  {% block content %}  
-  <body>
-    <main>
-        <div>
-            <h1>Ground Truthing Page</h1>
-            <p>Welcome back, User</p>
-        <div class="containerDiv">
-        
-            <!-- Recording Selector -->
-            <section>
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="/static/styles/style.css?version={{ now }}"> 
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="page-container">
+    <div class="upload-heading">
+        <h3>Ground Truthing</h3>
+    </div>
+    <div class="top-row">
+
+        <div class="left-column">
+            <div class="left-stack">
+                <!-- Recording Selector -->
+                <section class="section-box">
                 <form>
                     <label for="recordingsInput">Recording</label>
                     <input list="recordings" id="recordingsInput" disabled>
-                    <datalist id="recordings">
-                    </datalist>
+                    <datalist id="recordings"></datalist>
                 </form>
-            </section>
-           
-   
-
-            <!-- Checkboxes for pause selection -->
-            <section>
-                <h3>Select Pause type to view:</h3>
-                <div>
-                    <label for="emotionalCheckbox">Emotional Pause</label>
-                    <input type="checkbox" id="emotionalCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="invitationalCheckbox">Invitational Pause</label>
-                    <input type="checkbox" id="invitationalCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="non-connectiveCheckbox">Non-Connective Pause</label>
-                    <input type="checkbox" id="non-connectiveCheckbox" disabled checked>
-                </div>
-
-                <div class="containerDiv">
-                    <!-- Graph -->
-                    <section>
-                        <canvas id="myCanvas" width="500" height="300" style="border:1px solid #000000;"></canvas>
+                </section>
+            
+                <!-- Checkboxes for pause selection -->
+                <section class="pause-section">
+                    <section class="section-box">
+                        <h3>Select Pause Type to View</h3>
+                        <label><input type="checkbox" disabled checked> Emotional Pause</label>
+                        <label><input type="checkbox" disabled checked> Invitational Pause</label>
+                        <label><input type="checkbox" disabled checked> Non-Connective Pause</label>
                     </section>
-                </div>
-            </section>
-             <!-- Add new Pause -->
-            <section>
-                <h3>Add new pause:</h3>
-                <div>
-                    <label for="startTime">
-                        <h4>Start</h4>
-                    </label>
-                    <input type="time" id="startTime">
-    
-                    <label for="endTime">
-                        <h4>to</h4>
-                    </label>
-                    <input type="time" id="endTime" >
-                </div>
-                <div>
-                    <label for="emotionalCheckbox">Emotional Pause</label>
-                    <input type="checkbox" id="emotionalCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="invitationalCheckbox">Invitational Pause</label>
-                    <input type="checkbox" id="invitationalCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="non-connectiveCheckbox">Non-Connective Pause</label>
-                    <input type="checkbox" id="non-connectiveCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="noPauseCheckbox">No Pause</label>
-                    <input type="checkbox" id="non-noPauseCheckbox" disabled checked>
-                </div>
-
-                <div>
-                    <button type="submit" id="update" value="update"  disabled> Add Update</button>
-                </div>
-           
-
-           
-            </section>
-
-             <!-- Extend Pause -->
-             <section>
-                <h3>Extend pause:</h3>
-                <div>
-                <label for="startTime">
-                    <h4>Start</h4>
-                </label>
-                <input type="time" id="startTime">
-
-                <label for="endTime">
-                    <h4>to</h4>
-                </label>
-                <input type="time" id="endTime" >
+                </section>
             </div>
-               <h4>Edit Transcription:</h4>
-           
-
-           
-            </section>
-             <!-- Ground Truthing Connection -->
-             <section>
-                <h3>Ground Truthing Connection</h3>
-                <div>
-                <label for="startTime">
-                    <h4>Start</h4>
-                </label>
-                <input type="time" id="startTime">
-
-                <label for="endTime">
-                    <h4>to</h4>
-                </label>
-                <input type="time" id="endTime" >
-            </div>
-                <div>
-                    <label for="emotionalCheckbox">Emotional Pause</label>
-                    <input type="checkbox" id="emotionalCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="invitationalCheckbox">Invitational Pause</label>
-                    <input type="checkbox" id="invitationalCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="non-connectiveCheckbox">Non-Connective Pause</label>
-                    <input type="checkbox" id="non-connectiveCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="noPauseCheckbox">No Pause</label>
-                    <input type="checkbox" id="non-noPauseCheckbox" disabled checked>
-                </div>
-                <div>
-                    <button type="submit" id="update" value="update"  disabled>Add Update</button>
-                </div>
-           
-            </section>
-            <div>
-                <button type="submit" id="update" value="update"  disabled> Save and update changes</button>
-            </div>
-       
-
-       
-            
-
-            
-            <div id="modalBackground" class="modalBackground">
-                <div id="modalPopup" class="modalPopup">
-                    <span id="modalContent" class="modalContent"></span>
-                </div>
-            </div>
-            
         </div>
-      
+
+        <div class="canvas-wrapper">
+            <canvas id="myCanvas"></canvas>
+          </div>
     </div>
-    </main>
-    <script src="index.js"></script>
-    <script src="../static/dashboard/dashboard.js"></script>
+
+    <div class ="bottom-row">
+        <section class="pause-section">
+          <h3>Add New Pause</h3>
+          <label><h4>Start</h4><input type="time"></label>
+          <label><h4>to</h4><input type="time"></label>
+          <label><input type="checkbox" disabled checked> Emotional Pause</label>
+          <label><input type="checkbox" disabled checked> Invitational Pause</label>
+          <label><input type="checkbox" disabled checked> Non-Connective Pause</label>
+          <label><input type="checkbox" disabled checked> No Pause</label>
+          <button type="submit" disabled>Add Update</button>
+        </section>
+
+        <section class="pause-section">
+          <h3>Extend Pause</h3>
+          <label><h4>Start</h4><input type="time"></label>
+          <label><h4>to</h4><input type="time"></label>
+          <h4>Edit Transcription:</h4>
+        </section>
+
+        <section class="pause-section">
+          <h3>Ground Truthing Connection</h3>
+          <label><h4>Start</h4><input type="time"></label>
+          <label><h4>to</h4><input type="time"></label>
+          <label><input type="checkbox" disabled checked> Emotional Pause</label>
+          <label><input type="checkbox" disabled checked> Invitational Pause</label>
+          <label><input type="checkbox" disabled checked> Non-Connective Pause</label>
+          <label><input type="checkbox" disabled checked> No Pause</label>
+          <button type="submit" disabled>Add Update</button>
+        </section>
+    </div>
+
+      <button class="btn-save-update" type="submit" disabled>Save and Update Changes</button>
+  </div>
+
+  <div id="modalBackground" class="modalBackground">
+    <div id="modalPopup" class="modalPopup">
+      <span id="modalContent" class="modalContent"></span>
+    </div>
+  </div>
+</main>
+<script src="index.js"></script>
+<script src="../static/dashboard/dashboard.js"></script>
 {% endblock content %}
