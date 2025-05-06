@@ -9,7 +9,7 @@ from hua.firebase.config import Config
 from hua.db_utils import upload_file_to_db, connect_to_database
 # from hua.consert.consert_process import ConsertProcess
 from flask_mail import Mail, Message
-# from hua import email_credentials
+
 from datetime import datetime, timedelta, timezone
 import os
 import uuid
@@ -114,6 +114,7 @@ def create_app():
 
     @app.route('/pi_access_request', methods=['GET', 'POST'])
     def pi_access_request():
+
         user=session.get("user")
         user_email=user.get("email")
         user_name=user.get("name")
@@ -121,6 +122,7 @@ def create_app():
         
         if request.method == 'POST':
             try:
+                import email_credentials 
                 # Add request to HUA firebase
                 requests_ref = db.collection('request').document(user_email)
                 requests_doc = requests_ref.set({"email":user_email,"name":user_name})
