@@ -22,9 +22,9 @@
             <tbody>
                 {% for file in files %}
                 <tr>
-                    <td>{{ file.id }}</td>
-                    <td>{{ file.file_name }}</td>
-                    <td>{{ file.file_type }}</td>
+                    <td>{{ file[0] }}</td>
+                    <td>{{ file[1] }}</td>
+                    <td>{{ file[2] }}</td>
                  
                 </tr>
                 {% endfor %}
