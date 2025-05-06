@@ -534,14 +534,18 @@ def create_app():
         if connection is None:
             return "Database connection failed", 500
 
+        cursor = None
         try:
-            cursor = connection.cursor(dictionary=True)
+            cursor = connection.cursor()
             cursor.execute("select id, file_name, file_type from audio_files")
             files = cursor.fetchall()
+            print("Fetched files:", files)
             return render_template('view-files.html', files=files)
         finally:
-            cursor.close()
-            connection.close()
+            if cursor:
+                cursor.close()
+            if connection:
+                connection.close()
     
     # @app.route('/run_consert', methods=['POST'])
     # def run_consert():
