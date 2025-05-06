@@ -9,11 +9,12 @@ from hua.firebase.config import Config
 from hua.db_utils import upload_file_to_db, connect_to_database
 # from hua.consert.consert_process import ConsertProcess
 from flask_mail import Mail, Message
-from hua import email_credentials
+# import email_credentials as email_credentials
 from datetime import datetime, timedelta, timezone
 import os
 import uuid
 import pandas as pd
+from datetime import datetime, timezone
 
 
 
@@ -46,8 +47,8 @@ def create_app():
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP email server 
     app.config['MAIL_PORT'] = 587
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.config['MAIL_USERNAME'] = email_credentials.hua_email
-    app.config['MAIL_PASSWORD'] = email_credentials.hua_password
+    # app.config['MAIL_USERNAME'] = email_credentials.hua_email
+    # app.config['MAIL_PASSWORD'] = email_credentials.hua_password
     app.config['MAIL_USE_TLS'] = True
     app.config['MAIL_USE_SSL'] = False
     mail = Mail(app)
@@ -113,6 +114,7 @@ def create_app():
 
     @app.route('/pi_access_request', methods=['GET', 'POST'])
     def pi_access_request():
+
         user=session.get("user")
         user_email=user.get("email")
         user_name=user.get("name")
@@ -120,6 +122,7 @@ def create_app():
         
         if request.method == 'POST':
             try:
+                import email_credentials 
                 # Add request to HUA firebase
                 requests_ref = db.collection('request').document(user_email)
                 requests_doc = requests_ref.set({"email":user_email,"name":user_name})
@@ -906,7 +909,22 @@ def create_app():
     @app.route('/save_changes', methods=['POST'])
     def ground_truth_connection():
         modifications = pd.read_csv('hua/static/modifications.csv')
+        project=session.get("project")
+        access_code=project.get("access")
+        user=session.get("user")
+        user_name=user.get("name")
 
+
+
+        proj_ref = db.collection("projects")
+        query_ref = proj_ref.where(filter=FieldFilter("access_code", "==", access_code))
+        docs = list(query_ref.stream())
+
+        if docs:
+            doc_ref = docs[0].reference
+            doc_ref.update({"ground_truthing": firestore.ArrayUnion([{"time": datetime.now(timezone.utc), "name": user_name}])})
+        else:
+            print("Coundn't find document with this access code.")
         modifications.to_csv('hua/static/test_video_classification.csv', index=False)
         return ground_truthing()
     
