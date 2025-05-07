@@ -1,27 +1,29 @@
 {% extends 'homeAdmin_base.html' %}
 
-
 {% import "bootstrap/wtf.html" as wtf %}
 
-
 {% block title %}
-Home Page: User
-
+HUA - View All Projects
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
-
+  <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?version={{ now }}"> 
 {% endblock %}
 
-{% block content%}
-
-<div class = "">
-  <form action="{{ url_for('viewAllProjectsAdmin')}}" method="post" onsubmit="return validateForm()">
-    <input type="text" name="s_Name" class = "inputText" placeholder="Search..."><br>
-    <button type="submit" class="save">Search</button>
-  </form>
+{% block content %}
+<h1>View All Projects</h1>
+<div class="view-project-container">
+  <div class="form-group">
+    <div class="input-group mb-4">
+        <input type="text" id="searchInput" name="s_Name" class="form-control" placeholder="Search ..." required>
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-search">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
   </div>
 
 {% for i in all_project %}

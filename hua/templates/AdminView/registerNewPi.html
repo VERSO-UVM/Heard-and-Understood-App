@@ -5,25 +5,30 @@
 
 
 {% block title %}
-Home Page: PI
+HUA - Register New PI
 
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+  <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}"> 
+
+  <!-- Font Awesome Link for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?version={{ now }}"> 
 
 {% endblock %}
 {%block content%}
-
-    <!-- Flash message for successful or failed registration -->
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <div class="alert alert-danger" role="alert">
-            {{ messages[0] }}
-        </div>
-    {% endif %}
-{% endwith %}
+<h1>Register New PI</h1>
+<div class="container">
+    <div class="view-project-container-small">
+            <!-- Flash message for successful or failed registration -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}      
 
 <form method="POST" action="/registerNewPI">
     <!-- Email input -->

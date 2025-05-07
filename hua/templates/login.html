@@ -3,53 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Login Form</title>
+    <title>HUA - Login</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- General Style Sheet-->
+    <link href="/static/styles/style.css" rel="stylesheet">
+
+    <!-- Font Awesome Link for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/hua_icon.png') }}">
+
 </head>
 <body>
+    <!-- HUA Logo -->
+    <img src="/static/images/HUA-logo.png" class="login-logo" alt="HUA Logo"/>
+
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-4">
-                <h2 class="text-center">Sign In</h2>
+            <div class="col-md-6">
+                <div class="border-login rounded p-4">
+                    <h2 class="text-center header-style">Sign In</h2>
 
-                <!-- Flash message for invalid credentials -->
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                                {{ message }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                    <!-- Flash message for invalid credentials -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+
+                    <form method="POST" action="/login">
+                        <!-- Email input -->
+                        <div class="form-group">
+                            <label for="formEmail">Email address</label>
+                            <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email" required>
+                        </div>
+                        
+                        <!-- Password input with toggle -->
+                        <div class="form-group">
+                            <label for="formPassword">Password</label>
+                            <div class="input-group">
+                                <input type="password" id="formPassword" name="password" class="form-control" placeholder="Enter password" required>
+                                <div class="input-group-append">
+                                    <button type="button" class="view-btn" id="togglePassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
                             </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
+                        </div>
 
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
 
-                <form method="POST" action="/login">
-                    <!-- Email input -->
-                    <div class="form-group">
-                        <label for="formEmail">Email address</label>
-                        <input type="email" id="formEmail" name="email" class="form-control" placeholder="Enter email" required>
-                    </div>
-                    
-                    <!-- Password input -->
-                    <div class="form-group">
-                        <label for="formPassword">Password</label>
-                        <input type="password" id="formPassword" name="password" class="form-control" placeholder="Password" required>
-                    </div>
-
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-
-                    <!-- Forgot password and create account links -->
-                    <div class="d-flex justify-content-between mt-3">
-                        <a href="{{ url_for('forgot_password') }}">Forgot password?</a>
-                        <a href="{{ url_for('register') }}">Create Account</a>
-                    </div>
-                </form>
+                        <!-- Forgot password and create account links -->
+                        <div class="d-flex justify-content-between mt-3">
+                            <a href="{{ url_for('forgot_password') }}">Forgot password?</a>
+                            <a href="{{ url_for('register') }}">Create Account</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -58,5 +79,16 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Toggle Password  -->
+    <script src="/static/js/togglePassword.js"></script>
+
+    <!-- Initialize Toggle Password function -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            setupPasswordToggle("togglePassword", "formPassword");
+        });
+    </script>
+
 </body>
 </html>

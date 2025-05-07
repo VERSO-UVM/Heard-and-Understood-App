@@ -1,35 +1,38 @@
 {% extends 'dashboardAdmin_base.html' %}
 
-
 {% import "bootstrap/wtf.html" as wtf %}
 
-
 {% block title %}
-View all Projects
-
+HUA - Upload Audio Files
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+  <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">  
 {% endblock %}
 
-{% block content%}
-    <div class=" container justify-content-center mt-5">
-        <h3>Upload Audio Files</h3>
+{% block content %}
+<h1>Upload Audio Files</h1>
+<div class="upload-page-wrapper">
+    <div class="upload-container">
         <form action="/upload_file" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" id="files" accept="audio/*" required /><br /><br />
-            <input type="submit" value="Upload" class="btn btn-primary"/>
+            <div class="upload-group mb-3">
+                <input type="file" name="file" id="files" accept="audio/*" required class="form-control"/>
+            </div>
+            <div class="center-btn">
+                <input type="submit" value="Upload" class="btn-upload"/>
+            </div>
         </form>
-        <p id = 'status'></p>
+        <p id="status" class="text-success status-message"></p>
     </div>
-</body>
-</html>
+</div>
 
 <script>
     const form = document.querySelector('form');
-    form.addEventListener('submit', function() {
-        document.getElementById('status').innerText = 'successfully uploaded!';
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        document.getElementById('status').innerText = 'Successfully uploaded!';
+        setTimeout(() => form.submit(), 1000);
     });
 </script>
 {% endblock %}
