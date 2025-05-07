@@ -578,6 +578,7 @@ def create_app():
 
             for doc in  query_ref:
                 searched_projects.append(doc.to_dict())
+               
                 return render_template('PIView/viewAllProjectsAdmin.html',all_project=searched_projects)
         
         else: 
