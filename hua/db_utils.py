@@ -1,18 +1,19 @@
-import mysql.connector
-from mysql.connector import Error
-#pip install mysql-connector-python ^^^^
+import pymysql
+
+#pip install pymysql
 
 def connect_to_database():
     try:
-        connection = mysql.connector.connect(
+        connection = pymysql.connect(
             host="localhost",
             user="root",
-            #change this to your password (and user if applicable) for your mysql
+            #replace this password/user with your mysql password/user
             password="password",
-            database="audio_files" 
+            database="audio_files"
         )
+        print("Connected to DB using PyMySQL")
         return connection
-    except Error as e:
+    except Exception as e:
         print(f"Error: {e}")
         return None
 
@@ -28,10 +29,11 @@ def upload_file_to_db(file_name, file_type, file_data):
         connection.commit()
         print(f"{file_name} uploaded successfully")
         return True
-    except Error as e:
+    except Exception as e:
         print(f"error when uploading file:{e}")
         return False
     finally:
-        if connection.is_connected():
+        if cursor:
             cursor.close()
+        if connection:
             connection.close()
