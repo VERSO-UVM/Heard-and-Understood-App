@@ -26,17 +26,20 @@ HUA - View All Projects
     </div>
   </div>
 
-  {% for i in all_project %}
-    <div class="user-card mb-3">
-      <p><strong>Project Name:</strong> {{ i['project_name'] }}</p>
-      <p><strong>Access Code:</strong> {{ i['access_code'] }}</p>
-      <p><strong>Number of Members:</strong> {{ i['project_members'] | length }}</p>
-      <p><strong>Members:</strong> {{ i['project_members'] }}</p>
-      <div class="mt-2">
-        <a href="/generateNewCode/{{ i.projectName }}" class="btn-user-card btn-sm btn-search">Generate New Code</a>
-        <a href="/deleteProject/{{ i.projectName }}" class="btn-user-card btn-sm btn-search">Delete Project</a>
-      </div>
-    </div>
-  {% endfor %}
-</div>
+{% for i in all_project %}
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ i['project_name'] }}<span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <h4>Access Code: {{ i['access_code']}}</h4>
+    <h4># of Memeber:{{ i['project_members'] | length}}</h4>
+    <h4>{{ i['project_members']}}</h4>
+  
+  </ul>
+</li>
+<td>
+  <br>
+  <a href="/generateNewCode/{{i.projectName}}">Generate New Code</a>
+  <a href="/deleteProject/{{i.projectName}}">Delete Project</a>
+</td>
+{% endfor %}
 {% endblock %}
