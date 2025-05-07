@@ -12,6 +12,7 @@ build/
 
 #Flask
 flask_session/
+hua/flask_session/
 
 #Output
 hua/static/
