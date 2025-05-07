@@ -6,22 +6,23 @@
 
 
 {% block title %}
-Home Page: User
+HUA - Change Profile
 
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+  <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}"> \
+
+  <!-- Font Awesome Link for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?version={{ now }}"> 
 
 {% endblock %}
 
 {% block content%}
-<div class="container mt-5">
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-4">
-            <h2 class="text-center">Change Profile</h2>
-
+        <div class="center-profile">
             <!-- Flash message for invalid credentials -->
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -30,33 +31,76 @@ Home Page: User
                     </div>
                 {% endif %}
             {% endwith %}
+            <div class="border-request-pi rounded p-4"> 
+                <h2 class="text-center">Change Profile</h2>
+                <form method="POST" action="/change-profile">
+                    <!-- Name input -->
+                    <div class="form-group">
+                        <label for="formName">Name</label>
+                        <input type="text" id="formName" name="name" class="form-control" placeholder={{name}} required>
+                    </div>
 
-            <form method="POST" action="/change-profile">
-                <!-- Name input -->
-                <div class="form-group">
-                    <label for="formName">Name</label>
-                    <input type="text" id="formName" name="name" class="form-control" placeholder={{name}} required>
-                </div>
+                    <!-- Email input -->
+                    <div class="form-group">
+                        <label for="formEmail">Email address</label>
+                        <input type="email" id="formEmail" name="email" class="form-control" placeholder={{email}} required>
+                    </div>
+                    
+                    <!-- Institution input -->
+                    <div class="form-group">
+                        <label for="passwordPrompt">Enter password</label><br>
+                        <input type="password" id="passwordPrompt" name="password" class="form-control" placeholder="Enter password" required>
+                    </div>
 
-                <!-- Email input -->
-                <div class="form-group">
-                    <label for="formEmail">Email address</label>
-                    <input type="email" id="formEmail" name="email" class="form-control" placeholder={{email}} required>
-                </div>
-                
-                <!-- Institution input -->
-                <div class="form-group">
-                    <label for="formPassword">Password</label>
-                    <input type="password" id="formPassword" name="password" class="form-control" placeholder="Enter Password" required>
-                </div>
-
-                <!-- Submit button -->
-                <!-- TODO: Push these new changes to the account in Firebase -->
-                <button type="submit" class="btn btn-primary btn-block">Save Profile</button>
-            </form>
+                    <!-- Submit button -->
+                    <!-- TODO: Push these new changes to the account in Firebase -->
+                    <button type="changeButton" type="submit" class="btn btn-primary btn-block">Save Profile</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+<script>
+    changeButton = document.getElementById("changeButton");
+    profileContainer = document.getElementById("profileInfo");
+
+    changeButton.addEventListener("click", function() {
+        passwordLabel = document.createElement("label");
+        passwordLabel.for = "passwordPrompt";
+        passwordLabel.textContent = "Enter Password";
+        passwordLabel.style.fontWeight = "bold";
+        profileContainer.innerHTML += "<br>";  
 
 
+        passwordPrompt = document.createElement("input");
+        passwordPrompt.id = "passwordPrompt";
+        passwordPrompt.type = "password";
+        passwordPrompt.placeholder = "Enter password";
+        passwordPrompt.classList.add("form-group");
+        passwordPrompt.classList.add("inputText");
+
+        profileContainer.append(passwordLabel);
+        profileContainer.innerHTML += "<br>"; 
+        profileContainer.append(passwordPrompt);
+        
+        changeButton.style.display = "none";
+
+        confirmButton = document.createElement("button");
+        confirmButton.classList.add("btn");
+        confirmButton.classList.add("btn-primary");
+        confirmButton.classList.add("btn-block");
+        confirmButton.textContent = "Edit Profile";
+        confirmButton.id = "confirmButton";
+        
+        confirmButton.addEventListener("click", function() {
+            window.location.href = "/change-profile";
+            // TODO: Validate user password before allowing them to make changes
+            validate_password(passwordPrompt.value);
+        });
+
+        profileContainer.append(confirmButton);
+
+
+    });
+</script>
 {% endblock %}

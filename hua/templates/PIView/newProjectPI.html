@@ -5,24 +5,77 @@
 
 
 {% block title %}
-View all Projects
+HUA - Create New Project
 
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+  <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}"> 
+
+  <!-- Font Awesome Link for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?version={{ now }}"> 
+
 {% endblock %}
 
 {% block content %}
-<div class = "">
-    <h5>Create New Project</h5>
-    <form action="{{ url_for('generateNewProject')}}" method="post" onsubmit="return validateForm()">
-      <label for="p_Name"></label>
-      <input type="text" name="p_Name" class = "inputText" placeholder="Project Name"><br>
-      
-      <button type="submit" class="save">Save</button>
-    </form>
-    </div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="center-profile">
+      <div class="border-request-pi rounded p-4">
+        <h2>Create New Project</h2>
 
+        <form action="{{ url_for('generateNewProject')}}" method="post" onsubmit="return validateForm()">
+          <div class="form-group">
+            <div class="input-group">
+              <label for="p_Name"></label>
+              <input type="text" name="p_Name" class = "inputText" placeholder="Project name"><br>
+            </div>
+          </div>
+          <button id="changeButton" type="submit" class="btn btn-primary btn-block">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  changeButton = document.getElementById("changeButton");
+  profileContainer = document.getElementById("profileInfo");
+
+  changeButton.addEventListener("click", function() {
+      passwordLabel = document.createElement("label");
+      passwordLabel.for = "passwordPrompt";
+      passwordLabel.textContent = "Enter Password";
+      passwordLabel.style.fontWeight = "bold"; 
+
+
+      passwordPrompt = document.createElement("input");
+      passwordPrompt.id = "passwordPrompt";
+      passwordPrompt.type = "password";
+
+      profileContainer.append(passwordLabel);
+      profileContainer.innerHTML += "<br>"; 
+      profileContainer.append(passwordPrompt);
+      
+      changeButton.style.display = "none";
+
+      confirmButton = document.createElement("button");
+      confirmButton.classList.add("btn");
+      confirmButton.classList.add("btn-primary");
+      confirmButton.classList.add("btn-block");
+      confirmButton.textContent = "Edit Profile";
+      confirmButton.id = "confirmButton";
+      
+      confirmButton.addEventListener("click", function() {
+          window.location.href = "/change-profile";
+          // TODO: Validate user password before allowing them to make changes
+          validate_password(passwordPrompt.value);
+      });
+
+      profileContainer.append(confirmButton);
+
+
+  });
+  </script>
 {% endblock %}

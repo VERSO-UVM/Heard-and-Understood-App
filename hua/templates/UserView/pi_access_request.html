@@ -5,35 +5,35 @@
 
 
 {% block title %}
-Home Page: User
+HUA - Request PI Access
 
 {% endblock %}
 
 {% block styles %}
   {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+  <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">
 
 {% endblock %}
 
 {% block content%}
-    <div class="container mt-5">
+    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-4">
-                <h2 class="text-center">Request PI Access</h2>
-                <p>To request PI access, submit a request to the administrators.</p>
-                <form action="{{ url_for('pi_access_request')}}" method="post" onsubmit="return validateForm()">
-             
+            <div class="center-profile">
+                <div class="border-request-pi rounded p-4"> 
+                    <h2 class="text-center">Request PI Access</h2>
+                    <p>To request PI access, submit a request to the administrators.</p>
+                    <form action="{{ url_for('pi_access_request')}}" method="post" onsubmit="return validateForm()">
+                
 
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block">Request PI Access</button>
-                </form>
-                <div>
-                    <p>Once reviewed, you will receive an email with your request status: access granted or denied. </p>
-                    <p>If access is granted, the next time you login you will have PI access. </p>
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block">Request PI Access</button>
+                    </form>
+                    <div>
+                        <p>Once reviewed, you will receive an email with your request status: access granted or denied. </p>
+                        <p>If access is granted, the next time you login you will have PI access. </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    
     {% endblock %}

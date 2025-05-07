@@ -1,0 +1,109 @@
+.side-nav-container {
+  position: absolute;
+  background-color: #1C26A5;
+  color: white;
+  width: 250px;
+  list-style-type: none !important;
+  padding: 0;
+}
+
+.side-nav-container ul {
+  margin: 0;
+  padding: 0;
+}
+
+.side-nav-container li {
+  text-align: center;
+  font-size: large;
+}
+
+.side-nav-container a {
+  display: block;
+  color: white;
+  /* font-weight: bold; */
+  text-decoration: none;
+  padding: 10px;
+  transition: 0.2s;
+}
+
+.side-nav-container a:hover {
+  background-color: white; 
+  /* text-decoration: underline;*/
+  color: #1C26A5;
+}
+
+/************* ADMIN NAVBAR ****************************************/
+.navbar {
+  background-color: #1C26A5;
+}
+  
+.navbar-menu {
+  display: flex;
+  justify-content: space-evenly;  /* Even spacing across the full width */
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+  
+.navbar-menu li {
+  flex: 1;                /* All items take equal width */
+  text-align: center;
+}  
+  
+.navbar-menu a {
+  display: inline-flex;
+  flex-direction: column;            /* Icon on top, label below (optional) */
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px;
+  font-size: 1.6rem;
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-menu a:hover {
+  background-color: white;
+  color: #1C26A5;
+  border-radius: 4px;
+}
+
+.navbar-menu > .dropdown {
+  position: relative;
+}
+
+/********** DROPDOWN MENU ******/
+.dropdown {
+  display: block; 
+}
+
+/* Ensure dropdown is hidden by default */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  min-width: 180px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 0;
+  list-style: none;
+  border-radius: 8px 8px 8px 8px;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu > li > a:hover {
+  background-color: #1C26A5;
+  color: white;
+}
+  
+.navbar-menu i {
+  font-size: 2rem;
+  margin-bottom: 4px;
+}
