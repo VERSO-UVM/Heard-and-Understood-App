@@ -14,6 +14,9 @@
     {% endblock metas %}
 
     {% block styles %}
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/hua_icon.png') }}">
+    
     {# Sets the favicon for the page #}
     <!-- Bootstrap -->
     <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
@@ -21,6 +24,7 @@
     <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">
     {# Links to a style CSS file with a dynamic version #}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
+
     {% endblock styles %}
 
     <header>
@@ -36,6 +40,8 @@
       </div>
       <!-- ******************************************************************************************** -->
     </header>
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='hua_icon.png') }}">
   </head>
   {% endblock head %}
 
@@ -48,7 +54,7 @@
               <li><a href="{{ url_for('homepage') }}">Home</a></li>
               <li><a href="{{ url_for('profile') }}">Profile</a></li>
                <li> <a href="{{ url_for('login') }}">Log Out</a></li>
-               <li> <a href="{{ url_for('contact') }}">Contact Admin</a></li>
+               <li> <a href="{{ url_for('contact') }}">Contact Admins</a></li>
                <li class="dropdown">
                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
                    <ul class="dropdown-menu">

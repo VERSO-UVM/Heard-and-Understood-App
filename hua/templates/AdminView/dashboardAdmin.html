@@ -71,6 +71,7 @@
           <div class="left-panel">
             <!-- Recording section now on the left -->
             <section class="recording-section">
+                <div class="center-dash-btn">
                 <div class="dashboard-spacing">
                     <div class="project">
                         <label for="projectsInput">Project </label>
@@ -84,10 +85,9 @@
                         <datalist id="recordings"></datalist>
                     </div>
                 </div>
-      
-                <div class="">
-                    <button class="btn-algorithm" type="submit" id="algorithm" onclick="runConsert()" disabled>Run Algorithm</button>
-                    <button class="btn-algorithm" type="submit" id="confusionMatrix" disabled>View Confusion Matrix</button>
+
+                    <button class="btn-data" type="submit" id="algorithm" onclick="runConsert()" disabled>Run Algorithm</button>
+                    <button class="btn-data" type="submit" id="confusionMatrix" disabled>View Confusion Matrix</button>
                 </div>
             </section>
           </div>
@@ -118,9 +118,11 @@
             </div>
           </div>
       
+        <!-- NOTE: for demo purposes, a static image is displayed to showcase consert.-->
           <div class="output-section">
-            <h2>Generated Output</h2>
-            <img id="generatedImage" src="" style="display: none; max-width: 100%;">
+            <div class="scroll-container">
+                <img src="{{ url_for('static', filename='images/consert_demo.png') }}" alt="Consert Output">
+            </div>
           </div>
         </section>
       </main>                  

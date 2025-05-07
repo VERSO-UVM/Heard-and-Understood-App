@@ -16,7 +16,7 @@ HUA - Admin Home Page
 {% endblock %}
 
 {% block content%}
-<h1>Welcome, Admin! - Home</h1>
+<h1>Welcome, Admin!</h1>
  <!-- Flash message for invalid credentials -->
  {% with messages = get_flashed_messages() %}
  {% if messages %}
@@ -35,7 +35,9 @@ HUA - Admin Home Page
                 <h3>Enter Project Access Code</h3>
             </div>
         <input type="text" name="accessCode" class="form-control" id="accessCode" placeholder="Enter Access Code">
-        <button class="btn-small btn-primary btn-block" id="save">Submit</button>
+        <div class="center">
+            <button class="btn-small btn-primary btn-block" id="save">Submit</button>
+        </div>
         </form>
     </div>
 </div>

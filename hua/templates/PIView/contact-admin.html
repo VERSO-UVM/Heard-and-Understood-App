@@ -1,43 +1,60 @@
 {% extends 'homePI_base.html' %}
-
-
 {% import "bootstrap/wtf.html" as wtf %}
-
 
 {% block title %}
 HUA - Contact Admins
-
 {% endblock %}
 
 {% block styles %}
-  {{ super() }}
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/.css') }}"> -->
+{{ super() }}
+<style>
+  .contact-row {
+    margin-bottom: 2rem;
+    align-items: center;
+  }
 
+  .contact-img {
+    max-width: 60%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .contact-text h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-text p {
+    font-size: 16px;
+  }
+</style>
 {% endblock %}
 
-{% block content%}
+{% block content %}
 <div class="container mt-5">
-    <h3>Contact Admins</h3>
-    <br/>
-    <div class="row align-items-start">
-        <div class="col">
-            <img src="{{ url_for('static', filename='images/Robert-E-Gramling-MD.jpg') }}" alt="Bob Gramling" width="20%">            </div>
-        <div class="col">
-            <h3><b>Robert Gramling</b></h3>
-            <p><b>Phone:</b> (802) 847-4848</p>
-            <p><b>Email:</b> robert.gramling@med.uvm.edu</p>
-        </div>
+  <h1>Contact Admins</h1>
+  <br/>
+
+  <div class="row contact-row">
+    <div class="col-md-4 text-center">
+      <img src="{{ url_for('static', filename='images/Robert-E-Gramling-MD.jpg') }}" alt="Bob Gramling" class="contact-img" />
     </div>
-    <br />
-    <div class="row align-items-start">
-        <div class="col">
-            <img src="{{ url_for('static', filename='images/donna.jpg') }}" alt="Donna Rizzo" width="20%">           
-        </div>
-        <div class="col">
-            <h3><b>Donna Rizzo</b></h3>
-            <p><b>Phone:</b> (802)-656-1495</p>
-            <p><b>Email:</b> drizzo@uvm.edu</p>
-        </div>
+    <div class="col-md-8 contact-text">
+      <h3><b>Robert Gramling</b></h3>
+      <p><b>Phone:</b> (802) 847-4848</p>
+      <p><b>Email:</b> robert.gramling@med.uvm.edu</p>
     </div>
+  </div>
+
+  <div class="row contact-row">
+    <div class="col-md-4 text-center">
+      <img src="{{ url_for('static', filename='images/donna.jpg') }}" alt="Donna Rizzo" class="contact-img" />
+    </div>
+    <div class="col-md-8 contact-text">
+      <h3><b>Donna Rizzo</b></h3>
+      <p><b>Phone:</b> (802)-656-1495</p>
+      <p><b>Email:</b> drizzo@uvm.edu</p>
+    </div>
+  </div>
 </div>
 {% endblock %}

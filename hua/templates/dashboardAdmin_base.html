@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?version={{ now }}">
 
     {% endblock styles %}
-
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/hua_icon.png') }}">
     <header>
       <!-- HUA Logo -->
       <div class="logo">
@@ -51,16 +52,10 @@
       <ul class="navbar-menu">
         <li><a href="{{ url_for('homepage') }}"><i class="fas fa-home"></i>Home</a></li>
         <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-chart-pie"></i>Dashboard</a></li>
-        <li><a href="{{ url_for('upload') }}"><i class="fas fa-file-import"></i>Upload</a></li>
-        <li><a href="{{ url_for('view_files') }}"><i class="fas fa-search"></i>View Data</a></li>
+        <li><a href="{{ url_for('upload') }}"><i class="fas fa-file-import"></i>Upload Audio Files</a></li>
+        <!-- <li><a href="{{ url_for('view_files') }}"><i class="fas fa-search"></i>View Data</a></li> -->
         <li><a href="{{ url_for('ground_truthing') }}"><i class="fas fa-wrench"></i>Ground Truthing</a></li>
-        <li class="dropdown">
-          <a href="#"><i class="fas fa-user-shield"></i>Admin View<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="{{ url_for('viewAllProjectsAdmin') }}">View All Projects</a></li>
-            <li><a href="{{ url_for('groundTruthUpdates') }}">View Ground Truth Updates</a></li>
-          </ul>
-        </li>
+        <li><a href="{{ url_for('groundTruthUpdates') }}"><i class="fas fa-user-shield"></i>View Ground Truth Updates</a></li>
       </ul>
     </nav>
     

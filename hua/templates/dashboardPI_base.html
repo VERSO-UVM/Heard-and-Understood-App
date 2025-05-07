@@ -15,14 +15,21 @@
     {% endblock metas %}
 
     {% block styles %}
-    {# Sets the favicon for the page #}
     <!-- Bootstrap -->
     <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
+    
     {# Links to General Style CSS file #}
     <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">
+    
     {# Links to a style CSS file with a dynamic version #}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
+    
+    {# Sets the favicon for the page #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?version={{ now }}">
+
     {% endblock styles %}
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/hua_icon.png') }}">
 
     <header>
       <!-- HUA Logo -->
@@ -43,25 +50,23 @@
   <body{% block body_attribs %}{% endblock body_attribs %}>
     {% block body %}
     {% block navbar %}
-    <header>
-      
-      <nav>
-        <ul>
-        <h3>PI Dashboard</h3>
-         <li> <a href="{{ url_for('homepage') }}">Home</a></li>
-           <li> <a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-             <li> <a href="{{ url_for('upload') }}">Upload</a></li>
-               <li><a href="{{ url_for('view_files') }}">View Data</a></li>
-                   <li><a href="{{ url_for('ground_truthing') }}">Ground Truthing</a></li>
+    <nav class="navbar">
+      <ul class="navbar-menu">
+        <li><a href="{{ url_for('homepage') }}"><i class="fas fa-home"></i>Home</a></li>
+        <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-chart-pie"></i>Dashboard</a></li>
+        <li><a href="{{ url_for('upload') }}"><i class="fas fa-file-import"></i>Upload Audio Files</a></li>
+        <!-- <li><a href="{{ url_for('view_files') }}"><i class="fas fa-search"></i>View Data</a></li> -->
+        <li><a href="{{ url_for('ground_truthing') }}"><i class="fas fa-wrench"></i>Ground Truthing</a></li>
+        <li><a href="{{ url_for('groundTruthUpdates') }}"><i class="fas fa-user-shield"></i>View Ground Truth Updates</a></li>
+<!--
                    <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PI view <span class="caret"></span></a>
                      <ul class="dropdown-menu">
                        <li><a href="{{ url_for('viewAllProjectsPI') }}">View all projects</a></li>
-                       <li><a href="{{ url_for('groundTruthUpdates') }}">View Ground Truth Updates</a></li>
+                       <li><a href="{{ url_for('groundTruthUpdates') }}">View Ground Truth Updates</a></li> -->
         </ul>
       </nav>
-     
-    </header>
+
     {%- endblock navbar %}
     {% block content %}{%- endblock content %}
 

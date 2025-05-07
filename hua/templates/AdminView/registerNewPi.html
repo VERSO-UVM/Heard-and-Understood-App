@@ -18,9 +18,9 @@ HUA - Register New PI
 
 {% endblock %}
 {%block content%}
+<h1>Register New PI</h1>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="center-profile">
+    <div class="view-project-container-small">
             <!-- Flash message for successful or failed registration -->
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -28,9 +28,7 @@ HUA - Register New PI
                         {{ messages[0] }}
                     </div>
                 {% endif %}
-            {% endwith %}   
-            <div class="border-request-pi rounded p-4">    
-                <h2 class="text-center">Register New PI</h2>
+            {% endwith %}      
 
                 <form method="POST" action="/registerNewPI">
                     <!-- Email input -->
@@ -51,8 +49,6 @@ HUA - Register New PI
                     <!-- Submit button -->
                     <button id="changeButton" type="submit" class="btn btn-primary btn-block">Register</button>
                 </form>
-            </div>
-        </div>
     </div>
 </div> 
 

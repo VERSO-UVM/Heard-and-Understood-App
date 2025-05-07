@@ -3,7 +3,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}
-HUA - Import Audio Files
+HUA - Upload Audio Files
 {% endblock %}
 
 {% block styles %}
@@ -12,10 +12,8 @@ HUA - Import Audio Files
 {% endblock %}
 
 {% block content %}
+<h1>Upload Audio Files</h1>
 <div class="upload-page-wrapper">
-    <div class="upload-heading">
-        <h3 class="">Upload Audio Files</h3>
-    </div>
     <div class="upload-container">
         <form action="/upload_file" method="post" enctype="multipart/form-data">
             <div class="upload-group mb-3">

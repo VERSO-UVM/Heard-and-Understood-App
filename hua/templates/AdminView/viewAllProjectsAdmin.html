@@ -1,4 +1,4 @@
-{% extends 'dashboardAdmin_base.html' %}
+{% extends 'homeAdmin_base.html' %}
 
 {% import "bootstrap/wtf.html" as wtf %}
 
@@ -13,8 +13,8 @@ HUA - View All Projects
 {% endblock %}
 
 {% block content %}
+<h1>View All Projects</h1>
 <div class="view-project-container">
-  
   <div class="form-group">
     <div class="input-group mb-4">
         <input type="text" id="searchInput" name="s_Name" class="form-control" placeholder="Search ..." required>
@@ -30,8 +30,8 @@ HUA - View All Projects
     <div class="user-card mb-3">
       <p><strong>Project Name:</strong> {{ i['project_name'] }}</p>
       <p><strong>Access Code:</strong> {{ i['access_code'] }}</p>
-      <p><strong>Number of Members:</strong> {{ i['members'] | length }}</p>
-      <p><strong>Members:</strong> {{ i['members'] }}</p>
+      <p><strong>Number of Members:</strong> {{ i['project_members'] | length }}</p>
+      <p><strong>Members:</strong> {{ i['project_members'] }}</p>
       <div class="mt-2">
         <a href="/generateNewCode/{{ i.projectName }}" class="btn-user-card btn-sm btn-search">Generate New Code</a>
         <a href="/deleteProject/{{ i.projectName }}" class="btn-user-card btn-sm btn-search">Delete Project</a>

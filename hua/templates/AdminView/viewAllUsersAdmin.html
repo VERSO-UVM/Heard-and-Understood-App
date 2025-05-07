@@ -1,4 +1,4 @@
-{% extends 'homeAdmin_base.html' %}
+{% extends 'homedmin_base.html' %}
 
 
 {% import "bootstrap/wtf.html" as wtf %}
@@ -18,6 +18,8 @@ HUA - View All Users
 {% endblock %}
 
 {% block content%}
+<h1>View All Users</h1>
+<div class="view-project-container">
 <div class="form-group">
   <div class="input-group">
       <input type="text" id="searchInput" name="s_Name" class="form-control" placeholder="Search ..." required>
@@ -37,4 +39,5 @@ HUA - View All Users
       <p><strong>Status:</strong> {{ i['status'] }}</p>
     </div>
   {% endfor %}
+  </div>
 {% endblock  %}

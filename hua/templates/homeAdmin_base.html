@@ -21,8 +21,11 @@
     <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">
     {# Links to a style CSS file with a dynamic version #}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
-    {% endblock styles %}
 
+    {% endblock styles %}
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/hua_icon.png') }}">
+    
     <header>
       <!-- HUA Logo -->
       <div class="logo">
@@ -36,7 +39,7 @@
       </div>
       <!-- ******************************************************************************************** -->
     </header>
-
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='hua_icon.png') }}">
   </head>
   {% endblock head %}
 
@@ -49,20 +52,20 @@
             <ul>
               <li><a href="{{ url_for('homepage') }}">Home</a></li>
               <li><a href="{{ url_for('profile') }}">Profile</a></li>
-              <li> <a href="{{ url_for('login') }}">Log Out</a></li>
-              <li><a href="{{ url_for('piRequest') }}">View All Requests</a></li>
-              <li><a href="{{ url_for('viewAllUsersAdmin') }}">View All Users</a></li>
+              <li><a href="{{ url_for('piRequest') }}">View All PI Requests</a></li>
               <li><a href="{{ url_for('viewAllProjectsAdmin') }}">View All Projects</a></li>
+              <li><a href="{{ url_for('viewAllUsersAdmin') }}">View All Users</a></li>
               <li><a href="{{ url_for('registerNewPI') }}">Register New PI</a></li>
+              <li> <a href="{{ url_for('login') }}">Log Out</a></li>
               <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                      <li><a href="{{ url_for('generateNewProject')}}">New Project</a></li>
+                    <li><a href="{{ url_for('generateNewProject')}}">New Project</a></li>
                       {% for i in projects%}
                     <li><a href="{{ url_for('projectInfo', project_code=i.project_code)}}">{{i.project_name}}</a></li>
                     {% endfor%}
                     </ul>
-                  </li>        
+              </li>        
             </ul>
           </nav>
 

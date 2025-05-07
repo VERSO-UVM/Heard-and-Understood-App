@@ -1,172 +1,256 @@
 {% extends 'dashboardUser_base.html' %}
-{# Extends the 'dashboardUser_base.html' template #}
-
 {% import "bootstrap/wtf.html" as wtf %}
-{# Imports 'wtf.html' from the 'bootstrap' directory with an alias 'wtf' #}
 
 {% block title %}
-Ground Truthing Page
+HUA - Ground Truthing
 {% endblock %}
-<link rel="stylesheet" href="../static/dashboard/dashboard.css">
+
 {% block styles %}
-  {{ super() }}
-  {% endblock %}
+{{ super() }}
+<link rel="stylesheet" href="/static/styles/style.css?version={{ now }}"> 
+<style>
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
 
-  {% block content %}  
-  <body>
-    <main>
-        <div>
-            <h1>Ground Truthing Page</h1>
-            <p>Welcome back, User</p>
-        <div class="containerDiv">
-        
-            <!-- Recording Selector -->
-            <section>
-                <form>
-                    <label for="recordingsInput">Recording</label>
-                    <input list="recordings" id="recordingsInput" disabled>
-                    <datalist id="recordings">
-                    </datalist>
+  h1 {
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .containerDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    margin: auto;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  section {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px rgba(0,0,0,0.25);
+  }
+
+  .view-pause {
+    background-color: #ffffff;
+    padding: 1rem;
+    margin-top: 5%;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+
+  section h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  label h4 {
+    display: inline;
+    margin-right: 0.5rem;
+  }
+
+  input[type="number"], input[type="text"], input[type="file"] {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  input[type="checkbox"], input[type="radio"] {
+    margin-left: 1rem;
+  }
+
+  button, .btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+  }
+
+  button:hover, .btn:hover {
+    background-color: #0056b3;
+  }
+
+  canvas {
+    border: 1px solid #000;
+    width: 100%;
+    height: auto;
+  }
+
+  .top-row {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  .bottom-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="page-container">
+    <h1>Ground Truthing</h1>
+    <div class="containerDiv">
+
+        <div class="top-row">
+            <section style="flex: 1">
+              <h3>Import Recording</h3>
+              <div class="upload-container-gt">
+                <form action="/csv_upload" method="post" enctype="multipart/form-data">
+                  <div class="upload-group mb-3">
+                    <input type="file" name="file" accept=".csv" required />
+                  </div>
+                  <div class="center">
+                    <input type="submit" value="Upload CSV" class="btn-upload"/>
+                  </div>
                 </form>
-            </section>
-           
-   
-
-            <!-- Checkboxes for pause selection -->
-            <section>
-                <h3>Select Pause type to view:</h3>
+                <p id="status"></p>
+              </div>
+          
+              <div class="view-pause">
+                <h3>Select Pause Type to View</h3>
                 <div>
+                    <input type="checkbox" id="emotionalCheckbox">
                     <label for="emotionalCheckbox">Emotional Pause</label>
-                    <input type="checkbox" id="emotionalCheckbox" disabled checked>
                 </div>
                 <div>
+                    <input type="checkbox" id="invitationalCheckbox">
                     <label for="invitationalCheckbox">Invitational Pause</label>
-                    <input type="checkbox" id="invitationalCheckbox" disabled checked>
                 </div>
                 <div>
+                    <input type="checkbox" id="non-connectiveCheckbox">
                     <label for="non-connectiveCheckbox">Non-Connective Pause</label>
-                    <input type="checkbox" id="non-connectiveCheckbox" disabled checked>
-                </div>
-
-                <div class="containerDiv">
-                    <!-- Graph -->
-                    <section>
-                        <canvas id="myCanvas" width="500" height="300" style="border:1px solid #000000;"></canvas>
-                    </section>
-                </div>
-            </section>
-             <!-- Add new Pause -->
-            <section>
-                <h3>Add new pause:</h3>
-                <div>
-                    <label for="startTime">
-                        <h4>Start</h4>
-                    </label>
-                    <input type="time" id="startTime">
-    
-                    <label for="endTime">
-                        <h4>to</h4>
-                    </label>
-                    <input type="time" id="endTime" >
-                </div>
-                <div>
-                    <label for="emotionalCheckbox">Emotional Pause</label>
-                    <input type="checkbox" id="emotionalCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="invitationalCheckbox">Invitational Pause</label>
-                    <input type="checkbox" id="invitationalCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="non-connectiveCheckbox">Non-Connective Pause</label>
-                    <input type="checkbox" id="non-connectiveCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="noPauseCheckbox">No Pause</label>
-                    <input type="checkbox" id="non-noPauseCheckbox" disabled checked>
-                </div>
-
-                <div>
-                    <button type="submit" id="update" value="update"  disabled> Add Update</button>
-                </div>
-           
-
-           
-            </section>
-
-             <!-- Extend Pause -->
-             <section>
-                <h3>Extend pause:</h3>
-                <div>
-                <label for="startTime">
-                    <h4>Start</h4>
-                </label>
-                <input type="time" id="startTime">
-
-                <label for="endTime">
-                    <h4>to</h4>
-                </label>
-                <input type="time" id="endTime" >
-            </div>
-               <h4>Edit Transcription:</h4>
-           
-
-           
-            </section>
-             <!-- Ground Truthing Connection -->
-             <section>
-                <h3>Ground Truthing Connection</h3>
-                <div>
-                <label for="startTime">
-                    <h4>Start</h4>
-                </label>
-                <input type="time" id="startTime">
-
-                <label for="endTime">
-                    <h4>to</h4>
-                </label>
-                <input type="time" id="endTime" >
-            </div>
-                <div>
-                    <label for="emotionalCheckbox">Emotional Pause</label>
-                    <input type="checkbox" id="emotionalCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="invitationalCheckbox">Invitational Pause</label>
-                    <input type="checkbox" id="invitationalCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="non-connectiveCheckbox">Non-Connective Pause</label>
-                    <input type="checkbox" id="non-connectiveCheckbox" disabled checked>
-                </div>
-                <div>
-                    <label for="noPauseCheckbox">No Pause</label>
-                    <input type="checkbox" id="non-noPauseCheckbox" disabled checked>
-                </div>
-                <div>
-                    <button type="submit" id="update" value="update"  disabled>Add Update</button>
-                </div>
-           
-            </section>
-            <div>
-                <button type="submit" id="update" value="update"  disabled> Save and update changes</button>
-            </div>
-       
-
-       
-            
-
-            
-            <div id="modalBackground" class="modalBackground">
-                <div id="modalPopup" class="modalPopup">
-                    <span id="modalContent" class="modalContent"></span>
                 </div>
             </div>
-            
+        </section>
+          
+        <section style="flex: 2">
+            <canvas id="myCanvas"></canvas>
+        </section>
         </div>
-      
+          
+
+      <div class="bottom-row">
+        <section style="flex: 1">
+            <form method="POST" action="/add_new_pause" style="display: flex; flex-direction: column; align-items: center;">
+              <h3>Add New Pause:</h3>
+          
+              <div style="display: flex; flex-direction: column; width: 100%; max-width: 300px;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <label><h4>Start</h4></label>
+                  <input type="number" name="startTime" step="0.1" required>
+                  <label><h4>to</h4></label>
+                  <input type="number" name="endTime" step="0.1" required>
+                </div>
+          
+                <div>
+                  <input type="radio" name="new-pause-type" value="emotional" required>
+                  <label>Emotional Pause</label>
+                </div>
+                <div>
+                  <input type="radio" name="new-pause-type" value="invitational" required>
+                  <label>Invitational Pause</label>
+                </div>
+                <div>
+                  <input type="radio" name="new-pause-type" value="non-connectional" required>
+                  <label>Non-Connective Pause</label>
+                </div>
+          
+                <label><h4>Transcription:</h4></label>
+                <input type="text" name="transcription" id="transcription" required>
+              </div>
+          
+              <div class="center">
+                <button class="btn-algorithm" type="submit" id="new-pause" value="update">Add New Pause</button>
+              </div>
+            </form>
+          </section>          
+
+        <section style="flex: 1">
+            <form method="POST" action="/extend_clip" style="display: flex; flex-direction: column; align-items: center;">
+              <h3>Modify Pause:</h3>
+              
+              <div style="display: flex; flex-direction: column; width: 100%; max-width: 300px;">
+                <label><h4>Pause is at</h4></label>
+                <input type="number" name="pauseAt" id="pauseAt" step="0.1" required>
+          
+                <label><h4>New Start Time</h4></label>
+                <input type="number" name="modifyStartTime" id="modifyStartTime" step="0.1">
+          
+                <label><h4>New End Time</h4></label>
+                <input type="number" name="modifyEndTime" id="modifyEndTime" step="0.1">
+          
+                <label><h4>Edit Transcription:</h4></label>
+                <input type="text" name="editTranscription" id="editTranscription">
+          
+                <label><h4>Modify Pause Type:</h4></label>
+                <div>
+                  <input type="radio" name="modify-pause-type" value="emotional">
+                  <label>Emotional Pause</label>
+                </div>
+                <div>
+                  <input type="radio" name="modify-pause-type" value="invitational">
+                  <label>Invitational Pause</label>
+                </div>
+                <div>
+                  <input type="radio" name="modify-pause-type" value="non-connectional">
+                  <label>Non-Connective Pause</label>
+                </div>
+              </div>
+          
+              <div class="center">
+                <button class="btn-algorithm" type="submit" name="pause-at" id="pause-at" value="update">Modify Length</button>
+              </div>
+            </form>
+          </section>
+          
+
+        <section style="flex: 1">
+          <form method="POST" action="/delete_pause">
+            <h3>Delete Pause:</h3>
+            <div class="center">
+                <input type="number" name="pauseAtDelete" id="pauseAtDelete" required>
+            </div>
+            <div class="center">
+              <button class="btn-algorithm" type="submit" id="delete-pause" value="update">Delete This Pause</button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+        <div class="center">
+            <form method="POST" action="/save_changes">
+            <button class="btn-save-update" type="submit" id="update" value="update">Save and Update Changes</button>
+            </form>
+        </div>
+
+      <div id="modalBackground" class="modalBackground">
+        <div id="modalPopup" class="modalPopup">
+          <span id="modalContent" class="modalContent"></span>
+        </div>
+      </div>
+
     </div>
-    </main>
-    <script src="index.js"></script>
-    <script src="../static/dashboard/dashboard.js"></script>
-{% endblock content %}
+  </div>
+</main>
+{% endblock %}
