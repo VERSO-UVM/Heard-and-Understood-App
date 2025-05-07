@@ -6,10 +6,13 @@ readme = "README.md"
 license = {file = "LICENSE"}
 dependencies = [
     "flask",
+    "flask_session",
+    "flask_bootstrap",
     "Flask-Mail",
     "firebase-admin",
     "bcrypt",
-    "mysql-connector"
+    "mysql-connector",
+    "pymysql",
 ]
 
 [build-system]
