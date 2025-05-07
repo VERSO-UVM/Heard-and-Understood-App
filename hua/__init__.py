@@ -64,6 +64,8 @@ def create_app():
 
     @app.route("/")
     def home():
+        session.clear()
+        get_projects.cache = [] 
         return render_template('login.html')
 
 
@@ -301,7 +303,8 @@ def create_app():
         
     @app.route("/homepage", methods=['GET', 'POST'])
     def homepage():
-
+        if hasattr(get_projects, "cache"):
+            get_projects.cache = []
         user = session.get("user")
         user_email=user.get("email")
         user_status=user.get("status")
@@ -475,6 +478,8 @@ def create_app():
 
     @app.route("/dashboard")
     def dashboard():
+        if hasattr(get_projects, "cache"):
+            get_projects.cache = []
         user = session.get("user")
         user_status= user.get("status")
         
@@ -569,6 +574,7 @@ def create_app():
         user_email=user.get("email")
         project_ref = (db.collection("projects")).where(filter=FieldFilter("PI_email", "==",user_email))
 
+        allprojects=get_projects()
         if request.method=='POST':
         
             ##Project name being searched
@@ -579,7 +585,7 @@ def create_app():
             for doc in  query_ref:
                 searched_projects.append(doc.to_dict())
                
-                return render_template('PIView/viewAllProjectsAdmin.html',all_project=searched_projects)
+                return render_template('PIView/viewAllProjectsPI.html',all_project=searched_projects,projects=allprojects)
         
         else: 
         
@@ -667,14 +673,14 @@ def create_app():
     ##Allows super pi to register new PI if an account has not yet been created
     @app.route('/registerNewPI', methods=['GET', 'POST'])
     def registerNewPI():
+        allprojects=get_projects()
         if request.method == 'GET':
-            return render_template('AdminView/registerNewPi.html')
+            return render_template('AdminView/registerNewPi.html',projects=allprojects)
         else:
             email = request.form.get('email')
             Institute = request.form.get('Institute')
             name = request.form.get('name')
-        
-            password = secrets.token_hex(3)
+            password = request.form.get('password')
 
             hashed_password = bcrypt.hashpw(
                 password.encode('utf-8'), bcrypt.gensalt())
@@ -709,13 +715,13 @@ def create_app():
     
         all_request_ref=db.collection("request")
         all_request_coll=all_request_ref.get()
-
+        allprojects=get_projects()
         all_request=[]
         for doc in all_request_coll:
             requests = doc.to_dict()  
             all_request.append(requests)
 
-        return render_template('AdminView/piRequest.html', all_request=all_request)
+        return render_template('AdminView/piRequest.html', all_request=all_request,projects=allprojects)
 
     @app.route("/acceptRequest/<pName>")
     def acceptRequest(pName):
@@ -740,6 +746,7 @@ def create_app():
         user= session.get("user")
         user_email=user.get("email")
         project_ref = (db.collection("projects")).where(filter=FieldFilter("PI_email", "==",user_email))
+        allprojects=get_projects()
 
         if request.method=='POST':
         
@@ -748,9 +755,10 @@ def create_app():
             searched_projects=[]
             query_ref=project_ref.where(filter=FieldFilter("project_name", "==",searched_name)).stream()
 
+            
             for doc in  query_ref:
                 searched_projects.append(doc.to_dict())
-                return render_template('AdminView/viewAllProjectsAdmin.html',all_project=searched_projects)
+                return render_template('AdminView/viewAllProjectsAdmin.html',all_project=searched_projects,projects=allprojects)
         
         else: 
         
@@ -761,11 +769,12 @@ def create_app():
                 project = doc.to_dict()  
                 all_projects.append(project)
         
-            return render_template('AdminView/viewAllProjectsAdmin.html',all_project=all_projects)
+            return render_template('AdminView/viewAllProjectsAdmin.html',all_project=all_projects,projects=allprojects)
 
     ##Shows all existing users
     @app.route("/viewAllUsersAdmin",methods=['POST', 'GET'])
     def viewAllUsersAdmin():
+        allprojects=get_projects()
         if request.method=='POST':
             searchedName=request.form["s_Name"]
             searched_users=[]
@@ -778,7 +787,7 @@ def create_app():
             searched_users.append(foundUser)
 
 
-            return render_template('AdminView/viewAllUsersAdmin.html',all_users=searched_users)
+            return render_template('AdminView/viewAllUsersAdmin.html',all_users=searched_users,projects=allprojects)
 
 
         else: 
@@ -792,7 +801,7 @@ def create_app():
 
             print(all_users)
 
-            return render_template('AdminView/viewAllUsersAdmin.html',all_users=all_users)
+            return render_template('AdminView/viewAllUsersAdmin.html',all_users=all_users,projects=allprojects)
 
 
 
