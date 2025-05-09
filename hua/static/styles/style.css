@@ -1,14 +1,26 @@
-/* General body styling */
-body, html {
+/********** GENERAL STYLING ***********/
+   body, html {
     font-family: 'Times New Roman', Times, serif;
     background-color: white; 
     height: 100%;
     margin: 0;
     padding: 0;
 }
-/******************************************************************************************/
 
-/* Logo styling */
+.container-fluid {
+    height: 100%;
+}
+
+.row {
+    height: 100%;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/********* LOGO STYLING ***********/
 .login-logo {
     display: block;
     margin: auto;
@@ -16,141 +28,23 @@ body, html {
     max-width: 85%;
     height: auto;
 }
-/******************************************************************************************/
 
-/* Login Border */
-.border-login {
-    border-color: black; 
-    border-width: 2px;
-    border-style: solid;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    /*display: flex;
-    flex-direction: column;
-    align-items: center;*/
-
-}
-
-.border-profile {
-    border-color: black; 
-    border-width: 2px;
-    border-style: solid;
-    padding: 3rem;
-    border-radius: 0.5rem;
-    /*display: flex;
-    flex-direction: column;
-    align-items: center;*/
-
-}
-
-.border-request-pi {
-    border-color: black; 
-    border-width: 2px;
-    border-style: solid;
-    padding: 3rem;
-    border-radius: 0.5rem;
-    /*display: flex;
-    flex-direction: column;
-    align-items: center;*/
-
-}
-
-/* Ensure main container is centered while considering the sidebar */
-.profile-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.header-bar {
+header .logo,
+.site-header .logo {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
-    margin-left: 6rem;
-  }
-  
-.header-title {
-    display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
 }
 
-.header-title h1 {
-    text-align: center;
-    margin-bottom: 0.5rem !important;
+.header-logo,
+.site-header .header-logo {
+    max-height: 100%;
+    width: auto;
+    max-width: 70%;
 }
 
-.dashboard-spacing {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-/* Sign In Header */
-.header-style {
-    margin-bottom: 5%;
-    text-decoration: underline;
-}
-
-/* View Password Toggle Button */
-.view-btn {
-    border-radius: 0.25rem;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border: 1px solid #ced4da;
-    box-shadow: none;
-    height: 36px;
-}
-
-.view-btn:hover {
-    background-color: #a9cafc;
-}
-
-/* Remove Toggle Button Border 
-and Outline When Clicked */
-.view-btn:focus, 
-.view-btn:active {
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* Button Style */
-.btn {
-    margin-top: 5%;
-    margin-bottom: 5%;
-    border-radius: 10px;
-    background-color: black;
-    border-color: black;
-    font-size: medium;
-}
-
-.btn:hover, .btn-small:hover, .btn-upload:hover, .btn-upload-small:hover {
-    background-color: #1C26A5 !important;
-}
-
-.btn-small {
-    width:50%;
-    margin-top: 5%;
-    margin-bottom: 5%;
-    border-radius: 10px;
-    background-color: black;
-    border-color: black;
-    font-size: medium;
-    
-}
-
-.center-btn{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.login-links:hover {
-    color: #1d63d1;
-}
-
-/* Header Styles */
+/********* HEADER STYLING ***********/
 header {
     display: flex;
     align-items: center;
@@ -158,23 +52,12 @@ header {
     height: 18%;
     background-color: #a9cafc;
 }
-/******************************************************************************************/
 
-/* Logo Styling */
-header .logo {
-    flex-shrink: 0;
+.site-header {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    background-color: #a9cafc;
 }
 
-header .header-logo {
-    max-height: 100%;
-    width: auto;
-    max-width: 70%;
-}
-
-/* Header HUA Slogan Styling */
 .slogan-header h1 {
     font-weight: bold;
     margin-bottom: 20px !important;
@@ -188,58 +71,311 @@ header .header-logo {
     margin-bottom: 20px !important;
 }
 
-/******************************************************************************************/
-/* Site Header Styles */
-.site-header {
-    display: flex;
+/********** FORMS, INPUTS, & BUTTONS ***********/
+.input,
+.inputText {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+    border-radius: 0.2rem;
+    border-color: #888;
+    box-sizing: border-box;
+}
+
+.submit {
+    border-radius: 1.5rem;
+    background-color: #1679EF;
+    border-color: #1679EF;
+    font-weight: bold;
+    width: 30%;
+    color: black;
+}
+
+.view-btn {
+    border-radius: 0.25rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border: 1px solid #ced4da;
+    box-shadow: none;
+    height: 36px;
+}
+
+.view-btn:hover {
     background-color: #a9cafc;
 }
 
-/* Logo Styling */
-.site-header .logo {
-    flex-shrink: 0;
+.view-btn:focus, 
+.view-btn:active {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.input-group,
+.upload-group {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    margin-top: 10px;
+    width: 100%;
 }
 
-.site-header .header-logo {
-    max-height: 100%;
-    width: auto;
-    max-width: 70%;
+.input-group .form-control {
+    border-radius: 1rem;
+    width: 40% !important;
+    height: 36px;
 }
 
-/******************************************************************************************/
+.upload-group .form-control {
+    border-radius: 1rem;
+    width: 50% !important;
+    height: 36px;
+}
 
-/* Main content area on the right */
-.col-md-9 {
-    margin-left: 300px; /* Space for the sidebar */
-    padding: 20px;
+.input-group-append .btn-search {
+    border-radius: 0 1rem 1rem 0;
+    padding: 6px 15px;
+}
+
+/********* BUTTON STYLING *********/
+.btn,
+.btn-small,
+.btn-upload,
+.btn-user-card {
+    border-radius: 10px;
+    background-color: black;
+    border-color: black;
+    font-size: medium;
+}
+
+.btn {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.btn-small {
+    width: 50%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.btn-upload {
+    margin-top: 10%;
+    font-size: large;
+    display: block;
+    color: white;
+    width: 100%;
+}
+
+.btn-user-card {
+    margin-top: 3%;
+    margin-bottom: 1%;
+}
+
+.btn:hover,
+.btn-small:hover,
+.btn-upload:hover,
+.btn-upload-small:hover,
+.btn-user-card:hover {
+    background-color: #1C26A5 !important;
+    text-decoration: none !important;
+    color: white;
+}
+
+.btn-search {
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 17px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.btn-search:hover {
+    background-color: #1d63d1;
+    color: white;
+}
+
+.fa-search {
+    font-size: 16px;
+    color: white;
+}
+
+/********* LAYOUT STRUCTURES STYLING ***********/
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .center-profile {
     width: 40%;
     align-items: center;
-    align-content: center;
     margin-left: 25%;
 }
 
-/* Full width and height container */
-.container-fluid {
-    height: 100%;
+.main-content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Ensure the row takes up the full height */
-.row {
-    height: 100%;
+/*********** BORDERS & PANELS STYLING ************/
+.border-login,
+.border-profile,
+.border-request-pi {
+    border-color: black; 
+    border-width: 2px;
+    border-style: solid;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
 }
 
+.border-profile,
+.border-request-pi {
+    padding: 3rem;
+}
 
-/* Note: use rem for font sizes and percentages for 
-    general sizing to aid in responsive design. */
-    
-/* Styling for Access Code Button */
-.modal-button{
+/********** DASHBOARD STYLING ************/
+.dashboard-layout {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    gap: 2rem;
+    padding-bottom: 0rem !important;
+}
+
+.left-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-left: 6rem;
+    width: 80%;
+}
+
+.right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.recording {
+    margin-left: 4rem;
+}
+
+.recording-section,
+.project-section {
+    margin-bottom: 1.5rem;
+}
+
+.project-dropdown {
+    flex-direction: row;
+    margin-left: 10rem;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 2rem 2rem 1rem 6rem;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.checkbox-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-algorithm,
+.btn-data {
+    border-radius: 10px;
+    background-color: #a9cafc;
+    color: black;
+    font-size: medium;
+    display: block !important;
+    font-weight: bold;
+}
+
+.btn-algorithm {
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+}
+
+.btn-data {
+    margin-top: 2%;
+    width: 40% !important;
+}
+
+.btn-algorithm:hover,
+.btn-data:hover {
+    background-color: #1d63d1;
+    color: white;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 85%;
+    margin: 0.25rem auto 0 auto;
+}
+
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.left-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+}
+
+.bottom-row {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    justify-content: space-between;
+}
+
+.section-box label {
+    display: block;
+    margin: 0.25rem 0;
+}
+
+.bottom-section {
+    display: flex;
+    justify-content: space-between;
+    width: 98vw;
+    padding: 1rem 2vw;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    gap: 2rem;
+    margin: 0.25rem auto 0 auto;
+}
+
+/********** MODAL STYLING **********/
+.modal-button {
     border: 0.45rem dashed #ccc;
     padding: 5%;
     width: 40%;
@@ -250,20 +386,18 @@ header .header-logo {
     font-weight: bold;
     margin-top: 10%;
     cursor: pointer;
-    /* Centering */
     position: absolute;
     left: 50%;
     transform: translate(-50%, -10%);
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
 }
 
-.modal-button:hover{
+.modal-button:hover {
     background-color: #e6effc;
 }
 
-/* Styling for Entering Access Code Pop-up */
 .modal {
     display: none;
     position: fixed;
@@ -274,13 +408,12 @@ header .header-logo {
     height: 100%;
     background-color: rgba(0,0,0,0.4);
 }
-    
-/* ****************************************** */
+
 .modal-content {
     background-color: white;
     margin: 18% auto;
     width: 100%;
-    max-width: 450px;  /* Increased from 500px */
+    max-width: 450px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -293,12 +426,6 @@ header .header-logo {
     gap: 1rem;
 }
 
-.modal-content, .input,
-.submit {
-    box-sizing: none !important;
-}
-
-/* Styling for Header in Access Code Popup */
 .modal-header {
     background-color: #a9cafc;
     border-top-left-radius: 0.6rem;
@@ -312,13 +439,11 @@ header .header-logo {
 
 .modal-header h3 {
     margin: 0;
-    text-decoration: none;
     font-size: 1.4rem;
     font-weight: bold;
     color: #333;
 }
 
-/* Styling for Close 'X-out' Button */
 .close {
     position: absolute;
     top: 0.8rem;
@@ -337,8 +462,8 @@ header .header-logo {
 .modal-body {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Vertically center */
-    align-items: center; /* Horizontally center */
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-body p {
@@ -346,51 +471,17 @@ header .header-logo {
     font-weight: bold;
 }
 
-/* Center text input */
 .modal-body input[type="text"] {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #888;
     text-align: left;
-    width: 100%; /* Makes it responsive */
+    width: 100%;
     max-width: 40rem;
-    align-content: center;
     margin-top: 2%;
 }
 
-.main-content {
-    display: flex;
-    flex-direction: column;
-    margin-top: 5%;
-    justify-content: center;
-    align-items: center;
-}
-
-.input {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 5%;
-    border-radius: 0.2rem;
-    border-color: #888;
-}
-
-.submit {
-    border-radius: 1.5rem;
-    background-color: #1679EF;
-    border-color: #1679EF;
-    font-weight: bold;
-    width: 30%;
-    color: black;
-}
-
-/* Styling for Add Icon */
-.add-icon{
-    width: 20%;
-    margin-bottom: 1.5rem;
-}
-
-/* Styling for View All Users */
+/*********** USER CARD & PROJECT VIEWS STYLING ***********/
 .user-card {
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -402,100 +493,27 @@ header .header-logo {
 }
 
 .user-card p {
-margin: 5px 0;
-font-size: 16px;
+    margin: 5px 0;
+    font-size: 16px;
 }
 
 .user-card strong {
-color: #333;
-}
-
-/* Custom search button styling */
-.btn-search {
-    background-color: black;
-    color: white;
-    border: none;
-    font-size: 17px;
-    padding: 6px 12px;
-    cursor: pointer;
-  }
-  
-.btn-search:hover {
-background-color: #1d63d1;
-color: white;
-}
-
-.input-group {
-    display: flex;
-    align-items: center;
-}
-
-.input-group .form-control {
-    border-radius: 1rem;
-    width: 40% !important;
-    height: 36px;
-}
-
-.upload-group .form-control {
-    border-radius: 1rem;
-    width: 50% !important;
-    height: 36px;
-}
-
-.input-group-append .btn-search {
-border-radius: 0 1rem 1rem 0; /* Rounded corners on right */
-padding: 6px 15px;
-}
-
-.input-group .fa-search {
-font-size: 16px;
-color: white;
-}
-
-/* Optional: Adjusting the space between the input and button */
-.input-group {
-    margin-top: 10px;
-    width: 100%;
-}
-
-.inputText {
-width: 100%;
-box-sizing: border-box;
-}
-
-.user-card {
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    color: #333;
 }
 
 .view-project-container {
     max-width: 75%;
-    margin: 0 auto;       /* centers the container horizontally */
-    padding: 1rem;        /* optional padding inside */
+    margin: 0 auto;
+    padding: 1rem;
 }
 
 .view-project-container-small {
     max-width: 50%;
-    margin: 0 auto;       /* centers the container horizontally */
-    padding: 1rem;        /* optional padding inside */
+    margin: 0 auto;
+    padding: 1rem;
 }
 
-.btn-user-card {
-    margin-top: 3%;
-    margin-bottom: 1%;
-    border-radius: 10px;
-    background-color: black;
-    border-color: black;
-    font-size: medium;
-}
-
-.btn-user-card:hover {
-    background-color: #1C26A5 !important;
-    text-decoration: none !important;
-}
-
-/********** Upload Files Styling ********************/
+/********** UPLOAD STYLING ************/
 .upload-page-wrapper {
     display: flex;
     flex-direction: column;
@@ -505,30 +523,17 @@ box-sizing: border-box;
     width: 100%;
 }
 
-.upload-heading h3{
+.upload-heading h3 {
     margin-bottom: 20%;
     text-align: center;
-    text-decoration: none;
     font-size: 30px;
     font-weight: bolder;
 }
 
-.upload-container {
-    border: 0.45rem dashed #ccc;
-    padding: 4%;
-    width: 40%;
-    text-align: center;
-    border-radius: 1.25rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    background-color: #f9f9f9;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-}
-
+.upload-container,
 .upload-container-gt {
     border: 0.45rem dashed #ccc;
     padding: 4%;
-    width: 100%;
     text-align: center;
     border-radius: 1.25rem;
     font-size: 1.2rem;
@@ -537,7 +542,15 @@ box-sizing: border-box;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.upload-container h3{
+.upload-container {
+    width: 40%;
+}
+
+.upload-container-gt {
+    width: 100%;
+}
+
+.upload-container h3 {
     padding: 15px;
 }
 
@@ -550,268 +563,258 @@ box-sizing: border-box;
     font-size: 1rem;
 }
 
-.btn-upload {
-    margin-top: 10%;
-    border-radius: 10px;
-    background-color: black;
-    font-size: large;
-    display: block;
-    color: white;
-    width: 100%;
+/********* MISC STYLING *********/
+.header-style {
+    margin-bottom: 5%;
+    text-decoration: underline;
 }
 
-/************ DASHBOARD STYLING *******************/
-.dashboard-layout {
+.login-links:hover {
+    color: #1d63d1;
+}
+
+.header-bar {
     display: flex;
-    justify-content: space-between;
-    padding: 2rem;
+    align-items: center;
     gap: 2rem;
-    padding-bottom: 0rem !important;
-  }
-  
-.left-panel,
-.right-panel {
-    flex: 1;
+    margin-bottom: 1.5rem;
+    margin-left: 6rem;
+}
+
+.header-title {
     display: flex;
     flex-direction: column;
 }
 
-.left-panel {
-    padding-left: 6rem;
-    width: 80%;
+.header-title h1 {
+    text-align: center;
+    margin-bottom: 0.5rem !important;
 }
 
-.recording {
-    margin-left: 4rem;
+.dashboard-spacing {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-/*.right-panel {
-    background-color: #ffffff;
-    border: 2px solid #ccc;
-    border-radius: 1rem;
-}*/
-  
-.recording-section,
-.project-section {
+.add-icon {
+    width: 20%;
     margin-bottom: 1.5rem;
 }
 
-.checkbox-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 2rem 2rem 1rem 6rem;
-    margin: 0 auto;
-  }
-  
-.project-dropdown {
-    flex-direction: row;
-    margin-left: 10rem;
+.col-md-9 {
+    margin-left: 300px;
+    padding: 20px;
 }
 
-.bottom-section {
-    display: flex;
-    justify-content: space-between;
-    width: 98vw;
-    padding: 1rem 2vw;
-    background-color: #ffffff;
-    border-radius: 1rem;
-    gap: 2rem;
-    margin: 0.25rem auto 0 auto; 
-  }
-  
 
-.algorithm-buttons {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 1rem;
-    border: 2px solid #ccc;
-    border-radius: 1rem;
-    background-color: #f9f9f9;
-}
-
-.checkbox-group {
-    flex: 1;
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.btn-algorithm {
-    margin-top: 2.5%;
-    margin-bottom: 2.5%;
-    border-radius: 10px;
-    background-color: #a9cafc;
-    color: black;
-    font-size: medium;
-    display: block !important;
-    font-weight: bold;
-}
-
-.btn-algorithm:hover, .btn-data:hover {
-    background-color: #1d63d1;
-    color: white;
-}
-
-.small {
-    
-}
-
-.btn-data {
-    margin-top: 2%;
-    border-radius: 10px;
-    background-color: #a9cafc;
-    color: black;
-    font-size: medium;
-    display: block !important;
-    width: 40% !important;
-    font-weight: bold;
-}
-
-.checkbox-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-/********** DASHBOARD STYLE *************/
+/******** GROUND TRUTHING STYLING *******/
 .page-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 85%;
-    margin: 0.25rem auto 0 auto; 
+    padding: 1rem;
   }
 
   h1 {
+    margin-bottom: 0.5rem;
     text-align: center;
-    margin-bottom: 3rem;
+  }
+
+  .containerDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    margin: auto;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  section {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px rgba(0,0,0,0.25);
+  }
+
+  .view-pause {
+    background-color: #ffffff;
+    padding: 1rem;
+    margin-top: 5%;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+
+  section h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  label h4 {
+    display: inline;
+    margin-right: 0.5rem;
+  }
+
+  input[type="number"], input[type="text"], input[type="file"] {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  input[type="checkbox"], input[type="radio"] {
+    margin-left: 1rem;
+  }
+
+  button, .btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+  }
+
+  button:hover, .btn:hover {
+    background-color: #0056b3;
+  }
+
+  canvas {
+    border: 1px solid #000;
+    width: 100%;
+    height: auto;
   }
 
   .top-row {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .left-column {
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-  }
-  
-  .left-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 5rem;
-  }
-
-  .section-box label {
-    display: block;
-    margin: 0.25rem 0;
+    gap: 2rem;
+    align-items: flex-start;
   }
 
   .bottom-row {
     display: flex;
     gap: 2rem;
-    margin-top: 2rem;
+    flex-wrap: wrap;
     justify-content: space-between;
   }
-  
-  .pause-section {
-    flex: 1;
-    padding: 2rem;
-    border: 2px solid #ccc;
-    border-radius: 1rem;
-    background-color: #f9f9f9;
-  }
 
-  .pause-section h3 {
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: none !important;
-    margin-top: 10px !important;
-  }
-
-  .canvas-wrapper {
-    width: 55%;
-    border: 1px solid black;
-    border-radius: 10px;
-  }
-
-  .section-box form {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem; /* space between label and input */
-  }
-  
-  .section-box label {
-    white-space: nowrap; /* Prevents wrapping if label is long */
-  }
-
-  /************** NEW DASHBOARD ***************/
-  .btn-upload-small {
-    margin-top: 10%;
-    border-radius: 10px;
-    background-color: black;
-    font-size: large;
-    display: block;
-    color: white;
-}
-
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.center-dash-btn {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.btn-save-update {
-    border-radius: 10px;
-    background-color: #1679EF;
-    color: black;
-    font-size: large;
-    font-weight: bold;
-    padding: 0.5rem;
-    width: 30rem;
-  }
-
-  .btn-save-update:hover {
-    background-color: black;
-    color: white;
-  }
-  .output-section {
+  .full-width {
     width: 100%;
-    max-width: 800px;           
-    height: 400px;             
+  }
+
+
+/*********** GROUND TRUTHING RECORDS STYLING ***********/
+.table-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .modern-table {
+    width: 90%;
+    max-width: 1000px;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+
+  .modern-table th,
+  .modern-table td {
+    text-align: left;
     padding: 1rem;
+  }
+
+  .modern-table th {
+    background-color:#a9cafc;
+    font-weight: bold;
+    border-bottom: 2px solid #e0e0e0;
+    font-size: 18px;
+  }
+
+  .modern-table tr {
     background-color: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    box-sizing: border-box;
-}
+    transition: background-color 0.2s ease;
+  }
 
-.scroll-container {
-    width: 100%;
-    height: 100%;
-    overflow-x: auto;          
-    overflow-y: hidden;        
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    white-space: nowrap;       
-}
+  .modern-table tr:hover {
+    background-color: #f0f8ff;
+  }
 
-.scroll-container img {
-    height: 100%;              
-    width: auto;               
-    display: inline-block;
-}
+  .modern-table td {
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 16px;
+  }
+
+
+/************ PI REQUEST STYLING ***********/
+.requests-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+  }
+
+  .request-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .request-info {
+    font-size: 16px;
+    color: #333;
+  }
+
+  .request-actions a {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+
+  .request-actions a.accept {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .request-actions a.accept:hover {
+    background-color: #218838;
+  }
+
+  .request-actions a.decline {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .request-actions a.decline:hover {
+    background-color: #c82333;
+  }
+
+/********** CONTACT ADMIN STYLING ***********/
+.contact-row {
+    margin-bottom: 2rem;
+    align-items: center;
+  }
+
+  .contact-img {
+    max-width: 60%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .contact-text h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-text p {
+    font-size: 16px;
+  }
