@@ -1,3 +1,4 @@
+/******** HOMEPAGE NAVBAR STYLING *********/
 .side-nav-container {
   position: absolute;
   background-color: #1C26A5;
@@ -20,7 +21,6 @@
 .side-nav-container a {
   display: block;
   color: white;
-  /* font-weight: bold; */
   text-decoration: none;
   padding: 10px;
   transition: 0.2s;
@@ -28,18 +28,17 @@
 
 .side-nav-container a:hover {
   background-color: white; 
-  /* text-decoration: underline;*/
   color: #1C26A5;
 }
 
-/************* ADMIN NAVBAR ****************************************/
+/******** DASHBOARD NAVBAR STYLING *********/
 .navbar {
   background-color: #1C26A5;
 }
   
 .navbar-menu {
   display: flex;
-  justify-content: space-evenly;  /* Even spacing across the full width */
+  justify-content: space-evenly;
   align-items: center;
   list-style: none;
   padding: 0;
@@ -48,13 +47,13 @@
 }
   
 .navbar-menu li {
-  flex: 1;                /* All items take equal width */
+  flex: 1;                
   text-align: center;
 }  
   
 .navbar-menu a {
   display: inline-flex;
-  flex-direction: column;            /* Icon on top, label below (optional) */
+  flex-direction: column;           
   align-items: center;
   justify-content: center;
   padding: 10px 10px;
@@ -73,12 +72,11 @@
   position: relative;
 }
 
-/********** DROPDOWN MENU ******/
+/********** DROPDOWN MENU STYLING ******/
 .dropdown {
   display: block; 
 }
 
-/* Ensure dropdown is hidden by default */
 .dropdown-menu {
   display: none;
   position: absolute;
@@ -93,7 +91,6 @@
   border-radius: 8px 8px 8px 8px;
 }
 
-/* Show dropdown on hover */
 .dropdown:hover .dropdown-menu {
   display: block;
 }

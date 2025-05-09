@@ -10,55 +10,6 @@ HUA - PI Requests
   <link rel="stylesheet" href="/static/styles/style.css?version={{ now }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?version={{ now }}">
 
-  <style>
-    .requests-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      background-color: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-    }
-
-    .request-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-      border-bottom: 1px solid #f0f0f0;
-    }
-
-    .request-info {
-      font-size: 16px;
-      color: #333;
-    }
-
-    .request-actions a {
-      margin-left: 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: background-color 0.2s ease;
-    }
-
-    .request-actions a.accept {
-      background-color: #28a745;
-      color: white;
-    }
-
-    .request-actions a.accept:hover {
-      background-color: #218838;
-    }
-
-    .request-actions a.decline {
-      background-color: #dc3545;
-      color: white;
-    }
-
-    .request-actions a.decline:hover {
-      background-color: #c82333;
-    }
-  </style>
 {% endblock %}
 
 {% block content %}
