@@ -1,8 +1,8 @@
-# Heard-and-Understood-App
+# Heard and Understood(tm) App
 
 [![DOI](https://zenodo.org/badge/851837059.svg)](https://doi.org/10.5281/zenodo.14649131)
 
-The Heard and Understood App provides a way to explore and classify silence and gaps in conversations.
+The Heard and Understood(tm) App provides a way to explore and classify silence and gaps in conversations.
 
 ## Description
 This is an [Open Community Research Accelerator (ORCA)](https://verso.w3.uvm.edu/orca/) project in collaboration with the [Vermont Conversation Lab](https://vermontconversationlab.com/) and their GitHub organization [Heard & Understood(tm)](https://github.com/heard-and-understood). This supports the exploration and adoption of the CONSert (Connectional Silence Ensemble-BERT) algorithm which uses a combination of Random Forests, Convolutional Neural Networks, OpenAI Whisper Transcriptions and a BERT ML model to detect, locate and classify pauses. Pauses will be classified as either Non-Connectional, Emotional, or Invitational.
