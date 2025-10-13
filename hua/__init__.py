@@ -7,15 +7,15 @@ import bcrypt, secrets
 from google.cloud.firestore_v1.base_query import FieldFilter
 from hua.firebase.config import Config
 from hua.db_utils import upload_file_to_db, connect_to_database
-# from hua.consert.consert_process import ConsertProcess
+from hua.consert.consert_process import ConsertProcess
 from flask_mail import Mail, Message
-# import email_credentials as email_credentials
+#import email_credentials as email_credentials
 from datetime import datetime, timedelta, timezone
 import os
 import uuid
 import pandas as pd
 from datetime import datetime, timezone
-
+import email_credentials
 
 
 
@@ -47,8 +47,8 @@ def create_app():
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP email server 
     app.config['MAIL_PORT'] = 587
     app.config['SESSION_TYPE'] = 'filesystem'
-    # app.config['MAIL_USERNAME'] = email_credentials.hua_email
-    # app.config['MAIL_PASSWORD'] = email_credentials.hua_password
+    app.config['MAIL_USERNAME'] = email_credentials.hua_email
+    app.config['MAIL_PASSWORD'] = email_credentials.hua_password
     app.config['MAIL_USE_TLS'] = True
     app.config['MAIL_USE_SSL'] = False
     mail = Mail(app)
@@ -552,15 +552,15 @@ def create_app():
             if connection:
                 connection.close()
     
-    # @app.route('/run_consert', methods=['POST'])
-    # def run_consert():
-    #     """Trigger the Consert process when the button is clicked."""
-    #     try:
-    #         process = ConsertProcess()  # Run the process
-    #         return jsonify({"status": "success", "message": "Consert process finished!"}) #TODO: replace the pop up window when done testing/implementing css
+    @app.route('/run_consert', methods=['POST'])
+    def run_consert():
+        """Trigger the Consert process when the button is clicked."""
+        try:
+            process = ConsertProcess()  # Run the process
+            return jsonify({"status": "success", "message": "Consert process finished!"}) #TODO: replace the pop up window when done testing/implementing css
 
-    #     except Exception as e:
-    #         return jsonify({"status": "error", "message": str(e)})
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)})
 
     @app.route('/testOutput/<filename>')
     def get_output_file(filename):

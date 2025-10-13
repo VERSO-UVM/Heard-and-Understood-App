@@ -1,6 +1,7 @@
 import consert
 
-media_file = 'path/to/media/file'
+# Update this path as needed for testing
+media_file = '../trimmed_test_audio.mp3'
 
 # Test 1: run the pauses identification and classification
 consert.classify_pauses(
