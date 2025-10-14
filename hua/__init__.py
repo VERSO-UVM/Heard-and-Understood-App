@@ -38,11 +38,7 @@ def create_app():
     initialize_firebase()
     db = firestore.client()
 
- 
-
-    
-    
-   
+    app.config['UPLOAD_FOLDER'] = './hua/static/audio'
 
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP email server 
     app.config['MAIL_PORT'] = 587
@@ -505,7 +501,7 @@ def create_app():
         else:
             return render_template("AdminView/ground_truthing.html")
 
-    @app.route("/import")
+    @app.route("/upload")
     def upload():
         user = session.get("user")
         user_status= user.get("status")
@@ -524,6 +520,19 @@ def create_app():
         if file.filename == '':
             return "No file selected", 400
         if file:
+            file_ext = file.filename.rsplit('.', 1)[1].lower()
+
+            if file_ext not in {'mp3', 'mp4', 'wav'}:
+                return f'Invalid file type \'{file_ext}\', must be mp3, mp4, or wav'
+            
+            filename = file.filename
+            while os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
+                filename = filename[:-4] + '_ copy' + filename[-4:]
+
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))            
+            
+            return redirect(url_for('upload'))
+
             file_data = file.read()
             file_name = file.filename
             file_type = file.content_type
