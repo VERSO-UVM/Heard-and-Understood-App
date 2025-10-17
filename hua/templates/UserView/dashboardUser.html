@@ -11,7 +11,6 @@
   {% block content %}  
   <body>
     <script>
-
         function runConsert() {
             fetch('/run_consert', { method: 'POST' })
                 .then(response => response.json())
@@ -63,7 +62,22 @@
                 optionsText += '<option value="' + project_recordings[i] + '" />';
             }
             recording_dropdown.innerHTML = optionsText;
+
         }
+        
+        function recSelected(){
+            recording_dropdown = document.getElementById('recInput');
+            var project_recordings = JSON.parse('{{ proj_recordings | tojson }}');
+            recordingVal = recording_dropdown.value;
+            console.log(recordingVal);
+            if (project_recordings.includes(recordingVal)) {
+                algorithmButton.disabled = false;
+            } else {
+                algorithmButton.disabled = true;
+            }
+        }
+
+        
     </script>
  
     <main>
@@ -90,7 +104,7 @@
 
                     <div class="recording">
                         <label for="recordings">Recording</label>
-                        <input list="recordings">
+                        <input list="recordings" id="recInput" oninput="recSelected()">
                         <datalist id="recordings">
                         </datalist>
                     </div>
