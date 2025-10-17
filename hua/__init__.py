@@ -472,10 +472,15 @@ def create_app():
     def get_proj_recs():
         if get_proj_name() != "":
             proj_name = get_proj_name()
+            proj_recordings = []
             if(os.path.isdir(os.path.join(app.config['UPLOAD_FOLDER'], proj_name))):
-                proj_recordings = os.listdir(os.path.join(app.config['UPLOAD_FOLDER'], proj_name))
+                for fpath in os.listdir(os.path.join(app.config['UPLOAD_FOLDER'], proj_name)):
+                    if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], proj_name, fpath)):
+                        proj_recordings.append(fpath)
+
+                # proj_recordings = os.listdir(os.path.join(app.config['UPLOAD_FOLDER'], proj_name))
                 return proj_recordings
-        return [""]
+        return proj_recordings
     
     ########################Project View#####################################################
     @app.route("/projectInfo/<project_code>")
@@ -542,6 +547,8 @@ def create_app():
             
             proj_name = get_proj_name()
             filename = file.filename
+            if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], proj_name)):
+                os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], proj_name))
             while os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], proj_name, filename)):
                 filename = filename[:-4] + '_ copy' + filename[-4:]
 
@@ -577,12 +584,12 @@ def create_app():
             if connection:
                 connection.close()
     
-    @app.route('/run_consert/<path:filename>', methods=['POST'])
-    def run_consert(filename):
+    @app.route('/run_consert/<path:filename>/<recname>', methods=['POST'])
+    def run_consert(filename, recname):
         """Trigger the Consert process when the button is clicked."""
         try:
             proj_name = get_proj_name()
-            process = ConsertProcess(filename, proj_name)  # Run the process
+            process = ConsertProcess(filename, proj_name, recname)  # Run the process
             return jsonify({"status": "success", "message": "Consert process finished!"}) #TODO: replace the pop up window when done testing/implementing css
 
         except Exception as e:
