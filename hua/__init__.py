@@ -577,11 +577,12 @@ def create_app():
             if connection:
                 connection.close()
     
-    @app.route('/run_consert', methods=['POST'])
-    def run_consert():
+    @app.route('/run_consert/<path:filename>', methods=['POST'])
+    def run_consert(filename):
         """Trigger the Consert process when the button is clicked."""
         try:
-            process = ConsertProcess()  # Run the process
+            proj_name = get_proj_name()
+            process = ConsertProcess(filename, proj_name)  # Run the process
             return jsonify({"status": "success", "message": "Consert process finished!"}) #TODO: replace the pop up window when done testing/implementing css
 
         except Exception as e:

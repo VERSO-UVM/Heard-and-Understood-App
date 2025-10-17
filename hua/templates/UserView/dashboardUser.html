@@ -11,8 +11,9 @@
   {% block content %}  
   <body>
     <script>
+        var file_path;
         function runConsert() {
-            fetch('/run_consert', { method: 'POST' })
+            fetch(`/run_consert/${file_path}`, { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
                     alert(data.message);
@@ -25,7 +26,7 @@
         function checkImage() {
             base_filename = recording_input.value.substring(0, recording_input.value.indexOf("."))
             proj_name = JSON.parse('{{proj_name | tojson}}')
-            const imagePath = '/static/audio/' + proj_name + "/" + base_filename + '.png';  
+            const imagePath = '/static/audio/' + proj_name + "/" + base_filename + '_classification.png';  
             fetch(imagePath, { method: 'HEAD' }) // Check if the file exists
                 .then(response => {
                     if (response.ok) {
@@ -69,10 +70,11 @@
         function recSelected(){
             recording_input = document.getElementById('recInput');
             var project_recordings = JSON.parse('{{ proj_recordings | tojson }}');
+            var proj_name = JSON.parse('{{ proj_name | tojson}}');
             recordingVal = recording_input.value;
-            console.log(recordingVal);
             if (project_recordings.includes(recordingVal)) {
                 algorithmButton.disabled = false;
+                file_path = '/static/audio/' + proj_name + '/' + recordingVal;
             } else {
                 algorithmButton.disabled = true;
             }
