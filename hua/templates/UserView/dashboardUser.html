@@ -54,6 +54,16 @@
             imgElement.src = imagePath;
             imgElement.style.display = "block"; // Ensure it's visible
         }
+
+        window.onload = function() {
+            recording_dropdown = document.getElementById('recordings');
+            var project_recordings = JSON.parse('{{ proj_recordings | tojson }}');
+            var optionsText = '';
+            for(i = 0; i < project_recordings.length; ++i) {
+                optionsText += '<option value="' + project_recordings[i] + '" />';
+            }
+            recording_dropdown.innerHTML = optionsText;
+        }
     </script>
  
     <main>
@@ -74,15 +84,15 @@
                 <div class="center-dash-btn">
                 <div class="dashboard-spacing">
                     <div class="project">
-                        <label for="projectsInput">Project </label>
-                        <input list="projects" id="projectsInput">
-                        <datalist id="projects"></datalist>
+                        <label for="projectsInput">Project: </label>
+                        <span>{{proj_name}}</span>
                     </div>
-                    
+
                     <div class="recording">
-                        <label for="recordingsInput">Recording</label>
-                        <input list="recordings" id="recordingsInput" disabled>
-                        <datalist id="recordings"></datalist>
+                        <label for="recordings">Recording</label>
+                        <input list="recordings">
+                        <datalist id="recordings">
+                        </datalist>
                     </div>
                 </div>
 
@@ -125,5 +135,5 @@
         </section>
       </main>                  
     <script src="index.js"></script>
-    <script src="../static/dashboard/dashboard.js"></script>
+    <script src="../../static/dashboard/dashboard.js"></script>
 {% endblock content %}

@@ -17,7 +17,7 @@ confusionMatrixButton = document.getElementById("confusionMatrix");
 rawDataButton = document.getElementById("rawData");
 
 recordingsList = document.getElementById("recordings");
-recordingsInput = document.getElementById("recordingsInput");
+// recordingsInput = document.getElementById("recordingsInput");
 
 projectsList = document.getElementById("projects");
 projectsInput = document.getElementById("projectsInput");
@@ -50,17 +50,17 @@ interactiveElements = [algorithmButton, confusionMatrixButton, rawDataButton, em
 
 recordings = ["recording 1", "recording 2", "recording 3", "recording 4"];
 var optionsText = '';
-for(i = 0; i < recordings.length; ++i) {
-    optionsText += '<option value="' + recordings[i] + '" />';
-}
-recordingsList.innerHTML = optionsText;
+// for(i = 0; i < recordings.length; ++i) {
+//     optionsText += '<option value="' + recordings[i] + '" />';
+// }
+// recordingsList.innerHTML = optionsText;
 
 projects = ["Vermont Conversation Lab", "Project 2", "Project 3", "Project 4"];
 var projectsOptions = '';
 for(i = 0; i < projects.length; ++i) {
     projectsOptions += '<option value="' + projects[i] + '" />';
 }
-projectsList.innerHTML = projectsOptions;
+// projectsList.innerHTML = projectsOptions;
 
 confusionMatrixButton.onclick = function() {
     modalPopup.style.display = "block";
@@ -76,24 +76,24 @@ rawDataButton.onclick = function() {
     background.style.display = "block";
     modalContent.textContent = rawDataButton.value + " for " + recordingVal;
 }
-projectsInput.addEventListener("input", function(){
-    projectVal = this.value;
-    if(projects.includes(projectVal)) {
-        recordingsInput.disabled = false;
-    } else {
-        recordingsInput.disabled = true;
-        resetPage();
-    }
-})
+// projectsInput.addEventListener("input", function(){
+//     projectVal = this.value;
+//     if(projects.includes(projectVal)) {
+//         recordingsInput.disabled = false;
+//     } else {
+//         recordingsInput.disabled = true;
+//         resetPage();
+//     }
+// })
 
-recordingsInput.addEventListener("input", function(){
-    recordingVal = this.value;
-    if (recordings.includes(recordingVal)) {
-        algorithmButton.disabled = false;
-    } else {
-        algorithmButton.disabled = true;
-    }
-});
+// recordingsInput.addEventListener("input", function(){
+//     recordingVal = this.value;
+//     if (recordings.includes(recordingVal)) {
+//         algorithmButton.disabled = false;
+//     } else {
+//         algorithmButton.disabled = true;
+//     }
+// });
 
 emotionalCheckbox.addEventListener("input", function(){
     showEmotional = !showEmotional;

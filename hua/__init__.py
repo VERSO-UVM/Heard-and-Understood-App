@@ -461,8 +461,22 @@ def create_app():
                 return render_template('AdminView/newProjectAdmin.html',projects=all_projects)
     #############################
 
-
-
+    def get_proj_name():
+        project_ref = (db.collection("projects")).where(filter=FieldFilter("access_code", "==",session["project"]["access"])).get()
+        if len(project_ref) == 1:
+            proj_name = project_ref[0].get("project_name")
+        else:
+            proj_name = "" # Should never occur, can only get to the dashboard with existing project
+        return proj_name
+    
+    def get_proj_recs():
+        if get_proj_name() != "":
+            proj_name = get_proj_name()
+            if(os.path.isdir(os.path.join(app.config['UPLOAD_FOLDER'], proj_name))):
+                proj_recordings = os.listdir(os.path.join(app.config['UPLOAD_FOLDER'], proj_name))
+                return proj_recordings
+        return [""]
+    
     ########################Project View#####################################################
     @app.route("/projectInfo/<project_code>")
     def projectInfo(project_code):
@@ -479,10 +493,11 @@ def create_app():
         user = session.get("user")
         user_status= user.get("status")
         
-        
+        proj_name = get_proj_name()
+        proj_recordings = get_proj_recs()
 
         if(user_status=="User"):
-            return render_template("UserView/dashboardUser.html")
+            return render_template("UserView/dashboardUser.html", proj_name = proj_name, proj_recordings = proj_recordings)
             
         elif(user_status=="PI"):
             return render_template("PIView/dashboardPI.html")
@@ -525,11 +540,12 @@ def create_app():
             if file_ext not in {'mp3', 'mp4', 'wav'}:
                 return f'Invalid file type \'{file_ext}\', must be mp3, mp4, or wav'
             
+            proj_name = get_proj_name()
             filename = file.filename
-            while os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
+            while os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], proj_name, filename)):
                 filename = filename[:-4] + '_ copy' + filename[-4:]
 
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))            
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], proj_name, filename))            
             
             return redirect(url_for('upload'))
 
