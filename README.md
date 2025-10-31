@@ -60,7 +60,10 @@ Accounts are split into __User__ which is the default permission level, __PI__, 
 __No sensitive audio file information is stored in the Firebase.__ Audio files are only ever stored in your computer's local storage. The inputs and outputs all stay within that specific Flask instance.
 
 ### Running CONSERT on your audio file
-1. Create an instance of the Flask app.
+1. Create an instance of the Flask app by running the command: 
+```
+flask --app hua run
+```
 2. Sign in to the Heard & Understood Application.
 3. From the homepage, click `Click to Enter Project Access Code` and enter the project code associated with your lab.
     - Note that without a project code, you __cannot__ run the CONSERT algorithm on an audio file. To generate project codes, you need an account with __PI access__. This can be requested via the `Request PI Access` navigation tab. 
