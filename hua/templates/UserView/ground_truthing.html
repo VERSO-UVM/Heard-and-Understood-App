@@ -13,15 +13,78 @@ HUA - Ground Truthing
 
 {% block content %}
 <main>
+  <div id="stickyTimeDisplay" style="position: fixed; top: 12px; right: 12px; background: rgba(0,0,0,0.8); color: #fff; padding: 0.5rem 1rem; border-radius: 8px; font-family: monospace; text-align: right; z-index: 1000; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
+    <div id="stickyTimeMain" style="font-size: 1.3rem;">00:00.000</div>
+    <div id="stickyTimeRaw" style="font-size: 0.85rem; opacity: 0.8;">0.000s</div>
+  </div>
   <div class="page-container">
     <h1>Ground Truthing</h1>
+
+    <div class="audio-player-section" style="width: 95%; max-width: 1100px; margin: 0 auto 2rem auto; text-align: center;">
+      <h3>Audio Playback</h3>
+      <div class="upload-group mb-3">
+        <input type="file" id="audioFileInput" accept="audio/*" />
+      </div>
+      <audio id="audioPlayer" controls style="width: 100%;"></audio>
+      <div id="audioTimeDisplay" style="font-size: 1.75rem; font-family: monospace; margin: 0.5rem 0;">00:00.000</div>
+      <div id="audioRawSeconds" style="font-size: 1.1rem; font-family: monospace; color: #555; margin-bottom: 0.5rem;">0.000s</div>
+      <div>
+        <button type="button" class="btn-data" id="skipBack5">&laquo; 5s</button>
+        <button type="button" class="btn-data" id="skipForward5">5s &raquo;</button>
+      </div>
+      <p style="font-size: 0.85rem; color: #777;">Press 'p' to loop the last 10 seconds and review/edit any pause in it.</p>
+    </div>
+
+    <div class="spectrogram-upload-section" style="width: 95%; max-width: 1100px; margin: 0 auto 1rem auto; text-align: center;">
+      <h4>Spectrogram Data (optional)</h4>
+      <input type="file" id="spectrogramFileInput" accept=".csv" />
+      <label style="margin-left: 1rem;">Seconds per row
+        <input type="number" id="secondsPerRow" value="0.5" step="0.05" style="width: 70px;">
+      </label>
+      <button type="button" class="btn-upload" id="spectrogramUploadButton">Upload Spectrogram CSV</button>
+      <p id="spectrogramStatus" style="font-size: 0.85rem;"></p>
+    </div>
+
+    <div id="loopPanel" style="display:none; width: 95%; max-width: 1100px; margin: 0 auto 2rem auto; border: 2px solid #444; border-radius: 8px; padding: 1rem; text-align: center;">
+      <h3>Loop &amp; Pause Editor</h3>
+      <p id="loopRangeLabel" style="font-family: monospace;"></p>
+
+      <div id="loopTimeline" style="position: relative; height: 50px; background: #eee; border: 1px solid #999; margin: 0.5rem 0 1rem 0;"></div>
+
+      <div id="loopPauseList" style="margin-bottom: 1rem;"></div>
+
+      <div id="loopNoPause" style="display: none;">
+        <p>No pause detected in this window - drag the default region below or type exact values, then Add Pause.</p>
+      </div>
+
+      <div id="loopEditForm" style="display: none; text-align: left; max-width: 700px; margin: 0 auto;">
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 0.5rem;">
+          <label>Start <input type="number" id="loopEditStart" step="0.001" style="width: 90px;"></label>
+          <label>Stop <input type="number" id="loopEditStop" step="0.001" style="width: 90px;"></label>
+        </div>
+        <div style="text-align: center; margin-bottom: 0.5rem;">
+          <input type="radio" name="loopEditType" value="emotional" id="loopTypeEmotional"><label for="loopTypeEmotional">Emotional</label>
+          <input type="radio" name="loopEditType" value="invitational" id="loopTypeInvitational"><label for="loopTypeInvitational">Invitational</label>
+          <input type="radio" name="loopEditType" value="non-connectional" id="loopTypeNonConnectional"><label for="loopTypeNonConnectional">Non-Connective</label>
+        </div>
+        <label for="loopEditTranscript">Transcript</label><br>
+        <textarea id="loopEditTranscript" rows="5" style="display: block !important; width: 100% !important; box-sizing: border-box !important; resize: vertical; font-family: inherit; font-size: 1rem;"></textarea>
+        <div class="center" style="margin-top: 0.75rem;">
+          <button type="button" class="btn-algorithm" id="loopSaveButton">Save Changes</button>
+          <button type="button" class="btn-algorithm" id="loopDeleteButton">Delete Pause</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn-data" id="loopExitButton" style="margin-top: 1rem;">Exit Loop</button>
+    </div>
+
     <div class="containerDiv">
 
         <div class="top-row">
             <section style="flex: 1">
               <h3>Import Recording</h3>
               <div class="upload-container-gt">
-                <form action="/csv_upload" method="post" enctype="multipart/form-data">
+                <form id="csvUploadForm" action="/csv_upload" method="post" enctype="multipart/form-data">
                   <div class="upload-group mb-3">
                     <input type="file" name="file" accept=".csv" required />
                   </div>
@@ -35,29 +98,30 @@ HUA - Ground Truthing
               <div class="view-pause">
                 <h3>Select Pause Type to View</h3>
                 <div>
-                    <input type="checkbox" id="emotionalCheckbox">
+                    <input type="checkbox" id="emotionalCheckbox" checked>
                     <label for="emotionalCheckbox">Emotional Pause</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="invitationalCheckbox">
+                    <input type="checkbox" id="invitationalCheckbox" checked>
                     <label for="invitationalCheckbox">Invitational Pause</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="non-connectiveCheckbox">
+                    <input type="checkbox" id="non-connectiveCheckbox" checked>
                     <label for="non-connectiveCheckbox">Non-Connective Pause</label>
                 </div>
             </div>
         </section>
           
         <section style="flex: 2">
-            <canvas id="myCanvas"></canvas>
+            <canvas id="myCanvas" width="500" height="300" style="border:1px solid #000000;"></canvas>
+            <div id="pauseTableContainer"></div>
         </section>
         </div>
           
 
       <div class="bottom-row">
         <section style="flex: 1">
-            <form method="POST" action="/add_new_pause" style="display: flex; flex-direction: column; align-items: center;">
+            <form id="addPauseForm" method="POST" action="/add_new_pause" style="display: flex; flex-direction: column; align-items: center;">
               <h3>Add New Pause:</h3>
           
               <div style="display: flex; flex-direction: column; width: 100%; max-width: 300px;">
@@ -92,7 +156,7 @@ HUA - Ground Truthing
           </section>          
 
         <section style="flex: 1">
-            <form method="POST" action="/extend_clip" style="display: flex; flex-direction: column; align-items: center;">
+            <form id="extendClipForm" method="POST" action="/extend_clip" style="display: flex; flex-direction: column; align-items: center;">
               <h3>Modify Pause:</h3>
               
               <div style="display: flex; flex-direction: column; width: 100%; max-width: 300px;">
@@ -131,7 +195,7 @@ HUA - Ground Truthing
           
 
         <section style="flex: 1">
-          <form method="POST" action="/delete_pause">
+          <form id="deletePauseForm" method="POST" action="/delete_pause">
             <h3>Delete Pause:</h3>
             <div class="center">
                 <input type="number" name="pauseAtDelete" id="pauseAtDelete" required>
@@ -144,7 +208,7 @@ HUA - Ground Truthing
       </div>
 
         <div class="center">
-            <form method="POST" action="/save_changes">
+            <form id="saveChangesForm" method="POST" action="/save_changes">
             <button class="btn-save-update" type="submit" id="update" value="update">Save and Update Changes</button>
             </form>
         </div>
@@ -158,4 +222,662 @@ HUA - Ground Truthing
     </div>
   </div>
 </main>
+
+<script>
+    const audioFileInput = document.getElementById("audioFileInput");
+    const audioPlayer = document.getElementById("audioPlayer");
+    const audioTimeDisplay = document.getElementById("audioTimeDisplay");
+    const audioRawSeconds = document.getElementById("audioRawSeconds");
+    const stickyTimeMain = document.getElementById("stickyTimeMain");
+    const stickyTimeRaw = document.getElementById("stickyTimeRaw");
+    const skipBack5 = document.getElementById("skipBack5");
+    const skipForward5 = document.getElementById("skipForward5");
+
+    let audioObjectUrl = null;
+
+    audioFileInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (!file) return;
+        if (audioObjectUrl) {
+            URL.revokeObjectURL(audioObjectUrl);
+        }
+        audioObjectUrl = URL.createObjectURL(file);
+        audioPlayer.src = audioObjectUrl;
+        audioPlayer.load();
+    });
+
+    function formatAudioTime(seconds) {
+        if (isNaN(seconds)) { seconds = 0; }
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        const ms = Math.floor((seconds % 1) * 1000);
+        return String(mins).padStart(2, '0') + ':' +
+            String(secs).padStart(2, '0') + '.' +
+            String(ms).padStart(3, '0');
+    }
+
+    function audioTimeLoop() {
+        const formatted = formatAudioTime(audioPlayer.currentTime);
+        const raw = (isNaN(audioPlayer.currentTime) ? 0 : audioPlayer.currentTime).toFixed(3) + 's';
+        audioTimeDisplay.textContent = formatted;
+
+        audioRawSeconds.textContent = raw;
+        stickyTimeMain.textContent = formatted;
+        stickyTimeRaw.textContent = raw;
+
+        if (loopActive && audioPlayer.currentTime >= loopEnd) {
+            audioPlayer.currentTime = loopStart;
+        }
+        if (loopActive) {
+            const playhead = document.getElementById("loopPlayhead");
+            if (playhead) {
+                playhead.style.left = timeToPercent(audioPlayer.currentTime) + "%";
+            }
+        }
+        updateNearestRowHighlight();
+        requestAnimationFrame(audioTimeLoop);
+    }
+    requestAnimationFrame(audioTimeLoop);
+
+    skipBack5.addEventListener("click", skipAudioBack);
+    skipForward5.addEventListener("click", skipAudioForward);
+
+    function skipAudioBack() {
+        audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 5);
+    }
+    function skipAudioForward() {
+        const max = isNaN(audioPlayer.duration) ? Infinity : audioPlayer.duration;
+        audioPlayer.currentTime = Math.min(max, audioPlayer.currentTime + 5);
+    }
+    function toggleAudioPlayback() {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+        } else {
+            audioPlayer.pause();
+        }
+    }
+
+    const LOOP_DURATION = 10;
+    let loopActive = false;
+    let loopStart = 0;
+    let loopEnd = 0;
+    let currentPauseRows = [];
+    let pendingPauses = [];
+    const pauseClassMap = { 'non-connectional': 0, 'emotional': 1, 'invitational': 2 };
+    let loopCandidates = [];
+    let activeLoopPause = null;
+    let dragHandle = null;
+
+    const loopPanel = document.getElementById("loopPanel");
+    const loopRangeLabel = document.getElementById("loopRangeLabel");
+    const loopTimeline = document.getElementById("loopTimeline");
+    const loopPauseList = document.getElementById("loopPauseList");
+    const loopNoPause = document.getElementById("loopNoPause");
+    const loopEditForm = document.getElementById("loopEditForm");
+    const loopEditStart = document.getElementById("loopEditStart");
+    const loopEditStop = document.getElementById("loopEditStop");
+    const loopEditTranscript = document.getElementById("loopEditTranscript");
+
+    let spectrogramRows = null;
+    let spectrogramMin = 0;
+    let spectrogramMax = 1;
+
+    document.getElementById("spectrogramUploadButton").addEventListener("click", function () {
+        const fileInput = document.getElementById("spectrogramFileInput");
+        const statusEl = document.getElementById("spectrogramStatus");
+        if (!fileInput.files[0]) {
+            statusEl.textContent = "Choose a CSV file first.";
+            statusEl.style.color = "red";
+            return;
+        }
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+        fetch("/spectrogram_upload", { method: "POST", body: formData })
+            .then(response => {
+                if (!response.ok) throw new Error("Upload failed - make sure it's a .csv file.");
+                return fetch("/api/spectrogram_data?t=" + Date.now(), { cache: "no-store" });
+            })
+            .then(response => {
+                if (!response.ok) throw new Error("Couldn't load spectrogram data.");
+                return response.json();
+            })
+            .then(data => {
+                spectrogramRows = data.rows;
+                let min = Infinity, max = -Infinity;
+                spectrogramRows.forEach(row => row.forEach(v => {
+                    if (v < min) min = v;
+                    if (v > max) max = v;
+                }));
+                spectrogramMin = min;
+                spectrogramMax = max;
+                statusEl.textContent = "Spectrogram loaded (" + spectrogramRows.length + " rows).";
+                statusEl.style.color = "green";
+                autoCalculateSecondsPerRow();
+                if (loopActive) { renderLoopTimeline(); }
+            })
+            .catch(error => {
+                statusEl.textContent = error.message;
+                statusEl.style.color = "red";
+            });
+    });
+
+    function autoCalculateSecondsPerRow() {
+        if (!spectrogramRows || spectrogramRows.length === 0) return;
+        if (isNaN(audioPlayer.duration) || audioPlayer.duration <= 0) return;
+
+        const calculated = audioPlayer.duration / spectrogramRows.length;
+        document.getElementById("secondsPerRow").value = calculated.toFixed(5);
+
+        const statusEl = document.getElementById("spectrogramStatus");
+        statusEl.textContent = "Spectrogram loaded (" + spectrogramRows.length + " rows). " +
+            "Seconds/row auto-calculated from audio duration: " + calculated.toFixed(5) + "s.";
+        statusEl.style.color = "green";
+        if (loopActive) { renderLoopTimeline(); }
+    }
+
+    audioPlayer.addEventListener("loadedmetadata", autoCalculateSecondsPerRow);
+
+    function heatColor(value) {
+        const range = spectrogramMax - spectrogramMin;
+        const t = range > 0 ? (value - spectrogramMin) / range : 0;
+        const clamped = Math.min(1, Math.max(0, t));
+        const r = Math.floor(255 * Math.min(1, clamped * 2));
+        const g = Math.floor(255 * Math.max(0, clamped - 0.5) * 2);
+        const b = Math.floor(255 * (1 - clamped));
+        return `rgb(${r},${g},${b})`;
+    }
+
+    function drawSpectrogramBackground() {
+        if (!spectrogramRows || spectrogramRows.length === 0) return;
+        const secondsPerRow = parseFloat(document.getElementById("secondsPerRow").value) || 0.5;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = loopTimeline.clientWidth;
+        canvas.height = loopTimeline.clientHeight;
+        canvas.style.position = "absolute";
+        canvas.style.top = "0";
+        canvas.style.left = "0";
+        loopTimeline.appendChild(canvas);
+        const ctx = canvas.getContext("2d");
+
+        const startRow = Math.max(0, Math.floor(loopStart / secondsPerRow));
+        const endRow = Math.min(spectrogramRows.length - 1, Math.ceil(loopEnd / secondsPerRow));
+        if (startRow > endRow) return;
+
+        const numCols = spectrogramRows[0].length;
+        if (!numCols) return;
+        const cellHeight = canvas.height / numCols;
+
+        for (let r = startRow; r <= endRow; r++) {
+            const row = spectrogramRows[r];
+            if (!row) continue;
+            const rowStartTime = r * secondsPerRow;
+            const rowEndTime = rowStartTime + secondsPerRow;
+            const x = timeToPercent(rowStartTime) / 100 * canvas.width;
+            const cellWidth = Math.max(1, (timeToPercent(rowEndTime) - timeToPercent(rowStartTime)) / 100 * canvas.width);
+            for (let c = 0; c < numCols; c++) {
+                const y = canvas.height - (c + 1) * cellHeight;
+                ctx.fillStyle = heatColor(row[c]);
+                ctx.fillRect(x, y, cellWidth, cellHeight);
+            }
+        }
+    }
+
+    function toggleLoop() {
+        if (loopActive) {
+            loopActive = false;
+            loopPanel.style.display = "none";
+            return;
+        }
+        loopEnd = audioPlayer.currentTime;
+        loopStart = Math.max(0, loopEnd - LOOP_DURATION);
+        loopActive = true;
+        audioPlayer.currentTime = loopStart;
+        audioPlayer.play();
+        loopPanel.style.display = "block";
+        refreshLoopWindow();
+    }
+
+    function refreshLoopWindow() {
+        loopRangeLabel.textContent = "Looping " + loopStart.toFixed(3) + "s - " + loopEnd.toFixed(3) + "s";
+        loopCandidates = pendingPauses.filter(row => {
+            const rowStart = parseFloat(row.start);
+            const rowStop = parseFloat(row.stop);
+            return rowStop > loopStart && rowStart < loopEnd;
+        });
+        activeLoopPause = null;
+        renderLoopPauseList();
+        if (loopCandidates.length === 1) {
+            selectLoopPause(loopCandidates[0]);
+        } else if (loopCandidates.length === 0) {
+            startNewPauseFlow();
+        }
+    }
+
+    function startNewPauseFlow() {
+        const defaultStop = loopEnd - 1;
+        const defaultStart = Math.max(loopStart, loopEnd - 3);
+        selectLoopPause({
+            start: defaultStart,
+            stop: Math.max(defaultStop, defaultStart + 0.1),
+            pause_type: "non-connectional",
+            context: "",
+            isNew: true
+        });
+        loopNoPause.style.display = "block";
+    }
+
+    function renderLoopPauseList() {
+        if (loopCandidates.length <= 1) {
+            loopPauseList.innerHTML = "";
+            return;
+        }
+        let html = "<p>Multiple pauses in this window - pick one to edit:</p>";
+        loopCandidates.forEach((pause, i) => {
+            html += `<button type="button" class="btn-data loop-select-btn" data-index="${i}">` +
+                `${parseFloat(pause.start).toFixed(2)}s-${parseFloat(pause.stop).toFixed(2)}s (${pause.pause_type})</button> `;
+        });
+        loopPauseList.innerHTML = html;
+        loopPauseList.querySelectorAll(".loop-select-btn").forEach(btn => {
+            btn.addEventListener("click", () => selectLoopPause(loopCandidates[parseInt(btn.dataset.index)]));
+        });
+    }
+
+    function selectLoopPause(pause) {
+        activeLoopPause = pause;
+        loopNoPause.style.display = pause.isNew ? "block" : "none";
+        loopEditForm.style.display = "block";
+        loopEditStart.value = parseFloat(pause.start).toFixed(3);
+        loopEditStop.value = parseFloat(pause.stop).toFixed(3);
+        loopEditTranscript.value = pause.context || "";
+        document.querySelectorAll('input[name="loopEditType"]').forEach(radio => {
+            radio.checked = (radio.value === pause.pause_type);
+        });
+        document.getElementById("loopDeleteButton").style.display = pause.isNew ? "none" : "inline-block";
+        document.getElementById("loopSaveButton").textContent = pause.isNew ? "Add Pause" : "Save Changes";
+        renderLoopTimeline();
+    }
+
+    function timeToPercent(t) {
+        const span = loopEnd - loopStart;
+        if (span <= 0) return 0;
+        return Math.min(100, Math.max(0, ((t - loopStart) / span) * 100));
+    }
+
+    function percentToTime(pct) {
+        return loopStart + (pct / 100) * (loopEnd - loopStart);
+    }
+
+    function renderLoopTimeline() {
+        loopTimeline.innerHTML = "";
+        drawSpectrogramBackground();
+        if (activeLoopPause) {
+            const start = parseFloat(loopEditStart.value);
+            const stop = parseFloat(loopEditStop.value);
+
+            const region = document.createElement("div");
+            region.style.position = "absolute";
+            region.style.top = "0";
+            region.style.height = "100%";
+            region.style.background = pauseColors[activeLoopPause.pause_type] || "gray";
+            region.style.opacity = "0.18";
+            region.style.border = "2px solid " + (pauseColors[activeLoopPause.pause_type] || "gray");
+            region.style.boxSizing = "border-box";
+            region.style.left = timeToPercent(start) + "%";
+            region.style.width = Math.max(1, timeToPercent(stop) - timeToPercent(start)) + "%";
+            loopTimeline.appendChild(region);
+
+            loopTimeline.appendChild(createDragHandle("start", start));
+            loopTimeline.appendChild(createDragHandle("stop", stop));
+        }
+        loopTimeline.appendChild(createPlayhead());
+    }
+
+    function createDragHandle(which, t) {
+
+        const hitbox = document.createElement("div");
+        hitbox.style.position = "absolute";
+        hitbox.style.top = "0";
+        hitbox.style.width = "16px";
+        hitbox.style.height = "100%";
+        hitbox.style.marginLeft = "-8px";
+        hitbox.style.cursor = "ew-resize";
+        hitbox.style.left = timeToPercent(t) + "%";
+        hitbox.style.background = "transparent";
+
+        const line = document.createElement("div");
+        line.style.position = "absolute";
+        line.style.top = "0";
+        line.style.left = "7px";
+        line.style.width = "2px";
+        line.style.height = "100%";
+        line.style.background = "rgba(0,0,0,0.75)";
+        hitbox.appendChild(line);
+
+        hitbox.addEventListener("mousedown", function (e) {
+            dragHandle = which;
+            e.preventDefault();
+        });
+        return hitbox;
+    }
+
+    function createPlayhead() {
+        const playhead = document.createElement("div");
+        playhead.id = "loopPlayhead";
+        playhead.style.position = "absolute";
+        playhead.style.top = "0";
+        playhead.style.width = "2px";
+        playhead.style.height = "100%";
+        playhead.style.background = "red";
+        playhead.style.pointerEvents = "none";
+        playhead.style.left = timeToPercent(audioPlayer.currentTime) + "%";
+        return playhead;
+    }
+
+    document.addEventListener("mousemove", function (e) {
+        if (!dragHandle || !activeLoopPause) return;
+        const rect = loopTimeline.getBoundingClientRect();
+        const pct = ((e.clientX - rect.left) / rect.width) * 100;
+        const t = percentToTime(Math.min(100, Math.max(0, pct)));
+
+        if (dragHandle === "start") {
+            const stop = parseFloat(loopEditStop.value);
+            loopEditStart.value = Math.min(t, stop - 0.05).toFixed(3);
+        } else {
+            const start = parseFloat(loopEditStart.value);
+            loopEditStop.value = Math.max(t, start + 0.05).toFixed(3);
+        }
+        renderLoopTimeline();
+    });
+    document.addEventListener("mouseup", function () {
+        dragHandle = null;
+    });
+
+    document.getElementById("loopSaveButton").addEventListener("click", function () {
+        if (!activeLoopPause) return;
+        const selectedType = document.querySelector('input[name="loopEditType"]:checked');
+        const newStart = parseFloat(loopEditStart.value);
+        const newStop = parseFloat(loopEditStop.value);
+        const newType = selectedType ? selectedType.value : activeLoopPause.pause_type;
+        const newTranscript = loopEditTranscript.value;
+
+        if (activeLoopPause.isNew) {
+            pendingPauses.push({
+                start: newStart,
+                stop: newStop,
+                context: newTranscript,
+                pause_type: newType,
+                class: pauseClassMap[newType]
+            });
+            showStatus("Pause added locally - click Save at the bottom to commit.", false);
+        } else {
+
+            activeLoopPause.start = newStart;
+            activeLoopPause.stop = newStop;
+            activeLoopPause.context = newTranscript;
+            activeLoopPause.pause_type = newType;
+            activeLoopPause.class = pauseClassMap[newType];
+            showStatus("Pause updated locally - click Save at the bottom to commit.", false);
+        }
+        pendingPauses.sort((a, b) => a.start - b.start);
+        renderAll();
+    });
+
+    document.getElementById("loopDeleteButton").addEventListener("click", function () {
+        if (!activeLoopPause || activeLoopPause.isNew) return;
+        const index = pendingPauses.indexOf(activeLoopPause);
+        if (index !== -1) { pendingPauses.splice(index, 1); }
+        showStatus("Pause deleted locally - click Save at the bottom to commit.", false);
+        activeLoopPause = null;
+        renderAll();
+    });
+
+    document.addEventListener("keydown", function (event) {
+        const tag = event.target.tagName;
+        const isTyping = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+        if (isTyping) return;
+
+        if (event.code === "Space") {
+            event.preventDefault();
+            toggleAudioPlayback();
+        } else if (event.code === "ArrowLeft") {
+            event.preventDefault();
+            skipAudioBack();
+        } else if (event.code === "ArrowRight") {
+            event.preventDefault();
+            skipAudioForward();
+        } else if (event.code === "KeyP") {
+            event.preventDefault();
+            toggleLoop();
+        }
+    });
+
+    document.getElementById("loopExitButton").addEventListener("click", toggleLoop);
+
+    const pauseColors = { emotional: 'green', invitational: 'blue', 'non-connectional': 'yellow' };
+
+    function showStatus(message, isError) {
+        const statusEl = document.getElementById("status");
+        statusEl.textContent = message;
+        statusEl.style.color = isError ? "red" : "green";
+    }
+
+    function drawPauses(rows) {
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const showEmotional = document.getElementById("emotionalCheckbox").checked;
+        const showInvitational = document.getElementById("invitationalCheckbox").checked;
+        const showNonConnective = document.getElementById("non-connectiveCheckbox").checked;
+
+        const maxStop = rows.reduce((max, r) => Math.max(max, parseFloat(r.stop) || 0), 1);
+
+        rows.forEach(row => {
+            const type = row.pause_type;
+            if (type === 'emotional' && !showEmotional) return;
+            if (type === 'invitational' && !showInvitational) return;
+            if (type === 'non-connectional' && !showNonConnective) return;
+
+            const startX = (parseFloat(row.start) / maxStop) * canvas.width;
+            const stopX = (parseFloat(row.stop) / maxStop) * canvas.width;
+            ctx.fillStyle = pauseColors[type] || 'gray';
+            ctx.fillRect(startX, 0, Math.max(stopX - startX, 2), canvas.height);
+        });
+    }
+
+    function renderPauseTable(rows) {
+        const container = document.getElementById("pauseTableContainer");
+        if (!rows || rows.length === 0) {
+            container.innerHTML = "<p>No pauses yet - add one below or upload a CSV.</p>";
+            return;
+        }
+        let html = '<table border="1" style="width:100%; text-align:left;"><thead><tr>' +
+            '<th></th><th>Start</th><th>Stop</th><th>Type</th><th>Transcription</th></tr></thead><tbody>';
+        rows.forEach(row => {
+            html += `<tr data-start="${row.start}" data-stop="${row.stop}" style="transition: background-color 0.2s;">` +
+                `<td class="nearest-marker" style="text-align:center; width:1.5rem;"></td>` +
+                `<td>${row.start}</td><td>${row.stop}</td><td>${row.pause_type}</td><td>${row.context}</td></tr>`;
+        });
+        html += '</tbody></table>';
+        container.innerHTML = html;
+        updateNearestRowHighlight();
+    }
+
+    function updateNearestRowHighlight() {
+        const container = document.getElementById("pauseTableContainer");
+        const rowEls = container.querySelectorAll('tr[data-start]');
+        if (rowEls.length === 0) return;
+
+        const t = audioPlayer.currentTime;
+        let nearestEl = null;
+        let nearestDist = Infinity;
+
+        rowEls.forEach(tr => {
+            const start = parseFloat(tr.dataset.start);
+            const stop = parseFloat(tr.dataset.stop);
+            let dist;
+            if (t >= start && t <= stop) {
+                dist = 0;
+            } else if (t < start) {
+                dist = start - t;
+            } else {
+                dist = t - stop;
+            }
+            if (dist < nearestDist) {
+                nearestDist = dist;
+                nearestEl = tr;
+            }
+            tr.style.backgroundColor = "";
+            tr.querySelector(".nearest-marker").textContent = "";
+        });
+
+        if (nearestEl) {
+            nearestEl.style.backgroundColor = "#fff3cd";
+            nearestEl.querySelector(".nearest-marker").textContent = "\u25B6";
+        }
+    }
+
+    function loadPauseData() {
+        fetch('/api/consert_output?t=' + Date.now(), { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) { throw new Error("no data"); }
+                return response.json();
+            })
+            .then(data => {
+                currentPauseRows = data.rows;
+                pendingPauses = data.rows.map(row => ({
+                    start: parseFloat(row.start),
+                    stop: parseFloat(row.stop),
+                    context: row.context || "",
+                    pause_type: row.pause_type,
+                    class: row.class
+                }));
+                renderAll();
+                if (data.skipped_count) {
+                    showStatus(data.skipped_count + " row(s) had a missing start/stop time and were skipped.", true);
+                }
+            })
+            .catch(() => {
+                currentPauseRows = [];
+                pendingPauses = [];
+                renderAll();
+            });
+    }
+
+    function renderAll() {
+        drawPauses(pendingPauses);
+        renderPauseTable(pendingPauses);
+        if (loopActive) { refreshLoopWindow(); }
+    }
+
+    function submitFormAjax(formId, successMessage, failureMessage, resetForm) {
+        const form = document.getElementById(formId);
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            fetch(form.action, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    if (!response.ok) { throw new Error(failureMessage); }
+                    showStatus(successMessage, false);
+                    if (resetForm) { form.reset(); }
+                    loadPauseData();
+                })
+                .catch(error => showStatus(error.message, true));
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        loadPauseData();
+
+        document.getElementById("emotionalCheckbox").addEventListener("change", renderAll);
+        document.getElementById("invitationalCheckbox").addEventListener("change", renderAll);
+        document.getElementById("non-connectiveCheckbox").addEventListener("change", renderAll);
+
+        submitFormAjax("csvUploadForm", "CSV uploaded.", "Upload failed - make sure it's a .csv file.", true);
+
+        document.getElementById("addPauseForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const form = event.target;
+            const startTime = parseFloat(form.querySelector('[name="startTime"]').value);
+            const endTime = parseFloat(form.querySelector('[name="endTime"]').value);
+            const typeInput = form.querySelector('[name="new-pause-type"]:checked');
+            const transcription = form.querySelector('[name="transcription"]').value;
+
+            if (!typeInput || isNaN(startTime) || isNaN(endTime) || startTime >= endTime) {
+                showStatus("Enter a valid start/end time and pause type.", true);
+                return;
+            }
+
+            pendingPauses.push({
+                start: startTime,
+                stop: endTime,
+                context: transcription,
+                pause_type: typeInput.value,
+                class: pauseClassMap[typeInput.value]
+            });
+            pendingPauses.sort((a, b) => a.start - b.start);
+            showStatus("Pause added locally - click Save at the bottom to commit.", false);
+            form.reset();
+            renderAll();
+        });
+
+        document.getElementById("extendClipForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const form = event.target;
+            const pauseAt = parseFloat(form.querySelector('[name="pauseAt"]').value);
+            const modifyStart = form.querySelector('[name="modifyStartTime"]').value;
+            const modifyEnd = form.querySelector('[name="modifyEndTime"]').value;
+            const editTranscript = form.querySelector('[name="editTranscription"]').value;
+            const typeInput = form.querySelector('[name="modify-pause-type"]:checked');
+
+            const match = pendingPauses.find(p => pauseAt >= p.start && pauseAt <= p.stop);
+            if (!match) {
+                showStatus("Couldn't find a pause at that time.", true);
+                return;
+            }
+            if (modifyStart !== "") { match.start = parseFloat(modifyStart); }
+            if (modifyEnd !== "") { match.stop = parseFloat(modifyEnd); }
+            if (editTranscript !== "") { match.context = editTranscript; }
+            if (typeInput) {
+                match.pause_type = typeInput.value;
+                match.class = pauseClassMap[typeInput.value];
+            }
+            pendingPauses.sort((a, b) => a.start - b.start);
+            showStatus("Pause updated locally - click Save at the bottom to commit.", false);
+            renderAll();
+        });
+
+        document.getElementById("deletePauseForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const form = event.target;
+            const pauseAtDelete = parseFloat(form.querySelector('[name="pauseAtDelete"]').value);
+            const index = pendingPauses.findIndex(p => pauseAtDelete >= p.start && pauseAtDelete <= p.stop);
+            if (index === -1) {
+                showStatus("Couldn't find a pause at that time.", true);
+                return;
+            }
+            pendingPauses.splice(index, 1);
+            showStatus("Pause deleted locally - click Save at the bottom to commit.", false);
+            form.reset();
+            renderAll();
+        });
+
+
+        document.getElementById("saveChangesForm").addEventListener('submit', function (event) {
+            event.preventDefault();
+            fetch('/save_changes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pauses: pendingPauses })
+            })
+                .then(response => {
+                    if (!response.ok) { throw new Error("Couldn't save changes."); }
+                    showStatus("Changes saved - downloading...", false);
+                    loadPauseData();
+                    window.location.href = '/download_consert_csv';
+                })
+                .catch(error => showStatus(error.message, true));
+        });
+    });
+</script>
 {% endblock %}

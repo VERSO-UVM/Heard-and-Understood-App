@@ -4,6 +4,10 @@
 
 The HEARD & UNDERSTOOD<sup>tm</sup> App provides a way to explore and classify silence and gaps in conversations.
 
+## NOTE
+
+This branch breaks the authentication scheme put in place for the app. This is primarily due to 
+
 ## Description
 This is an [Open Community Research Accelerator (ORCA)](https://verso.w3.uvm.edu/orca/) project in collaboration with the [Vermont Conversation Lab](https://vermontconversationlab.com/) and their GitHub organization [HEARD & UNDERSTOOD<sup>tm</sup>](https://github.com/heard-and-understood). This supports the exploration and adoption of the CONSert (Connectional Silence Ensemble-BERT) algorithm which uses a combination of Random Forests, Convolutional Neural Networks, OpenAI Whisper Transcriptions and a BERT ML model to detect, locate and classify pauses. Pauses will be classified as either Non-Connectional, Emotional, or Invitational.
 
