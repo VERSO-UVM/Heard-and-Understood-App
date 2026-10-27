@@ -322,6 +322,10 @@ HUA - Ground Truthing
     let spectrogramMin = 0;
     let spectrogramMax = 1;
 
+    function reverseWithinRows(matrix) {
+        return matrix.map(row => row.slice().reverse());
+    }
+
     document.getElementById("spectrogramUploadButton").addEventListener("click", function () {
         const fileInput = document.getElementById("spectrogramFileInput");
         const statusEl = document.getElementById("spectrogramStatus");
@@ -342,7 +346,7 @@ HUA - Ground Truthing
                 return response.json();
             })
             .then(data => {
-                spectrogramRows = data.rows;
+                spectrogramRows = reverseWithinRows(data.rows);
                 let min = Infinity, max = -Infinity;
                 spectrogramRows.forEach(row => row.forEach(v => {
                     if (v < min) min = v;
@@ -534,7 +538,6 @@ HUA - Ground Truthing
     }
 
     function createDragHandle(which, t) {
-
         const hitbox = document.createElement("div");
         hitbox.style.position = "absolute";
         hitbox.style.top = "0";
@@ -611,7 +614,6 @@ HUA - Ground Truthing
             });
             showStatus("Pause added locally - click Save at the bottom to commit.", false);
         } else {
-
             activeLoopPause.start = newStart;
             activeLoopPause.stop = newStop;
             activeLoopPause.context = newTranscript;
@@ -862,7 +864,6 @@ HUA - Ground Truthing
             renderAll();
         });
 
-
         document.getElementById("saveChangesForm").addEventListener('submit', function (event) {
             event.preventDefault();
             fetch('/save_changes', {
@@ -874,6 +875,7 @@ HUA - Ground Truthing
                     if (!response.ok) { throw new Error("Couldn't save changes."); }
                     showStatus("Changes saved - downloading...", false);
                     loadPauseData();
+
                     window.location.href = '/download_consert_csv';
                 })
                 .catch(error => showStatus(error.message, true));
