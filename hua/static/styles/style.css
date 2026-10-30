@@ -771,8 +771,13 @@ header {
     color: #333;
   }
 
-  .request-actions a {
+  .request-actions form {
+    display: inline;
+  }
+
+  .request-actions button {
     margin-left: 1rem;
+    border: none;
     padding: 0.5rem 1rem;
     border-radius: 6px;
     text-decoration: none;
@@ -780,21 +785,21 @@ header {
     transition: background-color 0.2s ease;
   }
 
-  .request-actions a.accept {
+  .request-actions button.accept {
     background-color: #28a745;
     color: white;
   }
 
-  .request-actions a.accept:hover {
+  .request-actions button.accept:hover {
     background-color: #218838;
   }
 
-  .request-actions a.decline {
+  .request-actions button.decline {
     background-color: #dc3545;
     color: white;
   }
 
-  .request-actions a.decline:hover {
+  .request-actions button.decline:hover {
     background-color: #c82333;
   }
 

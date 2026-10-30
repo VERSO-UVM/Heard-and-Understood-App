@@ -38,8 +38,12 @@ HUA - View All Projects
 </li>
 <td>
   <br>
-  <a href="/generateNewCode/{{i.projectName}}">Generate New Code</a>
-  <a href="/deleteProject/{{i.projectName}}">Delete Project</a>
+  <form method="POST" action="{{ url_for('generateNewCode', project_name=i['project_name']) }}" style="display: inline;">
+    <button type="submit" class="btn btn-link">Generate New Code</button>
+  </form>
+  <form method="POST" action="{{ url_for('deleteProject', project_name=i['project_name']) }}" style="display: inline;" onsubmit="return confirm('Delete this project?');">
+    <button type="submit" class="btn btn-link">Delete Project</button>
+  </form>
 </td>
 {% endfor %}
 {% endblock %}

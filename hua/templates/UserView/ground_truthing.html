@@ -121,7 +121,7 @@ HUA - Ground Truthing
 
       <div class="bottom-row">
         <section style="flex: 1">
-            <form id="addPauseForm" method="POST" action="/add_new_pause" style="display: flex; flex-direction: column; align-items: center;">
+            <form id="addPauseForm" style="display: flex; flex-direction: column; align-items: center;">
               <h3>Add New Pause:</h3>
           
               <div style="display: flex; flex-direction: column; width: 100%; max-width: 300px;">
@@ -156,7 +156,7 @@ HUA - Ground Truthing
           </section>          
 
         <section style="flex: 1">
-            <form id="extendClipForm" method="POST" action="/extend_clip" style="display: flex; flex-direction: column; align-items: center;">
+            <form id="extendClipForm" style="display: flex; flex-direction: column; align-items: center;">
               <h3>Modify Pause:</h3>
               
               <div style="display: flex; flex-direction: column; width: 100%; max-width: 300px;">
@@ -195,7 +195,7 @@ HUA - Ground Truthing
           
 
         <section style="flex: 1">
-          <form id="deletePauseForm" method="POST" action="/delete_pause">
+          <form id="deletePauseForm">
             <h3>Delete Pause:</h3>
             <div class="center">
                 <input type="number" name="pauseAtDelete" id="pauseAtDelete" required>
@@ -208,7 +208,7 @@ HUA - Ground Truthing
       </div>
 
         <div class="center">
-            <form id="saveChangesForm" method="POST" action="/save_changes">
+            <form id="saveChangesForm">
             <button class="btn-save-update" type="submit" id="update" value="update">Save and Update Changes</button>
             </form>
         </div>

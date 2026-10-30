@@ -24,7 +24,7 @@
                     {% endif %}
                 {% endwith %}
                 <h2 class="text-center">Enter Verification Code</h2>
-                <form method="POST" action="{{ url_for('enter_code') }}?email={{ email }}">
+                <form method="POST" action="{{ url_for('enter_code', email=email) }}">
                     <input type="hidden" name="email" value="{{ email }}">
                     <div class="form-group">
                         <label for="verificationCode">Verification Code</label>
