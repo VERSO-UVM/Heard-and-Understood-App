@@ -38,3 +38,6 @@ bin/
 
 # consert
 /hua/static/consert_ouput/
+
+# app data (recordings, transcripts)
+instance/

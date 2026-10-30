@@ -21,12 +21,12 @@ HUA - PI Requests
         <strong>{{ i['name'] }}</strong> &mdash; {{ i['email'] }}
       </div>
       <div class="request-actions">
-        <a class="accept" href="/acceptRequest/{{ i['email'] }}">
-          <i class="fa-solid fa-check"></i> Accept
-        </a>
-        <a class="decline" href="/declineRequest/{{ i['email'] }}">
-          <i class="fa-solid fa-xmark"></i> Decline
-        </a>
+        <form method="POST" action="{{ url_for('acceptRequest', pName=i['email']) }}">
+          <button type="submit" class="accept"><i class="fa-solid fa-check"></i> Accept</button>
+        </form>
+        <form method="POST" action="{{ url_for('declineRequest', pName=i['email']) }}">
+          <button type="submit" class="decline"><i class="fa-solid fa-xmark"></i> Decline</button>
+        </form>
       </div>
     </div>
   {% endfor %}

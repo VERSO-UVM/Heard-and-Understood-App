@@ -25,30 +25,31 @@
                         interactiveElements.forEach(button => {
                             button.disabled = false;
                         });
+                        checkImage(0);
                     }
-                    checkImage();
                 }
             )
             .catch(error => console.error('Error:', error));
         }
 
-        function checkImage() {
+        // Polls for the plot ConSert writes, giving up after about a minute
+        function checkImage(attempt) {
             const imagePath = '/static/consert_output/test_video_short_classification.png';
-;  
+            if (attempt >= 30) {
+                console.error("ConSert output image never appeared");
+                return;
+            }
             fetch(imagePath, { method: 'HEAD' })
                 .then(response => {
                     if (response.ok) {
-                        console.log("image found")
                         displayImage(imagePath);
                     } else {
-                        console.log("image not found, trying again in 2 seonds")
-                        setTimeout(checkImage, 2000);
-
+                        setTimeout(() => checkImage(attempt + 1), 2000);
                     }
             })
             .catch(error => {
                 console.error('Error checking image:', error);
-                setTimeout(checkImage, 2000);
+                setTimeout(() => checkImage(attempt + 1), 2000);
             });
         }
 
@@ -131,6 +132,5 @@
             </div>
         </div>
       </main>                  
-    <script src="index.js"></script>
     <script src="../static/dashboard/dashboard.js"></script>
 {% endblock content %}
