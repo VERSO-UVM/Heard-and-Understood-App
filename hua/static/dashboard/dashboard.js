@@ -16,11 +16,7 @@ algorithmButton = document.getElementById("algorithm");
 confusionMatrixButton = document.getElementById("confusionMatrix");
 rawDataButton = document.getElementById("rawData");
 
-recordingsList = document.getElementById("recordings");
 recordingsInput = document.getElementById("recordingsInput");
-
-projectsList = document.getElementById("projects");
-projectsInput = document.getElementById("projectsInput");
 
 modalPopup = document.getElementById("modalPopup");
 background = document.getElementById("modalBackground");
@@ -37,9 +33,7 @@ showNonConnective = true;
 showAccuracy = true;
 
 recordingVal = '';
-projectVal = '';
 
-// Arrays of dummy pause data in graph
 emotionalPauses = [];
 invitationalPauses = [];
 nonConnectivePauses = [];
@@ -48,45 +42,66 @@ downloadButton = document.getElementById("downloadCSV");
 
 interactiveElements = [algorithmButton, confusionMatrixButton, rawDataButton, emotionalCheckbox, invitationalCheckbox, nonConnectiveCheckbox, downloadButton, accuracyToggle];
 
-recordings = ["recording 1", "recording 2", "recording 3", "recording 4"];
-var optionsText = '';
-for(i = 0; i < recordings.length; ++i) {
-    optionsText += '<option value="' + recordings[i] + '" />';
-}
-recordingsList.innerHTML = optionsText;
+recordings = [];
 
-projects = ["Vermont Conversation Lab", "Project 2", "Project 3", "Project 4"];
-var projectsOptions = '';
-for(i = 0; i < projects.length; ++i) {
-    projectsOptions += '<option value="' + projects[i] + '" />';
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 }
-projectsList.innerHTML = projectsOptions;
+
+fetch('/api/uploads')
+    .then(response => response.json())
+    .then(files => {
+        recordings = files;
+        var optionsHTML = '<option value="" disabled selected>Select a recording</option>';
+        for (i = 0; i < recordings.length; ++i) {
+            optionsHTML += '<option value="' + escapeHtml(recordings[i]) + '">' + escapeHtml(recordings[i]) + '</option>';
+        }
+        recordingsInput.innerHTML = optionsHTML;
+    })
+    .catch(error => console.error('Error loading uploads:', error));
 
 confusionMatrixButton.onclick = function() {
     modalPopup.style.display = "block";
     background.style.display = "block";
     modalContent.textContent = confusionMatrixButton.value + " for " + recordingVal;
     if(showAccuracy){
-        // Hard coded accuracy until we get actual data
         modalContent.textContent += " with 96% accuracy";
     }
 }
 rawDataButton.onclick = function() {
     modalPopup.style.display = "block";
     background.style.display = "block";
-    modalContent.textContent = rawDataButton.value + " for " + recordingVal;
-}
-projectsInput.addEventListener("input", function(){
-    projectVal = this.value;
-    if(projects.includes(projectVal)) {
-        recordingsInput.disabled = false;
-    } else {
-        recordingsInput.disabled = true;
-        resetPage();
-    }
-})
+    modalContent.innerHTML = "Loading raw data...";
 
-recordingsInput.addEventListener("input", function(){
+    fetch('/api/consert_output')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No output available yet - run the algorithm first.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            let tableHTML = '<table border="1" style="margin: auto; text-align: left;"><thead><tr>';
+            data.columns.forEach(col => {
+                tableHTML += '<th>' + escapeHtml(col) + '</th>';
+            });
+            tableHTML += '</tr></thead><tbody>';
+            data.rows.forEach(row => {
+                tableHTML += '<tr>';
+                data.columns.forEach(col => {
+                    tableHTML += '<td>' + escapeHtml(row[col]) + '</td>';
+                });
+                tableHTML += '</tr>';
+            });
+            tableHTML += '</tbody></table>';
+            modalContent.innerHTML = tableHTML;
+        })
+        .catch(error => {
+            modalContent.textContent = error.message;
+        });
+}
+
+recordingsInput.addEventListener("change", function(){
     recordingVal = this.value;
     if (recordings.includes(recordingVal)) {
         algorithmButton.disabled = false;
@@ -130,10 +145,8 @@ currentlyVisiblePauses = function() {
     }
 }
 
-downloadCSV = function() {
-    if(recordingVal != ''){
-        console.log('downloading csv for ' + recordingVal);
-    }
+downloadButton.onclick = function() {
+    window.location.href = '/download_consert_csv';
 }
 
 window.onclick = function(event) {
@@ -231,7 +244,6 @@ function resetPage() {
 function clearCanvas() {
     const canvas = document.getElementById("myCanvas");
     const ctx = canvas.getContext("2d");
-    // Clear the entire canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 

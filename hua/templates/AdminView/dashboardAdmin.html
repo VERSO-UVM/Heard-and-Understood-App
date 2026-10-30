@@ -1,5 +1,5 @@
 {% extends 'dashboardAdmin_base.html' %}
-{# Extends the 'dashboardUser_base.html' template #}
+{# Extends the 'dashboardAdmin_base.html' template #}
 
 {% import "bootstrap/wtf.html" as wtf %}
 {# Imports 'wtf.html' from the 'bootstrap' directory with an alias 'wtf' #}
@@ -13,11 +13,20 @@
     <script>
 
         function runConsert() {
-            fetch('/run_consert', { method: 'POST' })
+            fetch('/run_consert', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ recording: recordingVal })
+            })
                 .then(response => response.json())
                 .then(data => {
                     alert(data.message);
-                    checkImage(); // Start checking for image readiness
+                    if (data.status === "success") {
+                        interactiveElements.forEach(button => {
+                            button.disabled = false;
+                        });
+                    }
+                    checkImage();
                 }
             )
             .catch(error => console.error('Error:', error));
@@ -26,20 +35,20 @@
         function checkImage() {
             const imagePath = '/static/consert_output/test_video_short_classification.png';
 ;  
-            fetch(imagePath, { method: 'HEAD' }) // Check if the file exists
+            fetch(imagePath, { method: 'HEAD' })
                 .then(response => {
                     if (response.ok) {
                         console.log("image found")
                         displayImage(imagePath);
                     } else {
                         console.log("image not found, trying again in 2 seonds")
-                        setTimeout(checkImage, 2000); // Retry after 2 seconds
+                        setTimeout(checkImage, 2000);
 
                     }
             })
             .catch(error => {
                 console.error('Error checking image:', error);
-                setTimeout(checkImage, 2000); // Retry after 2 seconds
+                setTimeout(checkImage, 2000);
             });
         }
 
@@ -52,12 +61,11 @@
             }
 
             imgElement.src = imagePath;
-            imgElement.style.display = "block"; // Ensure it's visible
+            imgElement.style.display = "block";
         }
     </script>
  
     <main>
-        <!-- Flex header with project dropdown next to H1 -->
         <div class="header-bar">
             <div class="header-title">
                 <h1>Dashboard</h1>
@@ -65,24 +73,16 @@
             </div>
         </div>
       
-        <!-- Dashboard layout -->
         <div class="dashboard-layout">
-          <!-- LEFT PANEL -->
           <div class="left-panel">
-            <!-- Recording section now on the left -->
             <section class="recording-section">
                 <div class="center-dash-btn">
                 <div class="dashboard-spacing">
-                    <div class="project">
-                        <label for="projectsInput">Project </label>
-                        <input list="projects" id="projectsInput">
-                        <datalist id="projects"></datalist>
-                    </div>
-                    
                     <div class="recording">
                         <label for="recordingsInput">Recording</label>
-                        <input list="recordings" id="recordingsInput" disabled>
-                        <datalist id="recordings"></datalist>
+                        <select id="recordingsInput">
+                            <option value="" disabled selected>Select a recording</option>
+                        </select>
                     </div>
                 </div>
 
@@ -120,11 +120,18 @@
       
         <!-- NOTE: for demo purposes, a static image is displayed to showcase consert.-->
           <div class="output-section">
+            <canvas id="myCanvas" width="500" height="300" style="border:1px solid #000000;"></canvas>
             <div class="scroll-container">
                 <img src="{{ url_for('static', filename='images/consert_demo.png') }}" alt="Consert Output">
             </div>
           </div>
         </section>
+
+        <div id="modalBackground" class="modalBackground">
+            <div id="modalPopup" class="modalPopup">
+                <span id="modalContent" class="modalContent"></span>
+            </div>
+        </div>
       </main>                  
     <script src="index.js"></script>
     <script src="../static/dashboard/dashboard.js"></script>

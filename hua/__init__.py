@@ -13,8 +13,25 @@ from flask_mail import Mail, Message
 from datetime import datetime, timedelta, timezone
 import os
 import uuid
+import subprocess
 import pandas as pd
 from datetime import datetime, timezone
+from werkzeug.utils import secure_filename
+
+UPLOAD_DIR = os.path.join("hua", "static", "uploads")
+CONSERT_PYTHON = os.environ.get("CONSERT_PYTHON", "python")
+CONSERT_SCRIPT = os.path.join("hua", "consert", "consert_process.py")
+CONSERT_OUTPUT_CSV = os.path.join("hua", "static", "test_video_classification.csv")
+SPECTROGRAM_CSV = os.path.join("hua", "static", "spectrogram.csv")
+PAUSE_CSV_COLUMNS = ['start', 'stop', 'context', 'class', 'pause_type']
+
+
+def load_pause_data():
+    df = pd.read_csv(CONSERT_OUTPUT_CSV)
+    missing = [col for col in PAUSE_CSV_COLUMNS if col not in df.columns]
+    if missing:
+        raise ValueError(f"Pause CSV is missing expected column(s) {missing}.")
+    return df[PAUSE_CSV_COLUMNS]
 
 
 
@@ -523,15 +540,12 @@ def create_app():
         file = request.files['file']
         if file.filename == '':
             return "No file selected", 400
-        if file:
-            file_data = file.read()
-            file_name = file.filename
-            file_type = file.content_type
-            success = upload_file_to_db(file_name, file_type, file_data)
-            if success:
-                return redirect(url_for('upload'))
-            else:
-                return "Failed to upload", 500
+        file_name = secure_filename(file.filename)
+        if not file_name:
+            return "Invalid file name", 400
+        os.makedirs(UPLOAD_DIR, exist_ok=True)
+        file.save(os.path.join(UPLOAD_DIR, file_name))
+        return redirect(url_for('upload'))
 
     @app.route("/view-files")
     def view_files():
@@ -552,15 +566,83 @@ def create_app():
             if connection:
                 connection.close()
     
-    # @app.route('/run_consert', methods=['POST'])
-    # def run_consert():
-    #     """Trigger the Consert process when the button is clicked."""
-    #     try:
-    #         process = ConsertProcess()  # Run the process
-    #         return jsonify({"status": "success", "message": "Consert process finished!"}) #TODO: replace the pop up window when done testing/implementing css
+    ##Lists recordings saved to the uploads folder for the dashboard dropdown
+    @app.route("/api/uploads")
+    def api_uploads():
+        files = []
+        if os.path.isdir(UPLOAD_DIR):
+            files = sorted(os.listdir(UPLOAD_DIR))
+        return jsonify(files)
 
-    #     except Exception as e:
-    #         return jsonify({"status": "error", "message": str(e)})
+    @app.route('/run_consert', methods=['POST'])
+    def run_consert():
+        """Trigger the ConSert process when the button is clicked."""
+        data = request.get_json(silent=True) or {}
+        recording = secure_filename(data.get('recording') or '')
+        recording_path = os.path.join(UPLOAD_DIR, recording)
+
+        if not recording or not os.path.isfile(recording_path):
+            return jsonify({"status": "error", "message": "No recording selected."}), 400
+
+        try:
+            result = subprocess.run(
+                [CONSERT_PYTHON, CONSERT_SCRIPT, recording_path],
+                capture_output=True, text=True, timeout=600
+            )
+        except FileNotFoundError:
+            return jsonify({"status": "error", "message": f"Couldn't find the ConSert python at {CONSERT_PYTHON}. Set the CONSERT_PYTHON environment variable."}), 500
+        except subprocess.TimeoutExpired:
+            return jsonify({"status": "error", "message": "ConSert process timed out."}), 500
+
+        if result.returncode != 0:
+            return jsonify({"status": "error", "message": result.stderr or "ConSert process failed."}), 500
+
+        return jsonify({"status": "success", "message": "Consert process finished!"})
+
+    ##Saves a spectrogram CSV for the ground truthing loop view
+    @app.route('/spectrogram_upload', methods=['POST'])
+    def spectrogram_upload():
+        file = request.files.get('file')
+        if not file or not file.filename.lower().endswith('.csv'):
+            return "Invalid, please upload a CSV file.", 400
+        file.save(SPECTROGRAM_CSV)
+        return ("", 204)
+
+    ##Returns the spectrogram as rows[time_frame][frequency_bin] (headerless CSV)
+    @app.route('/api/spectrogram_data')
+    def api_spectrogram_data():
+        if not os.path.exists(SPECTROGRAM_CSV):
+            return jsonify({"error": "No spectrogram uploaded yet."}), 404
+        df = pd.read_csv(SPECTROGRAM_CSV, header=None)
+        response = jsonify({"rows": df.values.tolist()})
+        response.headers['Cache-Control'] = 'no-store'
+        return response
+
+    ##Returns the current pause CSV for the raw data modal and ground truthing table
+    @app.route('/api/consert_output')
+    def api_consert_output():
+        if not os.path.exists(CONSERT_OUTPUT_CSV):
+            return jsonify({"error": "No output yet. Run the algorithm first."}), 404
+
+        df = load_pause_data()
+        valid_mask = df['start'].notna() & df['stop'].notna()
+        valid_df = df[valid_mask]
+        safe_df = valid_df.astype(object).where(pd.notnull(valid_df), None)
+
+        response = jsonify({
+            "columns": list(df.columns),
+            "rows": safe_df.to_dict(orient="records"),
+            "skipped_count": int((~valid_mask).sum())
+        })
+        response.headers['Cache-Control'] = 'no-store'
+        return response
+
+    @app.route('/download_consert_csv')
+    def download_consert_csv():
+        if not os.path.exists(CONSERT_OUTPUT_CSV):
+            return "No output yet. Run the algorithm first.", 404
+        return send_from_directory(os.path.abspath(os.path.dirname(CONSERT_OUTPUT_CSV)),
+                                   os.path.basename(CONSERT_OUTPUT_CSV), as_attachment=True)
 
     @app.route('/testOutput/<filename>')
     def get_output_file(filename):
@@ -918,7 +1000,14 @@ def create_app():
 
     @app.route('/save_changes', methods=['POST'])
     def ground_truth_connection():
-        modifications = pd.read_csv('hua/static/modifications.csv')
+        data = request.get_json(silent=True) or {}
+        pauses = data.get("pauses")
+        if pauses is None:
+            return "No pauses sent.", 400
+        modifications = pd.DataFrame(pauses, columns=PAUSE_CSV_COLUMNS)
+        if not modifications.empty:
+            modifications = modifications.sort_values(by='start')
+
         project=session.get("project")
         access_code=project.get("access")
         user=session.get("user")
@@ -935,8 +1024,8 @@ def create_app():
             doc_ref.update({"ground_truthing": firestore.ArrayUnion([{"time": datetime.now(timezone.utc), "name": user_name}])})
         else:
             print("Coundn't find document with this access code.")
-        modifications.to_csv('hua/static/test_video_classification.csv', index=False)
-        return ground_truthing()
+        modifications.to_csv(CONSERT_OUTPUT_CSV, index=False)
+        return ("", 204)
     
 
     @app.route('/csv_upload', methods=['POST'])
